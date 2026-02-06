@@ -3,50 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CielSec • Portfolio Neon</title>
+  <title>CielSec • Portfolio Neon (Optimized)</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    /* ---------------------------
-       Base + Theme (Purple Neon)
-    ---------------------------- */
     :root{
-      --bg0:#05030a;
-      --bg1:#0b0614;
-      --bg2:#120a25;
+      --bg0:#05030a; --bg2:#120a25;
+      --txt:#eae6ff; --mut:#b8aefc; --mut2:#9186f0;
 
-      --txt:#eae6ff;
-      --mut:#b8aefc;
-      --mut2:#9186f0;
-
-      --p1:#a855f7;  /* purple */
-      --p2:#7c3aed;  /* violet */
-      --p3:#c084fc;  /* lilac */
-      --c1:#00e5ff;  /* cyan accent */
-      --warn:#ff4fd8;
+      --p1:#a855f7; --p2:#7c3aed; --p3:#c084fc; --c1:#00e5ff; --warn:#ff4fd8;
 
       --glass: rgba(255,255,255,.06);
-      --glass2: rgba(255,255,255,.10);
+      --line: rgba(168,85,247,.22);
+      --shadow: 0 18px 55px rgba(0,0,0,.55);
 
-      --shadow: 0 20px 60px rgba(0,0,0,.65);
-      --glow: 0 0 22px rgba(168,85,247,.55);
-      --glow2: 0 0 40px rgba(124,58,237,.45);
-
-      --r: 18px;
-      --r2: 26px;
-
-      --line: rgba(168,85,247,.28);
-      --line2: rgba(0,229,255,.18);
-
+      --r: 18px; --r2: 26px;
       --ease: cubic-bezier(.2,.9,.2,1);
       --ease2: cubic-bezier(.16,1,.3,1);
-
-      --grid: rgba(168,85,247,.12);
-      --grid2: rgba(0,229,255,.08);
     }
 
     * { box-sizing: border-box; }
@@ -56,238 +32,147 @@
       font-family: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--txt);
       background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(168,85,247,.25), transparent 55%),
-        radial-gradient(900px 500px at 80% 20%, rgba(0,229,255,.12), transparent 55%),
-        radial-gradient(900px 700px at 70% 85%, rgba(255,79,216,.12), transparent 55%),
+        radial-gradient(1200px 600px at 20% 10%, rgba(168,85,247,.22), transparent 55%),
+        radial-gradient(900px 500px at 80% 20%, rgba(0,229,255,.10), transparent 55%),
+        radial-gradient(900px 700px at 70% 85%, rgba(255,79,216,.10), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg2));
       overflow-x:hidden;
-      cursor:none; /* hide default cursor - we'll draw our own */
+      cursor:none;
     }
 
-    /* ---------------------------
-       Custom Cursor
-    ---------------------------- */
-    .cursor-dot, .cursor-ring{
-      position: fixed;
-      top:0; left:0;
-      pointer-events:none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      will-change: transform;
-    }
-    .cursor-dot{
-      width: 8px; height: 8px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--p3));
-      box-shadow: 0 0 18px rgba(192,132,252,.8), 0 0 28px rgba(168,85,247,.55);
-      mix-blend-mode: screen;
-    }
-    .cursor-ring{
-      width: 42px; height: 42px;
-      border-radius: 999px;
-      border: 1px solid rgba(192,132,252,.55);
-      box-shadow: 0 0 26px rgba(168,85,247,.30), inset 0 0 22px rgba(0,229,255,.12);
-      backdrop-filter: blur(2px);
-      transition: width .22s var(--ease), height .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
-      mix-blend-mode: screen;
-    }
-    .cursor-ring.is-hover{
-      width: 64px; height: 64px;
-      border-color: rgba(0,229,255,.55);
-      box-shadow: 0 0 34px rgba(0,229,255,.25), 0 0 46px rgba(168,85,247,.35);
-    }
-    .cursor-ring.is-down{
-      width: 34px; height: 34px;
-      border-color: rgba(255,79,216,.65);
-      box-shadow: 0 0 40px rgba(255,79,216,.22), 0 0 30px rgba(168,85,247,.30);
-    }
-
-    /* ---------------------------
-       Subtle scanlines + grid
-    ---------------------------- */
+    /* FX leve (sem blur pesado) */
     .fx{
       position: fixed;
       inset: 0;
       pointer-events:none;
       z-index: 0;
-      opacity: .9;
+      opacity: .85;
+      will-change: transform;
     }
     .fx::before{
       content:"";
       position:absolute; inset:0;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size: 100% 4px;
-      opacity: .22;
-      mix-blend-mode: overlay;
-      animation: scan 8s linear infinite;
+      background: linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 100% 6px; /* menos linhas = mais leve */
+      opacity: .18;
+      animation: scan 10s linear infinite;
+      transform: translateZ(0);
     }
     .fx::after{
       content:"";
       position:absolute; inset:-2px;
       background:
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-        linear-gradient(0deg, var(--grid2) 1px, transparent 1px);
-      background-size: 72px 72px;
+        linear-gradient(90deg, rgba(168,85,247,.10) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0,229,255,.06) 1px, transparent 1px);
+      background-size: 84px 84px;
+      opacity:.45;
       mask-image: radial-gradient(ellipse at 50% 35%, #000 25%, transparent 70%);
-      opacity:.55;
       transform: translateZ(0);
     }
     @keyframes scan{
-      0%{ transform: translateY(-10%); }
-      100%{ transform: translateY(10%); }
+      0%{ transform: translateY(-8%); }
+      100%{ transform: translateY(8%); }
     }
 
-    /* ---------------------------
-       Layout
-    ---------------------------- */
-    .wrap{
-      position: relative;
-      z-index: 1;
-      min-height: 100%;
-      display:flex;
-      flex-direction: column;
+    /* Cursor custom (otimizado: update via rAF no JS) */
+    .cursor-dot, .cursor-ring{
+      position: fixed; top:0; left:0;
+      pointer-events:none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+      mix-blend-mode: screen;
     }
+    .cursor-dot{
+      width: 7px; height: 7px; border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--p3));
+      box-shadow: 0 0 14px rgba(192,132,252,.65);
+    }
+    .cursor-ring{
+      width: 38px; height: 38px; border-radius: 999px;
+      border: 1px solid rgba(192,132,252,.50);
+      box-shadow: 0 0 18px rgba(168,85,247,.22);
+      /* backdrop-filter removido (era pesado) */
+      transition: width .20s var(--ease), height .20s var(--ease), border-color .20s var(--ease), box-shadow .20s var(--ease);
+    }
+    .cursor-ring.is-hover{
+      width: 58px; height: 58px;
+      border-color: rgba(0,229,255,.55);
+      box-shadow: 0 0 22px rgba(0,229,255,.18), 0 0 26px rgba(168,85,247,.22);
+    }
+    .cursor-ring.is-down{
+      width: 32px; height: 32px;
+      border-color: rgba(255,79,216,.65);
+      box-shadow: 0 0 22px rgba(255,79,216,.16), 0 0 22px rgba(168,85,247,.20);
+    }
+
+    .wrap{ position: relative; z-index: 1; min-height: 100%; display:flex; flex-direction: column; }
 
     header{
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: linear-gradient(180deg, rgba(5,3,10,.85), rgba(5,3,10,.35));
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(168,85,247,.18);
+      position: sticky; top: 0; z-index: 10;
+      background: linear-gradient(180deg, rgba(5,3,10,.85), rgba(5,3,10,.30));
+      border-bottom: 1px solid rgba(168,85,247,.16);
+      /* backdrop-filter removido pra aliviar */
     }
     .nav{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 14px 18px;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 14px;
+      max-width: 1100px; margin: 0 auto; padding: 14px 18px;
+      display:flex; align-items:center; justify-content: space-between; gap: 14px;
     }
-    .brand{
-      display:flex; align-items:center; gap: 12px;
-      user-select:none;
-    }
+    .brand{ display:flex; align-items:center; gap: 12px; user-select:none; }
     .logo{
-      width: 42px; height: 42px;
-      border-radius: 14px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.30), transparent 40%),
-        linear-gradient(135deg, rgba(168,85,247,.95), rgba(124,58,237,.75));
-      box-shadow: var(--glow), var(--shadow);
-      position: relative;
-      overflow:hidden;
+      width: 42px; height: 42px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(168,85,247,.95), rgba(124,58,237,.75));
+      box-shadow: 0 0 18px rgba(168,85,247,.30), var(--shadow);
+      position: relative; overflow:hidden;
     }
     .logo::after{
-      content:"";
-      position:absolute; inset:-40%;
-      background: linear-gradient(90deg, transparent, rgba(0,229,255,.35), transparent);
+      content:""; position:absolute; inset:-40%;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,.28), transparent);
       transform: rotate(20deg);
-      animation: shimmer 3.8s var(--ease) infinite;
+      animation: shimmer 4.8s var(--ease) infinite;
     }
     @keyframes shimmer{
-      0%{ transform: translateX(-40%) rotate(20deg); opacity:.0; }
-      20%{ opacity:.55; }
-      60%{ opacity:.18; }
+      0%{ transform: translateX(-40%) rotate(20deg); opacity:0; }
+      25%{ opacity:.55; }
       100%{ transform: translateX(40%) rotate(20deg); opacity:0; }
     }
 
-    .brand h1{
-      margin:0;
-      font-size: 14px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--txt);
-    }
-    .brand .sub{
-      display:block;
-      font-size: 12px;
-      color: var(--mut2);
-      letter-spacing: .08em;
-      margin-top: 2px;
-    }
+    .brand h1{ margin:0; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; }
+    .brand .sub{ display:block; font-size: 12px; color: var(--mut2); letter-spacing: .08em; margin-top: 2px; }
 
-    .links{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+    .links{ display:flex; align-items:center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
     .chip{
-      padding: 9px 12px;
-      border-radius: 999px;
+      padding: 9px 12px; border-radius: 999px;
       background: rgba(255,255,255,.06);
-      border: 1px solid rgba(168,85,247,.18);
+      border: 1px solid rgba(168,85,247,.16);
       color: var(--mut);
-      font-size: 12px;
-      letter-spacing:.06em;
+      font-size: 12px; letter-spacing:.06em;
       text-decoration:none;
-      position: relative;
-      overflow:hidden;
-      transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+      transition: transform .20s var(--ease), border-color .20s var(--ease), background .20s var(--ease);
+      will-change: transform;
     }
-    .chip::after{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(400px 80px at 10% 0%, rgba(0,229,255,.18), transparent 60%);
-      opacity: 0;
-      transition: opacity .25s var(--ease);
-    }
-    .chip:hover{
-      transform: translateY(-2px);
-      border-color: rgba(0,229,255,.35);
-      background: rgba(255,255,255,.08);
-    }
-    .chip:hover::after{ opacity: 1; }
+    .chip:hover{ transform: translateY(-1px); border-color: rgba(0,229,255,.28); background: rgba(255,255,255,.08); }
 
     main{
       flex:1;
-      max-width: 1100px;
-      width: 100%;
+      max-width: 1100px; width: 100%;
       margin: 0 auto;
       padding: 42px 18px 70px;
     }
 
-    /* ---------------------------
-       Hero
-    ---------------------------- */
     .hero{
       position: relative;
       border-radius: var(--r2);
       background:
-        radial-gradient(900px 300px at 20% 10%, rgba(168,85,247,.26), transparent 60%),
-        radial-gradient(800px 260px at 80% 20%, rgba(0,229,255,.12), transparent 60%),
+        radial-gradient(900px 300px at 20% 10%, rgba(168,85,247,.20), transparent 60%),
+        radial-gradient(800px 260px at 80% 20%, rgba(0,229,255,.10), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(168,85,247,.20);
+      border: 1px solid rgba(168,85,247,.18);
       box-shadow: var(--shadow);
       overflow:hidden;
       padding: 34px 24px;
-    }
-    .hero::before{
-      content:"";
-      position:absolute; inset:-1px;
-      background:
-        linear-gradient(120deg, transparent 20%, rgba(192,132,252,.18), transparent 60%),
-        linear-gradient(180deg, rgba(124,58,237,.12), transparent 60%);
-      opacity: .9;
-      pointer-events:none;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:-60% -30%;
-      background: radial-gradient(circle at 30% 40%, rgba(255,79,216,.12), transparent 50%),
-                  radial-gradient(circle at 70% 45%, rgba(0,229,255,.10), transparent 50%);
-      filter: blur(12px);
-      animation: floaty 10s var(--ease2) infinite alternate;
-      pointer-events:none;
-    }
-    @keyframes floaty{
-      0%{ transform: translate(-1%, -1%) rotate(-2deg); }
-      100%{ transform: translate(2%, 2%) rotate(2deg); }
+      will-change: transform;
+      transform: translateZ(0);
     }
 
     .hero-grid{
@@ -300,29 +185,23 @@
     }
     @media (max-width: 900px){
       .hero-grid{ grid-template-columns: 1fr; }
+      body{ cursor:auto; }
+      .cursor-dot, .cursor-ring{ display:none; }
     }
 
     .tag{
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,229,255,.18);
+      display:inline-flex; align-items:center; gap: 10px;
+      padding: 10px 12px; border-radius: 999px;
+      border: 1px solid rgba(0,229,255,.16);
       background: rgba(0,229,255,.06);
       color: var(--mut);
-      font-size: 12px;
-      letter-spacing:.12em;
-      text-transform: uppercase;
+      font-size: 12px; letter-spacing:.12em; text-transform: uppercase;
       width: fit-content;
-      position: relative;
-      overflow:hidden;
     }
     .tag i{
-      width: 10px; height: 10px;
-      border-radius: 999px;
+      width: 10px; height: 10px; border-radius: 999px;
       background: linear-gradient(135deg, var(--p3), var(--c1));
-      box-shadow: 0 0 18px rgba(0,229,255,.25);
+      box-shadow: 0 0 12px rgba(0,229,255,.20);
     }
 
     .title{
@@ -337,7 +216,6 @@
       background: linear-gradient(90deg, #fff, var(--p3), var(--p1));
       -webkit-background-clip: text;
       background-clip: text;
-      text-shadow: 0 0 28px rgba(168,85,247,.18);
     }
 
     .lead{
@@ -347,26 +225,13 @@
       line-height: 1.6;
       max-width: 60ch;
     }
-    .lead b{
-      color: #fff;
-      font-weight: 700;
-    }
+    .lead b{ color:#fff; font-weight:700; }
 
-    .hero-actions{
-      display:flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
+    .hero-actions{ display:flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(168,85,247,.22);
+      display:inline-flex; align-items:center; justify-content:center; gap: 10px;
+      padding: 12px 14px; border-radius: 14px;
+      border: 1px solid rgba(168,85,247,.18);
       background: rgba(255,255,255,.06);
       color: var(--txt);
       text-decoration:none;
@@ -374,179 +239,83 @@
       letter-spacing:.08em;
       text-transform: uppercase;
       font-size: 12px;
-      position: relative;
-      overflow:hidden;
-      transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+      transition: transform .20s var(--ease), border-color .20s var(--ease), box-shadow .20s var(--ease), background .20s var(--ease);
+      will-change: transform;
     }
-    .btn::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(260px 120px at 15% 20%, rgba(0,229,255,.18), transparent 60%),
-                  radial-gradient(260px 120px at 85% 70%, rgba(255,79,216,.16), transparent 60%);
-      opacity: 0;
-      transition: opacity .25s var(--ease);
-    }
-    .btn:hover{
-      transform: translateY(-2px);
-      border-color: rgba(0,229,255,.35);
-      box-shadow: var(--glow2);
-      background: rgba(255,255,255,.08);
-    }
-    .btn:hover::before{ opacity: 1; }
-
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(0,229,255,.26); box-shadow: 0 0 18px rgba(168,85,247,.16); background: rgba(255,255,255,.08); }
     .btn.primary{
-      border-color: rgba(168,85,247,.35);
-      background: linear-gradient(135deg, rgba(168,85,247,.22), rgba(124,58,237,.10));
-      box-shadow: 0 0 24px rgba(168,85,247,.18);
-    }
-    .btn.primary:hover{
-      border-color: rgba(255,255,255,.18);
-      box-shadow: 0 0 32px rgba(168,85,247,.25), 0 0 22px rgba(0,229,255,.16);
+      border-color: rgba(168,85,247,.28);
+      background: linear-gradient(135deg, rgba(168,85,247,.18), rgba(124,58,237,.08));
+      box-shadow: 0 0 16px rgba(168,85,247,.16);
     }
 
     .panel{
       border-radius: var(--r);
       background: rgba(10,6,18,.55);
-      border: 1px solid rgba(168,85,247,.18);
-      box-shadow: 0 10px 40px rgba(0,0,0,.45);
+      border: 1px solid rgba(168,85,247,.16);
+      box-shadow: 0 10px 34px rgba(0,0,0,.45);
       overflow:hidden;
     }
     .panel-top{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
+      display:flex; align-items:center; justify-content: space-between;
       padding: 12px 14px;
-      border-bottom: 1px solid rgba(168,85,247,.14);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-bottom: 1px solid rgba(168,85,247,.12);
+      background: rgba(255,255,255,.04);
     }
-    .dots{
-      display:flex; gap: 8px;
-    }
+    .dots{ display:flex; gap: 8px; }
     .dots span{
       width: 10px; height: 10px; border-radius: 999px;
       background: rgba(255,255,255,.10);
       border: 1px solid rgba(255,255,255,.10);
-      box-shadow: inset 0 0 12px rgba(0,0,0,.35);
     }
-    .dots span:nth-child(1){ background: rgba(255,79,216,.35); border-color: rgba(255,79,216,.35); }
-    .dots span:nth-child(2){ background: rgba(0,229,255,.25); border-color: rgba(0,229,255,.25); }
-    .dots span:nth-child(3){ background: rgba(168,85,247,.35); border-color: rgba(168,85,247,.35); }
+    .dots span:nth-child(1){ background: rgba(255,79,216,.30); border-color: rgba(255,79,216,.30); }
+    .dots span:nth-child(2){ background: rgba(0,229,255,.22); border-color: rgba(0,229,255,.22); }
+    .dots span:nth-child(3){ background: rgba(168,85,247,.30); border-color: rgba(168,85,247,.30); }
 
     .panel-title{
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
       font-size: 12px;
       color: rgba(234,230,255,.75);
       letter-spacing:.08em;
     }
-
     .code{
       margin:0;
       padding: 16px 14px 18px;
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
       font-size: 12.5px;
       line-height: 1.6;
       color: rgba(234,230,255,.86);
       overflow:auto;
-      max-height: 290px;
+      max-height: 260px;
     }
 
-    /* pseudo highlight */
-    .tok-k{ color: #ffb3ff; }  /* keywords */
-    .tok-f{ color: #7dd3fc; }  /* functions */
-    .tok-s{ color: #a7f3d0; }  /* strings */
-    .tok-c{ color: rgba(234,230,255,.55); } /* comments */
-    .tok-n{ color: #fca5a5; }  /* numbers */
-    .tok-p{ color: #c084fc; }  /* punctuation */
+    .section{ margin-top: 26px; padding-top: 22px; }
+    .section-head{ display:flex; align-items:flex-end; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+    .section h2{ margin:0; font-size: 16px; letter-spacing: .22em; text-transform: uppercase; color: rgba(234,230,255,.9); }
+    .section p{ margin: 6px 0 0; color: rgba(234,230,255,.72); font-size: 13.5px; line-height: 1.55; }
 
-    /* ---------------------------
-       Sections
-    ---------------------------- */
-    .section{
-      margin-top: 26px;
-      padding-top: 22px;
-    }
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-    .section h2{
-      margin:0;
-      font-size: 16px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(234,230,255,.9);
-    }
-    .section p{
-      margin: 6px 0 0;
-      color: rgba(234,230,255,.72);
-      font-size: 13.5px;
-      line-height: 1.55;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
 
     .card{
       grid-column: span 4;
       border-radius: var(--r);
       background: rgba(255,255,255,.05);
-      border: 1px solid rgba(168,85,247,.18);
-      box-shadow: 0 18px 45px rgba(0,0,0,.45);
+      border: 1px solid rgba(168,85,247,.16);
+      box-shadow: 0 16px 38px rgba(0,0,0,.45);
       overflow:hidden;
-      position: relative;
+      transition: transform .25s var(--ease2), border-color .25s var(--ease2), box-shadow .25s var(--ease2);
+      will-change: transform;
       transform: translateZ(0);
-      transition: transform .32s var(--ease2), border-color .32s var(--ease2), box-shadow .32s var(--ease2);
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(260px 120px at 20% 15%, rgba(168,85,247,.16), transparent 60%),
-        radial-gradient(240px 120px at 80% 85%, rgba(0,229,255,.10), transparent 60%);
-      opacity: .9;
-      pointer-events:none;
-    }
-    .card::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,.07), transparent 55%);
-      transform: translateX(-35%);
-      opacity: 0;
-      transition: transform .55s var(--ease2), opacity .55s var(--ease2);
-      pointer-events:none;
     }
     .card:hover{
-      transform: translateY(-6px) scale(1.01);
-      border-color: rgba(0,229,255,.32);
-      box-shadow: 0 26px 70px rgba(0,0,0,.62), 0 0 30px rgba(168,85,247,.18);
+      transform: translateY(-3px);
+      border-color: rgba(0,229,255,.24);
+      box-shadow: 0 22px 55px rgba(0,0,0,.60);
     }
-    .card:hover::after{
-      opacity: 1;
-      transform: translateX(35%);
-    }
+    @media (max-width: 980px){ .card{ grid-column: span 6; } }
+    @media (max-width: 620px){ .card{ grid-column: span 12; } }
 
-    @media (max-width: 980px){
-      .card{ grid-column: span 6; }
-    }
-    @media (max-width: 620px){
-      .card{ grid-column: span 12; }
-    }
-
-    .card-top{
-      padding: 14px 14px 10px;
-      display:flex;
-      align-items:flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
+    .card-top{ padding: 14px 14px 10px; display:flex; align-items:flex-start; justify-content: space-between; gap: 12px; }
     .badge{
       font-size: 11px;
       letter-spacing:.14em;
@@ -554,56 +323,27 @@
       color: rgba(234,230,255,.75);
       padding: 8px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(168,85,247,.18);
+      border: 1px solid rgba(168,85,247,.16);
       background: rgba(168,85,247,.08);
       white-space: nowrap;
     }
-    .card h3{
-      margin: 0;
-      font-size: 15px;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.92);
-    }
-    .card p{
-      margin: 8px 0 0;
-      color: rgba(234,230,255,.72);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .card-body{
-      padding: 0 14px 14px;
-      position: relative;
-      z-index: 1;
-    }
-    .meta{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
+    .card h3{ margin: 0; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; }
+    .card p{ margin: 8px 0 0; color: rgba(234,230,255,.72); font-size: 13px; line-height: 1.55; }
+    .card-body{ padding: 0 14px 14px; }
+    .meta{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
     .pill{
       font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 11px;
-      letter-spacing: .06em;
+      font-size: 11px; letter-spacing: .06em;
       color: rgba(234,230,255,.78);
-      padding: 6px 8px;
-      border-radius: 999px;
+      padding: 6px 8px; border-radius: 999px;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.18);
     }
 
-    .card-actions{
-      display:flex;
-      gap: 10px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
+    .card-actions{ display:flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
     .mini{
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(168,85,247,.18);
+      padding: 10px 12px; border-radius: 12px;
+      border: 1px solid rgba(168,85,247,.16);
       background: rgba(255,255,255,.06);
       color: rgba(234,230,255,.9);
       text-decoration:none;
@@ -611,65 +351,30 @@
       letter-spacing:.10em;
       text-transform: uppercase;
       font-size: 11px;
-      transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+      transition: transform .20s var(--ease), border-color .20s var(--ease);
+      will-change: transform;
     }
-    .mini:hover{
-      transform: translateY(-2px);
-      border-color: rgba(0,229,255,.35);
-      box-shadow: 0 0 26px rgba(0,229,255,.16);
-    }
+    .mini:hover{ transform: translateY(-1px); border-color: rgba(0,229,255,.24); }
 
-    /* ---------------------------
-       Footer
-    ---------------------------- */
     footer{
-      border-top: 1px solid rgba(168,85,247,.14);
+      border-top: 1px solid rgba(168,85,247,.12);
       background: rgba(5,3,10,.55);
-      backdrop-filter: blur(10px);
     }
     .foot{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 18px;
-      display:flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+      max-width: 1100px; margin: 0 auto; padding: 18px;
+      display:flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
       color: rgba(234,230,255,.65);
-      font-size: 12px;
-      letter-spacing:.08em;
+      font-size: 12px; letter-spacing:.08em;
     }
-    .foot a{
-      color: rgba(192,132,252,.9);
-      text-decoration:none;
-      border-bottom: 1px dashed rgba(192,132,252,.35);
-    }
+    .foot a{ color: rgba(192,132,252,.9); text-decoration:none; border-bottom: 1px dashed rgba(192,132,252,.35); }
 
-    /* ---------------------------
-       Reveal animation
-    ---------------------------- */
     .reveal{
       opacity: 0;
-      transform: translateY(14px);
-      filter: blur(4px);
-      transition: opacity .7s var(--ease2), transform .7s var(--ease2), filter .7s var(--ease2);
+      transform: translateY(12px);
+      transition: opacity .55s var(--ease2), transform .55s var(--ease2);
     }
-    .reveal.in{
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
+    .reveal.in{ opacity: 1; transform: translateY(0); }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar{ height: 10px; width: 10px; }
-    ::-webkit-scrollbar-thumb{
-      background: linear-gradient(180deg, rgba(168,85,247,.45), rgba(0,229,255,.22));
-      border-radius: 999px;
-      border: 2px solid rgba(5,3,10,.55);
-    }
-    ::-webkit-scrollbar-track{ background: rgba(255,255,255,.04); }
-
-    /* Accessibility: allow users to reduce motion */
     @media (prefers-reduced-motion: reduce){
       *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       body{ cursor:auto; }
@@ -681,7 +386,6 @@
 <body>
   <div class="fx"></div>
 
-  <!-- Custom cursor -->
   <div class="cursor-ring" aria-hidden="true"></div>
   <div class="cursor-dot" aria-hidden="true"></div>
 
@@ -708,17 +412,16 @@
       <section class="hero reveal" id="topo">
         <div class="hero-grid">
           <div>
-            <div class="tag"><i></i> interface neon • roxo • animações</div>
+            <div class="tag"><i></i> neon roxo • animado • otimizado</div>
             <h2 class="title"><span class="glow">ARCHON</span> INSPIRED UI</h2>
             <p class="lead">
-              Um layout <b>minimalista</b> e <b>agressivo</b> (no visual), com brilho roxo, transições suaves, cursor custom,
-              e um painel pra mostrar seus projetos com trechos de código.
+              Layout roxo neon com cursor custom e animações suaves, mas sem derreter teu FPS.
             </p>
 
             <div class="hero-actions">
               <a class="btn primary hoverable" href="#projetos">Entrar</a>
               <a class="btn hoverable" href="#codigo">Ver código</a>
-              <a class="btn hoverable" href="#" onclick="toggleTheme(event)">Modo “ultra glow”</a>
+              <a class="btn hoverable" href="#" onclick="toggleFx(event)">FX Scanlines ON/OFF</a>
             </div>
           </div>
 
@@ -727,19 +430,19 @@
               <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
               <div class="panel-title">/projects/preview.py</div>
             </div>
-            <pre class="code"><span class="tok-c"># Preview rápido: estrutura de projeto</span>
-<span class="tok-k">class</span> <span class="tok-f">Project</span><span class="tok-p">:</span>
-  <span class="tok-k">def</span> <span class="tok-f">__init__</span><span class="tok-p">(</span><span class="tok-k">self</span><span class="tok-p">,</span> name<span class="tok-p">,</span> stack<span class="tok-p">)</span><span class="tok-p">:</span>
-    <span class="tok-k">self</span>.name <span class="tok-p">=</span> name
-    <span class="tok-k">self</span>.stack <span class="tok-p">=</span> stack
+            <pre class="code"># Preview rápido: estrutura de projeto
+class Project:
+  def __init__(self, name, stack):
+    self.name = name
+    self.stack = stack
 
-projects <span class="tok-p">=</span> <span class="tok-p">[</span>
-  <span class="tok-f">Project</span><span class="tok-p">(</span><span class="tok-s">"SQLmap GUI"</span><span class="tok-p">,</span> <span class="tok-s">"PyQt • SQLmap • Logs"</span><span class="tok-p">)</span><span class="tok-p">,</span>
-  <span class="tok-f">Project</span><span class="tok-p">(</span><span class="tok-s">"Recon Toolkit"</span><span class="tok-p">,</span> <span class="tok-s">"nmap • ffuf • nuclei"</span><span class="tok-p">)</span><span class="tok-p">,</span>
-  <span class="tok-f">Project</span><span class="tok-p">(</span><span class="tok-s">"C2 Lab"</span><span class="tok-p">,</span> <span class="tok-s">"Labs • Simulação"</span><span class="tok-p">)</span>
-<span class="tok-p">]</span>
+projects = [
+  Project("SQLmap GUI", "PyQt • SQLmap • Logs"),
+  Project("Recon Toolkit", "nmap • ffuf • nuclei"),
+  Project("C2 Lab", "Labs • Simulação")
+]
 
-<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s">"Loaded:"</span><span class="tok-p">,</span> <span class="tok-k">len</span><span class="tok-p">(</span>projects<span class="tok-p">)</span><span class="tok-p">)</span></pre>
+print("Loaded:", len(projects))</pre>
           </aside>
         </div>
       </section>
@@ -748,9 +451,9 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
         <div class="section-head">
           <div>
             <h2>Projetos</h2>
-            <p>Cards com glow + hover cinematic. Clique em “Detalhes” pra abrir um modal com snippet (sem framework).</p>
+            <p>Cards com hover leve (sem blur pesado).</p>
           </div>
-          <a class="chip hoverable" href="#contato">↳ baixar / contato</a>
+          <a class="chip hoverable" href="#contato">↳ contato</a>
         </div>
 
         <div class="grid">
@@ -764,9 +467,9 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
             </div>
             <div class="card-body">
               <div class="meta">
-                <span class="pill">stdout/stderr stream</span>
+                <span class="pill">stdout/stderr</span>
                 <span class="pill">profiles</span>
-                <span class="pill">export JSON</span>
+                <span class="pill">export</span>
               </div>
               <div class="card-actions">
                 <a class="mini hoverable" href="#" data-open="p1">Detalhes</a>
@@ -778,16 +481,16 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
           <article class="card reveal">
             <div class="card-top">
               <div>
-                <h3>ReconFTW-like Runner</h3>
-                <p>Pipeline de recon agressivo (nmap → ffuf → nuclei → reporting) com templates e throttling.</p>
+                <h3>Recon Runner</h3>
+                <p>Pipeline de recon (scan → fuzz → nuclei) com templates e rate-limit.</p>
               </div>
-              <div class="badge">Bash • Automação</div>
+              <div class="badge">Bash</div>
             </div>
             <div class="card-body">
               <div class="meta">
                 <span class="pill">rate-limit</span>
                 <span class="pill">resolvers</span>
-                <span class="pill">diff snapshots</span>
+                <span class="pill">snapshots</span>
               </div>
               <div class="card-actions">
                 <a class="mini hoverable" href="#" data-open="p2">Detalhes</a>
@@ -799,15 +502,15 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
           <article class="card reveal">
             <div class="card-top">
               <div>
-                <h3>Web Security Lab</h3>
-                <p>Ambiente local com alvos intencionais (XSS/LFI/SSRF/SSTI), telemetria e replay de requests.</p>
+                <h3>Web Lab</h3>
+                <p>Ambiente local com alvos e telemetria pra replay de requests.</p>
               </div>
-              <div class="badge">Docker • Labs</div>
+              <div class="badge">Docker</div>
             </div>
             <div class="card-body">
               <div class="meta">
                 <span class="pill">compose</span>
-                <span class="pill">mitm</span>
+                <span class="pill">proxy</span>
                 <span class="pill">pcap</span>
               </div>
               <div class="card-actions">
@@ -823,7 +526,7 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
         <div class="section-head">
           <div>
             <h2>Contato</h2>
-            <p>Deixa aqui seus links (GitHub, Discord, etc.) e pronto. Visual clean, sem “HACKER” cringe.</p>
+            <p>Edite os links e fechou.</p>
           </div>
         </div>
 
@@ -832,7 +535,7 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
             <div class="card-top">
               <div>
                 <h3>Links</h3>
-                <p>Edite os placeholders no HTML: GitHub, Discord, Email. Tem hover e animação suave.</p>
+                <p>GitHub / Discord / Email</p>
               </div>
               <div class="badge">perfil</div>
             </div>
@@ -840,7 +543,7 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
               <a class="btn hoverable" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
               <a class="btn hoverable" href="#" onclick="copyText(event,'discord: cielsec')">Discord</a>
               <a class="btn hoverable" href="mailto:seuemail@exemplo.com">Email</a>
-              <a class="btn primary hoverable" href="#topo">Voltar ao topo</a>
+              <a class="btn primary hoverable" href="#topo">Topo</a>
             </div>
           </div>
         </div>
@@ -849,15 +552,15 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
 
     <footer>
       <div class="foot">
-        <span>© <span id="year"></span> CielSec • UI Neon Roxo</span>
-        <span>feito com <a class="hoverable" href="#topo">glow</a> e um pouco de caos</span>
+        <span>© <span id="year"></span> CielSec • Neon Roxo</span>
+        <span>feito com glow controlado</span>
       </div>
     </footer>
   </div>
 
-  <!-- Modal (no framework) -->
+  <!-- Modal (leve) -->
   <div id="modal" style="position:fixed;inset:0;display:none;z-index:50;">
-    <div id="modalBackdrop" style="position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);"></div>
+    <div id="modalBackdrop" style="position:absolute;inset:0;background:rgba(0,0,0,.65);"></div>
 
     <div id="modalBox" class="panel" style="
       position:relative;
@@ -865,9 +568,9 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
       margin: 8vh auto;
       border-radius: 22px;
       overflow:hidden;
-      transform: translateY(14px) scale(.98);
+      transform: translateY(10px) scale(.99);
       opacity:0;
-      transition: transform .35s var(--ease2), opacity .35s var(--ease2);
+      transition: transform .28s var(--ease2), opacity .28s var(--ease2);
     ">
       <div class="panel-top" style="display:flex;align-items:center;justify-content:space-between;">
         <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -876,8 +579,7 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
       </div>
       <div style="padding: 16px 16px 18px;">
         <p id="modalDesc" style="margin:0 0 10px;color:rgba(234,230,255,.78);line-height:1.6;"></p>
-
-        <pre class="code" id="modalCode" style="max-height: 360px; border-radius: 16px; border:1px solid rgba(168,85,247,.18); background: rgba(0,0,0,.18);"></pre>
+        <pre class="code" id="modalCode" style="max-height: 320px; border-radius: 16px; border:1px solid rgba(168,85,247,.16); background: rgba(0,0,0,.18);"></pre>
 
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top: 12px;">
           <a class="btn primary hoverable" href="#codigo" onclick="closeModal()">Ir pro painel</a>
@@ -888,18 +590,12 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
   </div>
 
   <script>
-    /* ---------------------------
-       Tiny helpers
-    ---------------------------- */
     const $ = (q, el=document) => el.querySelector(q);
     const $$ = (q, el=document) => [...el.querySelectorAll(q)];
 
-    // Year
     $("#year").textContent = new Date().getFullYear();
 
-    /* ---------------------------
-       Reveal on scroll (IntersectionObserver)
-    ---------------------------- */
+    // Reveal (barato)
     const io = new IntersectionObserver((entries)=>{
       for(const e of entries){
         if(e.isIntersecting){
@@ -908,71 +604,81 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
         }
       }
     }, { threshold: 0.12 });
-
     $$(".reveal").forEach(el => io.observe(el));
 
-    /* ---------------------------
-       Custom cursor logic
-    ---------------------------- */
+    // Cursor + hover (rAF throttling)
     const dot = $(".cursor-dot");
     const ring = $(".cursor-ring");
 
-    let mx = window.innerWidth/2, my = window.innerHeight/2;
+    let mx = innerWidth/2, my = innerHeight/2;
     let rx = mx, ry = my;
+    let rafId = null;
+
+    function renderCursor(){
+      rafId = null;
+      // dot snap (ok)
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+      // ring lerp
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      // keep animating while moving
+      requestAnimationFrame(loopRing);
+    }
+
+    function loopRing(){
+      // ring continues smoothing even if mouse stops for a bit
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      // stop when close enough
+      if(Math.abs(mx - rx) + Math.abs(my - ry) > 0.6) requestAnimationFrame(loopRing);
+    }
 
     window.addEventListener("mousemove", (e)=>{
       mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+      if(!rafId) rafId = requestAnimationFrame(renderCursor);
     }, { passive:true });
 
-    // ring lags behind (smooth)
-    function tick(){
-      rx += (mx - rx) * 0.15;
-      ry += (my - ry) * 0.15;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      requestAnimationFrame(tick);
-    }
-    tick();
-
-    // hover detection
-    function setHover(state){
-      ring.classList.toggle("is-hover", state);
-    }
-    function setDown(state){
-      ring.classList.toggle("is-down", state);
-    }
+    function setHover(state){ ring.classList.toggle("is-hover", state); }
+    function setDown(state){ ring.classList.toggle("is-down", state); }
 
     document.addEventListener("mouseover", (e)=>{
-      if(e.target.closest(".hoverable, a, button, .btn, .chip, .mini")){
-        setHover(true);
-      }
-    });
+      if(e.target.closest(".hoverable, a, button, .btn, .chip, .mini")) setHover(true);
+    }, { passive:true });
+
     document.addEventListener("mouseout", (e)=>{
-      if(!e.relatedTarget || !e.relatedTarget.closest?.(".hoverable, a, button, .btn, .chip, .mini")){
-        setHover(false);
-      }
-    });
+      if(!e.relatedTarget || !e.relatedTarget.closest?.(".hoverable, a, button, .btn, .chip, .mini")) setHover(false);
+    }, { passive:true });
 
-    document.addEventListener("mousedown", ()=>setDown(true));
-    document.addEventListener("mouseup", ()=>setDown(false));
+    document.addEventListener("mousedown", ()=>setDown(true), { passive:true });
+    document.addEventListener("mouseup", ()=>setDown(false), { passive:true });
 
-    /* ---------------------------
-       Ultra glow toggle (theme punch)
-    ---------------------------- */
-    let ultra = false;
-    function toggleTheme(ev){
-      ev?.preventDefault?.();
-      ultra = !ultra;
-      document.documentElement.style.setProperty("--glass", ultra ? "rgba(255,255,255,.09)" : "rgba(255,255,255,.06)");
-      document.documentElement.style.setProperty("--glow", ultra ? "0 0 36px rgba(168,85,247,.70)" : "0 0 22px rgba(168,85,247,.55)");
-      document.documentElement.style.setProperty("--glow2", ultra ? "0 0 60px rgba(124,58,237,.55)" : "0 0 40px rgba(124,58,237,.45)");
-      document.body.style.filter = ultra ? "saturate(1.15) contrast(1.05)" : "none";
+    // Parallax: desativado por padrão (era o maior "mata-FPS").
+    // Se quiser reativar, troque enableParallax = true;
+    let enableParallax = false;
+    const hero = document.querySelector(".hero");
+    let parRaf = null;
+    let px = 0, py = 0;
+
+    function parallaxTick(){
+      parRaf = null;
+      hero.style.transform = `perspective(900px) rotateY(${px*1.6}deg) rotateX(${py*-1.4}deg) translateZ(0)`;
     }
-    window.toggleTheme = toggleTheme;
 
-    /* ---------------------------
-       Modal system + project snippets
-    ---------------------------- */
+    if(hero && enableParallax){
+      window.addEventListener("mousemove", (e)=>{
+        const r = hero.getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width/2)) / r.width;
+        const y = (e.clientY - (r.top + r.height/2)) / r.height;
+        px = x; py = y;
+        if(!parRaf) parRaf = requestAnimationFrame(parallaxTick);
+      }, { passive:true });
+
+      window.addEventListener("mouseleave", ()=>{ hero.style.transform = ""; }, { passive:true });
+    }
+
+    // Modal (simples)
     const modal = $("#modal");
     const box = $("#modalBox");
     const b = $("#modalBackdrop");
@@ -984,75 +690,41 @@ projects <span class="tok-p">=</span> <span class="tok-p">[</span>
     let currentCode = "";
 
     const projects = {
-      p1: {
-        title: "/projects/sqlmap_gui.py",
-        desc: "GUI PyQt que chama o SQLmap e streama stdout/stderr pra um painel. (Snippet demonstrativo.)",
-        code:
-`# sqlmap_gui.py (snippet)
-import subprocess, threading
+      p1: { title:"/projects/sqlmap_gui.py", desc:"GUI PyQt com stream de stdout/stderr (snippet).",
+        code:`import subprocess, threading
 
-def run_sqlmap(cmd, on_line):
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
-    for line in p.stdout:
-        on_line(line.rstrip())
-    return p.wait()
+def run(cmd, on_line):
+  p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+  for line in p.stdout: on_line(line.rstrip())
+  return p.wait()
 
-def start_scan(target_url, log):
-    cmd = ["sqlmap","-u",target_url,"--batch","--threads=5","--risk=3","--level=5"]
-    threading.Thread(target=run_sqlmap, args=(cmd, log), daemon=True).start()
-`
-      },
-      p2: {
-        title: "/tools/recon_runner.sh",
-        desc: "Pipeline de recon (exemplo): resolve → scan → fuzz → nuclei. Ajuste conforme seu estilo.",
-        code:
-`#!/usr/bin/env bash
+def start_scan(url, log):
+  cmd = ["sqlmap","-u",url,"--batch","--threads=5","--risk=3","--level=5"]
+  threading.Thread(target=run, args=(cmd, log), daemon=True).start()
+` },
+      p2: { title:"/tools/recon_runner.sh", desc:"Pipeline recon (exemplo).",
+        code:`#!/usr/bin/env bash
 set -euo pipefail
-
 DOMAIN="$1"
 OUT="out/$DOMAIN"; mkdir -p "$OUT"
-
-# Subdomains (exemplo)
 subfinder -d "$DOMAIN" -silent | tee "$OUT/subs.txt"
-
-# Alive + ports
 httpx -l "$OUT/subs.txt" -silent -o "$OUT/alive.txt"
-nmap -iL "$OUT/subs.txt" -Pn -T4 --top-ports 1000 -oN "$OUT/nmap.txt"
-
-# Fuzz (exemplo)
-ffuf -w /usr/share/seclists/Discovery/Web-Content/common.txt \\
-  -u "https://$DOMAIN/FUZZ" -mc 200,204,301,302,307,401,403 \\
-  -rate 120 -o "$OUT/ffuf.json" -of json
-
-# Nuclei
 nuclei -l "$OUT/alive.txt" -severity medium,high,critical -o "$OUT/nuclei.txt"
-`
-      },
-      p3: {
-        title: "/labs/docker-compose.yml",
-        desc: "Lab local: alvo vulnerável + proxy + collector. (Esqueleto.)",
-        code:
-`version: "3.9"
+` },
+      p3: { title:"/labs/docker-compose.yml", desc:"Lab local (esqueleto).",
+        code:`version: "3.9"
 services:
   target:
     image: vulnerables/web-dvwa
     ports: ["8080:80"]
-  proxy:
-    image: mitmproxy/mitmproxy
-    command: mitmweb --web-host 0.0.0.0 --web-port 8081
-    ports: ["8081:8081", "8082:8080"]
-`
-      }
+` }
     };
 
     function openModal(id){
       const p = projects[id];
       if(!p) return;
-
       t.textContent = p.title;
       d.textContent = p.desc;
-
-      // minimal “highlight”
       currentCode = p.code;
       c.textContent = currentCode;
 
@@ -1066,28 +738,24 @@ services:
 
     function closeModal(){
       box.style.opacity = "0";
-      box.style.transform = "translateY(14px) scale(.98)";
+      box.style.transform = "translateY(10px) scale(.99)";
       setTimeout(()=>{
         modal.style.display = "none";
         document.body.style.overflow = "";
-      }, 200);
+      }, 180);
     }
 
     function copyModalCode(ev){
       ev.preventDefault();
       if(!currentCode) return;
-      navigator.clipboard.writeText(currentCode).then(()=>{
-        flash("Snippet copiado.");
-      }).catch(()=>flash("Falha ao copiar (permissão)."));
+      navigator.clipboard.writeText(currentCode).then(()=>flash("Snippet copiado."))
+        .catch(()=>flash("Falha ao copiar."));
     }
     window.copyModalCode = copyModalCode;
     window.closeModal = closeModal;
 
     $$(".mini[data-open]").forEach(a=>{
-      a.addEventListener("click", (e)=>{
-        e.preventDefault();
-        openModal(a.dataset.open);
-      });
+      a.addEventListener("click", (e)=>{ e.preventDefault(); openModal(a.dataset.open); });
     });
 
     b.addEventListener("click", closeModal);
@@ -1097,9 +765,7 @@ services:
       if(e.key === "Escape" && modal.style.display === "block") closeModal();
     });
 
-    /* ---------------------------
-       Copy helper + small toast
-    ---------------------------- */
+    // Toast leve
     let toastTimer = null;
     function flash(msg){
       let el = document.getElementById("toast");
@@ -1110,13 +776,12 @@ services:
           position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
           padding: 10px 12px; border-radius: 999px;
           background: rgba(255,255,255,.08);
-          border: 1px solid rgba(168,85,247,.22);
+          border: 1px solid rgba(168,85,247,.18);
           color: rgba(234,230,255,.92);
           font-size: 12px; letter-spacing: .10em; text-transform: uppercase;
-          box-shadow: 0 20px 60px rgba(0,0,0,.65), 0 0 26px rgba(168,85,247,.18);
-          backdrop-filter: blur(10px);
+          box-shadow: 0 18px 40px rgba(0,0,0,.55);
           z-index: 9998;
-          opacity: 0; transition: opacity .22s var(--ease), transform .22s var(--ease);
+          opacity: 0; transition: opacity .18s var(--ease), transform .18s var(--ease);
         `;
         document.body.appendChild(el);
       }
@@ -1127,7 +792,7 @@ services:
       toastTimer = setTimeout(()=>{
         el.style.opacity = "0";
         el.style.transform = "translateX(-50%) translateY(8px)";
-      }, 1300);
+      }, 1100);
     }
 
     function copyText(ev, text){
@@ -1136,20 +801,23 @@ services:
     }
     window.copyText = copyText;
 
-    /* ---------------------------
-       Subtle parallax for hero (mouse)
-    ---------------------------- */
-    const hero = document.querySelector(".hero");
-    window.addEventListener("mousemove", (e)=>{
-      if(!hero) return;
-      const r = hero.getBoundingClientRect();
-      const x = (e.clientX - (r.left + r.width/2)) / r.width;
-      const y = (e.clientY - (r.top + r.height/2)) / r.height;
-      hero.style.transform = `perspective(900px) rotateY(${x*2.2}deg) rotateX(${y*-2.0}deg)`;
-    }, { passive:true });
+    // FX toggle
+    const fx = document.querySelector(".fx");
+    function toggleFx(ev){
+      ev.preventDefault();
+      fx.style.display = (fx.style.display === "none") ? "block" : "none";
+      flash(fx.style.display === "none" ? "FX OFF" : "FX ON");
+    }
+    window.toggleFx = toggleFx;
 
-    window.addEventListener("mouseleave", ()=>{
-      if(hero) hero.style.transform = "";
+    // Pause animations when tab not visible (free FPS)
+    document.addEventListener("visibilitychange", ()=>{
+      if(document.hidden){
+        fx.style.animationPlayState = "paused";
+        document.documentElement.style.scrollBehavior = "auto";
+      }else{
+        fx.style.animationPlayState = "running";
+      }
     });
   </script>
 </body>
