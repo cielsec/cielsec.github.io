@@ -1,0 +1,49 @@
+/* styles.css */
+/* Cole aqui o CSS que estava dentro de <style>...</style> no seu HTML original. */
+
+:root{
+  --bg: #0b0612;
+  --fg: #e8e6ff;
+  --muted: rgba(232,230,255,.7);
+  --accent: #b84dff;
+  --accent2: #33d6ff;
+  --card: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.12);
+}
+
+*{ box-sizing: border-box; }
+html,body{ height: 100%; }
+body{
+  margin: 0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  background:
+    radial-gradient(800px 500px at 20% 20%, rgba(184,77,255,.18), transparent 55%),
+    radial-gradient(900px 600px at 80% 30%, rgba(51,214,255,.14), transparent 55%),
+    var(--bg);
+  color: var(--fg);
+}
+
+.container{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 16px;
+}
+
+.header{
+  padding: 18px 18px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+h1{
+  margin: 0 0 8px 0;
+  letter-spacing: .2px;
+}
+
+p{
+  margin: 0;
+  color: var(--muted);
+}
