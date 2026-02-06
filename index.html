@@ -3,41 +3,232 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0612" />
   <title>Ciel Sec</title>
 
-  <!-- CSS externo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Fonte opcional (se você preferir 100% offline, apague as 2 linhas acima e a linha abaixo) -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
 </head>
+
 <body>
-  <main class="container">
-    <header class="header">
-      <div class="brand">
-        <span class="logo" aria-hidden="true">◈</span>
-        <div class="brand-text">
-          <h1>Ciel Sec</h1>
-          <p>Interface base com CSS separado (styles.css)</p>
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- VIEW 1: Gate / Landing -->
+  <section id="gate" class="view view-gate" aria-label="Tela inicial">
+    <div class="wrap">
+      <div class="mark" aria-hidden="true">
+        <img src="logo.svg" alt="" class="logo" />
+      </div>
+
+      <h1 class="title">
+        <span class="title-strong">CIEL</span>
+        <span class="title-soft">SEC</span>
+      </h1>
+
+      <p class="subtitle">
+        Uma vitrine neon de scripts, automações e projetos do meu laboratório.
+      </p>
+
+      <p class="signature">— Team Ciel</p>
+
+      <div class="rules">
+        <div class="rule"></div>
+        <div class="rule rule-thin"></div>
+      </div>
+
+      <div class="welcome">Seja bem-vindo!</div>
+
+      <div class="rules rules-bottom">
+        <div class="rule rule-thin"></div>
+        <div class="rule"></div>
+      </div>
+
+      <button id="enterBtn" class="btn btn-primary" type="button" aria-controls="desk" aria-expanded="false">
+        ENTRAR
+      </button>
+
+      <p class="hint">Dica: pressione <kbd>Enter</kbd> ou <kbd>Espaço</kbd>.</p>
+    </div>
+  </section>
+
+  <!-- VIEW 2: Portfolio / Conteúdo -->
+  <section id="desk" class="view view-desk" aria-label="Conteúdo do site">
+    <header class="topbar">
+      <div class="topbar-left">
+        <img src="logo.svg" alt="Logo Ciel Sec" class="logo logo-sm" />
+        <div class="brand">
+          <div class="brand-title">Ciel Sec</div>
+          <div class="brand-sub">Scripts & projetos</div>
         </div>
       </div>
+
+      <nav class="topbar-nav" aria-label="Navegação">
+        <a href="#scripts" class="navlink">Scripts</a>
+        <a href="#projetos" class="navlink">Projetos</a>
+        <a href="#contato" class="navlink">Contato</a>
+      </nav>
     </header>
 
-    <section class="card">
-      <h2>Status</h2>
-      <p>Estrutura pronta: <code>index.html</code> + <code>styles.css</code>.</p>
-      <div class="actions">
-        <a class="btn" href="#" onclick="alert('Ciel Sec online.'); return false;">Testar</a>
-        <a class="btn btn-ghost" href="#" onclick="navigator.clipboard?.writeText(location.href); alert('Link copiado (se o navegador permitir).'); return false;">Copiar link</a>
-      </div>
-    </section>
+    <main class="content">
+      <section class="hero-mini">
+        <h2>Minha bancada</h2>
+        <p>
+          Aqui você lista seus scripts e ferramentas. Tudo editável: títulos, descrições e links.
+          (Procure por <code>EDITA_AQUI</code> no HTML.)
+        </p>
+      </section>
 
-    <footer class="footer">
-      <span>© <span id="y"></span> Ciel Sec</span>
-      <span class="dot">•</span>
-      <span class="muted">Neon minimal</span>
-    </footer>
-  </main>
+      <section id="scripts" class="grid-section">
+        <div class="section-head">
+          <h3>Scripts</h3>
+          <div class="chips">
+            <button class="chip is-active" data-filter="all" type="button">Todos</button>
+            <button class="chip" data-filter="python" type="button">Python</button>
+            <button class="chip" data-filter="bash" type="button">Bash</button>
+            <button class="chip" data-filter="web" type="button">Web</button>
+          </div>
+        </div>
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+        <div class="cards" id="cards">
+          <!-- EDITA_AQUI: copie/duplique cards e ajuste -->
+          <article class="card" data-tags="python web">
+            <div class="card-top">
+              <div class="badge">PY</div>
+              <h4 class="card-title">Scanner de endpoints</h4>
+            </div>
+            <p class="card-desc">
+              Enumeração de rotas + coleta de headers e fingerprint. Saída em JSON/HTML.
+            </p>
+            <div class="tagrow">
+              <span class="tag">python</span><span class="tag">enum</span><span class="tag">report</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-ghost" href="#" onclick="return false;">README</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
+            </div>
+          </article>
+
+          <article class="card" data-tags="bash">
+            <div class="card-top">
+              <div class="badge">SH</div>
+              <h4 class="card-title">Recon rápido</h4>
+            </div>
+            <p class="card-desc">
+              Pipeline agressivo com subdomínios → portas → web scan → output organizado.
+            </p>
+            <div class="tagrow">
+              <span class="tag">bash</span><span class="tag">recon</span><span class="tag">automation</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-ghost" href="#" onclick="return false;">README</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
+            </div>
+          </article>
+
+          <article class="card" data-tags="python">
+            <div class="card-top">
+              <div class="badge">PY</div>
+              <h4 class="card-title">Wordlist builder</h4>
+            </div>
+            <p class="card-desc">
+              Gera wordlists “inteligentes” com mutações, regras e scoring simples.
+            </p>
+            <div class="tagrow">
+              <span class="tag">python</span><span class="tag">wordlist</span><span class="tag">rules</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-ghost" href="#" onclick="return false;">README</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
+            </div>
+          </article>
+
+          <article class="card" data-tags="web">
+            <div class="card-top">
+              <div class="badge">WEB</div>
+              <h4 class="card-title">Dashboard de logs</h4>
+            </div>
+            <p class="card-desc">
+              Interface neon minimal pra visualizar resultados, filtros e exportação.
+            </p>
+            <div class="tagrow">
+              <span class="tag">web</span><span class="tag">ui</span><span class="tag">logs</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-ghost" href="#" onclick="return false;">Demo</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Repo</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="projetos" class="grid-section">
+        <div class="section-head">
+          <h3>Projetos</h3>
+          <p class="section-note">Coisas maiores/mais completas.</p>
+        </div>
+
+        <div class="cards two">
+          <article class="card wide">
+            <div class="card-top">
+              <div class="badge">LAB</div>
+              <h4 class="card-title">Ciel Sec Toolkit</h4>
+            </div>
+            <p class="card-desc">
+              Coleção modular: scanners, parsers, automação e relatórios — tudo plugável.
+            </p>
+            <div class="tagrow">
+              <span class="tag">toolkit</span><span class="tag">modules</span><span class="tag">reports</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-ghost" href="#" onclick="return false;">Docs</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Repo</a>
+            </div>
+          </article>
+
+          <article class="card wide">
+            <div class="card-top">
+              <div class="badge">UI</div>
+              <h4 class="card-title">Painel neon</h4>
+            </div>
+            <p class="card-desc">
+              Base de frontend com transições, cards e filtros. Perfeito pra plugar suas ferramentas.
+            </p>
+            <div class="tagrow">
+              <span class="tag">frontend</span><span class="tag">neon</span><span class="tag">animation</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn btn-ghost" href="#" onclick="return false;">Template</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contato" class="grid-section">
+        <div class="section-head">
+          <h3>Contato</h3>
+          <p class="section-note">Coloque seus links aqui.</p>
+        </div>
+
+        <div class="contact">
+          <!-- EDITA_AQUI -->
+          <a class="contact-link" href="#" onclick="return false;">GitHub</a>
+          <a class="contact-link" href="#" onclick="return false;">Discord</a>
+          <a class="contact-link" href="#" onclick="return false;">E-mail</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>© <span id="y"></span> Ciel Sec</span>
+        <span class="sep">•</span>
+        <span class="muted">Neon, mas com personalidade própria.</span>
+      </footer>
+    </main>
+  </section>
 </body>
 </html>
