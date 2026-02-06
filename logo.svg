@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ciel Sec logo">
+  <defs>
+    <linearGradient id="g" x1="40" y1="40" x2="216" y2="216" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B84DFF"/>
+      <stop offset="0.52" stop-color="#33D6FF"/>
+      <stop offset="1" stop-color="#22F1C3"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Hex ring -->
+  <path d="M128 20 L214 70 V186 L128 236 L42 186 V70 Z"
+        stroke="url(#g)" stroke-width="8" stroke-linejoin="round" filter="url(#glow)"/>
+
+  <!-- Inner mark: stylized C + slash -->
+  <path d="M162 86
+           C149 73 132 66 114 66
+           C80 66 52 94 52 128
+           C52 162 80 190 114 190
+           C132 190 149 183 162 170"
+        stroke="url(#g)" stroke-width="10" stroke-linecap="round" filter="url(#glow)"/>
+
+  <path d="M170 78 L96 204" stroke="url(#g)" stroke-width="8" stroke-linecap="round" opacity="0.9" filter="url(#glow)"/>
+</svg>
