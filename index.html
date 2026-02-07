@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#050707" />
   <meta name="color-scheme" content="dark" />
-  <meta name="description" content="Storm Central: painel para operações e projetos." />
+  <meta name="description" content="Storm Central" />
   <title>Storm Central</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,37 +17,34 @@
 </head>
 
 <body>
-  <!-- Camadas de fundo -->
+  <!-- Background layers -->
   <div class="bg" aria-hidden="true"></div>
   <div class="grid" aria-hidden="true"></div>
   <div class="glow" aria-hidden="true"></div>
   <div class="scanlines" aria-hidden="true"></div>
 
-  <!-- Cursor custom -->
+  <!-- Cursor -->
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
-  <!-- Overlay de transição -->
-  <div class="transition-wipe" aria-hidden="true"></div>
-
   <a class="skip" href="#hub">Pular para o painel</a>
 
-  <main class="shell" id="app">
+  <main class="shell" id="app" data-app>
+
     <!-- HERO / TERMINAL -->
     <section class="screen hero-screen is-active" id="hero" data-screen="hero" aria-label="Tela inicial">
-      <div class="hero-wrap">
-        <div class="terminal-window" role="region" aria-label="Terminal">
+      <div class="hero-core hero-terminal">
+        <div class="terminal-window" role="region" aria-label="Terminal de inicialização">
           <div class="terminal-bar" aria-hidden="true">
             <span class="dot red"></span>
             <span class="dot yellow"></span>
             <span class="dot green"></span>
             <span class="terminal-title">ciel@stormcentral: ~</span>
-            <span class="terminal-right">tty1</span>
           </div>
 
           <div class="terminal-body">
-            <!-- Logo watermark (menor) -->
-            <div class="terminal-watermark" aria-hidden="true">
+            <!-- watermark logo (menor) -->
+            <div class="terminal-watermark terminal-watermark-sm" aria-hidden="true">
               <svg viewBox="0 0 160 160">
                 <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
                 <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
@@ -55,36 +52,38 @@
               </svg>
             </div>
 
-            <!-- Linhas do boot -->
+            <!-- linhas do boot (JS escreve aqui) -->
             <div class="terminal-lines" id="boot-lines" aria-live="polite"></div>
 
-            <!-- Linha atual (digitando) -->
-            <div class="terminal-current" id="boot-current" aria-hidden="true">
+            <div class="terminal-footer">
               <span class="cursor" aria-hidden="true"></span>
             </div>
           </div>
         </div>
 
         <div class="hero-actions hero-actions-hidden" id="hero-actions">
-          <button class="btn btn-primary" id="enter-btn" type="button" aria-controls="hub" aria-expanded="false">
+          <button class="btn btn-primary" id="enter-btn" type="button" data-action="enter" aria-controls="hub" aria-expanded="false">
             ENTRAR
           </button>
         </div>
 
         <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
-
-        <noscript>
-          <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
-        </noscript>
       </div>
+
+      <!-- overlay de transição -->
+      <div class="transition-wipe" aria-hidden="true"></div>
+
+      <noscript>
+        <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
+      </noscript>
     </section>
 
     <!-- HUB -->
     <section class="screen hub-screen" id="hub" data-screen="hub" aria-label="Painel" aria-hidden="true" tabindex="-1">
       <header class="hub-header">
         <div class="hub-head">
-          <p class="eyebrow">Painel</p>
-          <h2>Operações, anotações e projetos.</h2>
+          <p class="eyebrow">Painel Central</p>
+          <h2>Operações, pesquisa e inteligência.</h2>
         </div>
 
         <div class="hub-line" aria-hidden="true"></div>
@@ -99,151 +98,215 @@
           <button class="hub-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-grupo" id="tab-grupo" data-panel="grupo">
             <span class="icon" aria-hidden="true">◎</span> Grupo
           </button>
+
           <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-ferramentas" id="tab-ferramentas" data-panel="ferramentas">
             <span class="icon" aria-hidden="true">⌁</span> Ferramentas
           </button>
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-notas" id="tab-notas" data-panel="notas">
-            <span class="icon" aria-hidden="true">⌬</span> Notas
+
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-artigos" id="tab-artigos" data-panel="artigos">
+            <span class="icon" aria-hidden="true">⌬</span> Artigos
           </button>
-          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-contato" id="tab-contato" data-panel="contato">
-            <span class="icon" aria-hidden="true">◇</span> Contato
+
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-suporte" id="tab-suporte" data-panel="suporte">
+            <span class="icon" aria-hidden="true">◇</span> Suporte
           </button>
+
           <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-projetos" id="tab-projetos" data-panel="projetos">
             <span class="icon" aria-hidden="true">⬡</span> Projetos
           </button>
         </nav>
 
-        <div class="hub-panels" role="region" aria-label="Conteúdo">
+        <div class="hub-panels" role="region" aria-label="Conteúdo da seção">
           <article class="hub-panel is-active" role="tabpanel" tabindex="0" id="panel-grupo" aria-labelledby="tab-grupo" data-panel-id="grupo">
             <h3>Grupo</h3>
-            <p>Laboratório + execução + evidência.</p>
+            <p>Núcleo voltado a pesquisa, laboratório e validação.</p>
             <ul>
-              <li>Metodologia e rotina de testes.</li>
-              <li>Checklist de verificação.</li>
-              <li>Registro e rastreio.</li>
+              <li>Rotina de testes e evidências.</li>
+              <li>Documentação técnica interna.</li>
+              <li>Monitoramento de superfícies críticas.</li>
             </ul>
           </article>
 
           <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-ferramentas" aria-labelledby="tab-ferramentas" data-panel-id="ferramentas" hidden>
             <h3>Ferramentas</h3>
-            <p>Scripts utilitários para fluxo e produtividade.</p>
+            <p>Conjunto de scripts utilitários e automação.</p>
             <ul>
-              <li>Recon e enumeração.</li>
-              <li>Automação de tarefas.</li>
-              <li>Logs e organização.</li>
+              <li>Enumeração e coleta.</li>
+              <li>Triagem e priorização.</li>
+              <li>Playbooks e logs.</li>
             </ul>
           </article>
 
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-notas" aria-labelledby="tab-notas" data-panel-id="notas" hidden>
-            <h3>Notas</h3>
-            <p>Documentação curta e direta.</p>
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-artigos" aria-labelledby="tab-artigos" data-panel-id="artigos" hidden>
+            <h3>Artigos</h3>
+            <p>Notas técnicas, estudos e guias.</p>
             <ul>
-              <li>Aprendizados.</li>
-              <li>Checkpoints.</li>
-              <li>Padronização.</li>
+              <li>Casos e lições.</li>
+              <li>Arquitetura e hardening.</li>
+              <li>Análise rápida.</li>
             </ul>
           </article>
 
-          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-contato" aria-labelledby="tab-contato" data-panel-id="contato" hidden>
-            <h3>Contato</h3>
-            <p>Canal para coordenação.</p>
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-suporte" aria-labelledby="tab-suporte" data-panel-id="suporte" hidden>
+            <h3>Suporte</h3>
+            <p>Canal direto para coordenação e triagem.</p>
             <ul>
-              <li>Briefing</li>
-              <li>Triagem</li>
-              <li>Entrega</li>
+              <li>Onboarding.</li>
+              <li>Resposta assistida.</li>
+              <li>Treinamento.</li>
             </ul>
           </article>
 
+          <!-- ABA PROJETOS (com “Ler mais” + drop panel) -->
           <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-projetos" aria-labelledby="tab-projetos" data-panel-id="projetos" hidden>
-            <h3>Projetos</h3>
-            <p>Lista de scripts.</p>
-            <ul>
-              <li>Organização por propósito.</li>
-              <li>Descrição curta e objetiva.</li>
-              <li>Autor fixo.</li>
-            </ul>
+            <header class="projects-header">
+              <p class="eyebrow">Projetos</p>
+              <h2>Scripts</h2>
+            </header>
+
+            <div class="projects-grid">
+
+              <!-- Card 1 -->
+              <article class="project-card"
+                data-project-id="havijpy"
+                data-title="havijpy_sqlmap_gui.py"
+                data-desc="Interface em PyQt que executa SQLmap e mostra saída em tempo real."
+                data-author="Ciel Sec"
+                data-src="code/havijpy_sqlmap_gui.py">
+                <header class="project-head">
+                  <h3>havijpy_sqlmap_gui.py</h3>
+                  <p>Interface em PyQt que executa SQLmap e mostra saída em tempo real.</p>
+                </header>
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
+                    Ler mais
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 2 -->
+              <article class="project-card"
+                data-project-id="pentest"
+                data-title="pentest_central.py"
+                data-desc="Orquestra ferramentas e salva logs por execução."
+                data-author="Ciel Sec"
+                data-src="code/pentest_central.py">
+                <header class="project-head">
+                  <h3>pentest_central.py</h3>
+                  <p>Orquestra ferramentas e salva logs por execução.</p>
+                </header>
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
+                    Ler mais
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 3 -->
+              <article class="project-card"
+                data-project-id="recon"
+                data-title="recon_automation.sh"
+                data-desc="Automação de enumeração e organização de resultados."
+                data-author="Ciel Sec"
+                data-src="code/recon_automation.sh">
+                <header class="project-head">
+                  <h3>recon_automation.sh</h3>
+                  <p>Automação de enumeração e organização de resultados.</p>
+                </header>
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
+                    Ler mais
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 4 -->
+              <article class="project-card"
+                data-project-id="privesc"
+                data-title="privesc_pack.sh"
+                data-desc="Coleta informações do host e organiza a saída."
+                data-author="Ciel Sec"
+                data-src="code/privesc_pack.sh">
+                <header class="project-head">
+                  <h3>privesc_pack.sh</h3>
+                  <p>Coleta informações do host e organiza a saída.</p>
+                </header>
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
+                    Ler mais
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 5 -->
+              <article class="project-card"
+                data-project-id="cielpl"
+                data-title="ciel.pl"
+                data-desc="Detecção e enumeração de WebDAV."
+                data-author="Ciel Sec"
+                data-src="code/ciel.pl">
+                <header class="project-head">
+                  <h3>ciel.pl</h3>
+                  <p>Detecção e enumeração de WebDAV.</p>
+                </header>
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" aria-controls="project-drop" aria-expanded="false">
+                    Ler mais
+                  </button>
+                </div>
+              </article>
+
+            </div>
+
+            <footer class="site-footer" role="contentinfo">
+              <p>Programado por Ciel Sec</p>
+            </footer>
           </article>
         </div>
       </div>
-
-      <section class="projects" id="projects" aria-label="Projetos">
-        <header class="projects-header">
-          <p class="eyebrow">Projetos</p>
-          <h2>Scripts</h2>
-        </header>
-
-        <div class="projects-grid">
-          <article class="project-card">
-            <header class="project-head">
-              <h3>havijpy_sqlmap_gui.py</h3>
-              <p>Interface que executa SQLmap e mostra saída em tempo real.</p>
-            </header>
-            <details class="project-details">
-              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
-              <div class="project-body">
-                <p class="project-meta">Autor: Ciel Sec</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3>pentest_central.py</h3>
-              <p>Centraliza execuções e organiza logs.</p>
-            </header>
-            <details class="project-details">
-              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
-              <div class="project-body">
-                <p class="project-meta">Autor: Ciel Sec</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3>recon_automation.sh</h3>
-              <p>Automação de enumeração e organização de resultados.</p>
-            </header>
-            <details class="project-details">
-              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
-              <div class="project-body">
-                <p class="project-meta">Autor: Ciel Sec</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3>privesc_pack.sh</h3>
-              <p>Coleta informações do host e organiza saída.</p>
-            </header>
-            <details class="project-details">
-              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
-              <div class="project-body">
-                <p class="project-meta">Autor: Ciel Sec</p>
-              </div>
-            </details>
-          </article>
-
-          <article class="project-card">
-            <header class="project-head">
-              <h3>ciel.pl</h3>
-              <p>Detecção e enumeração de WebDAV.</p>
-            </header>
-            <details class="project-details">
-              <summary class="btn btn-ghost" data-summary>Mostrar</summary>
-              <div class="project-body">
-                <p class="project-meta">Autor: Ciel Sec</p>
-              </div>
-            </details>
-          </article>
-        </div>
-      </section>
-
-      <footer class="site-footer" role="contentinfo">
-        <p>Programado por Ciel Sec</p>
-      </footer>
     </section>
+
   </main>
+
+  <!-- DROP MINI TELA (fica fora do fluxo e “cai” por cima) -->
+  <div class="drop-overlay" id="project-drop" aria-hidden="true">
+    <div class="drop-backdrop" data-drop-close aria-hidden="true"></div>
+
+    <section class="drop-panel" role="dialog" aria-modal="true" aria-label="Detalhes do projeto" tabindex="-1">
+      <header class="drop-head">
+        <div class="drop-titlewrap">
+          <p class="eyebrow">Projeto</p>
+          <h3 class="drop-title" id="drop-title">—</h3>
+        </div>
+
+        <button class="btn btn-ghost drop-close" type="button" data-drop-close aria-label="Fechar">
+          Fechar
+        </button>
+      </header>
+
+      <div class="drop-body">
+        <div class="drop-info">
+          <p class="drop-desc" id="drop-desc">—</p>
+
+          <div class="drop-meta">
+            <span class="drop-chip"><strong>Autor:</strong> <span id="drop-author">—</span></span>
+            <span class="drop-chip"><strong>Arquivo:</strong> <span id="drop-file">—</span></span>
+          </div>
+
+          <div class="drop-actions">
+            <button class="btn btn-primary copy-btn" type="button" data-copy-target="drop-code">
+              Copiar
+            </button>
+          </div>
+        </div>
+
+        <!-- Code viewer (JS troca o data-src e carrega o arquivo) -->
+        <pre class="code-block drop-code" id="drop-code" data-src=""><code>Selecione “Ler mais” em um projeto.</code></pre>
+      </div>
+    </section>
+  </div>
+
+  <!-- Toast (mensagem rápida tipo “Copiado.”) -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
