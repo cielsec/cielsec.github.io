@@ -2,6 +2,28 @@
   const year = document.getElementById("y");
   if (year) year.textContent = String(new Date().getFullYear());
 
+  const intro = document.getElementById("intro");
+  const introButton = document.getElementById("intro-enter");
+  const siteContent = document.getElementById("site-content");
+
+  if (siteContent) {
+    siteContent.setAttribute("aria-hidden", "true");
+  }
+
+  if (introButton) {
+    introButton.addEventListener("click", () => {
+      document.body.classList.remove("intro-active");
+      if (siteContent) {
+        siteContent.setAttribute("aria-hidden", "false");
+      }
+      if (intro) {
+        window.setTimeout(() => {
+          intro.setAttribute("aria-hidden", "true");
+        }, 700);
+      }
+    });
+  }
+
   const cursor = document.querySelector(".cursor");
   const cursorBlur = document.querySelector(".cursor-blur");
   const spotlight = document.querySelector(".spotlight");
