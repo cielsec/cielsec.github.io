@@ -6,7 +6,8 @@
   const enterBtn = document.getElementById("enter-btn");
 
   const linesEl = document.getElementById("boot-lines");
-  const actions = document.getElementById("hero-actions");
+  const currentEl = document.getElementById("boot-current");
+  const actionsEl = document.getElementById("hero-actions");
 
   const hubButtons = document.querySelectorAll(".hub-btn");
   const hubPanels = document.querySelectorAll(".hub-panel");
@@ -16,14 +17,20 @@
 
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-  // Scroll parallax var
+  // ===== Scroll var (parallax) =====
+  let scrollTicking = false;
   const setScrollVar = () => {
-    document.documentElement.style.setProperty("--scroll", `${window.scrollY}px`);
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      document.documentElement.style.setProperty("--scroll", `${window.scrollY}px`);
+      scrollTicking = false;
+    });
   };
   window.addEventListener("scroll", setScrollVar, { passive: true });
   window.addEventListener("load", setScrollVar);
 
-  // Cursor (sem duplicar)
+  // ===== Cursor custom (sem duplicação) =====
   const initCursor = () => {
     if (!cursorDot || !cursorRing) return;
 
@@ -60,7 +67,7 @@
     tick();
   };
 
-  // Tabs do hub
+  // ===== Tabs =====
   const activatePanel = (target) => {
     hubButtons.forEach(btn => {
       const on = btn.dataset.panel === target;
@@ -75,73 +82,125 @@
     });
   };
 
-  hubButtons.forEach((button) => {
-    button.addEventListener("click", () => activatePanel(button.dataset.panel));
+  hubButtons.forEach(btn => {
+    btn.addEventListener("click", () => activatePanel(btn.dataset.panel));
   });
 
-  // ===== Terminal boot =====
-  const bootLines = [
-    { text: `┌──(ciel㉿kali)-[~]\n└─$ whoami`, cls: "term-line", wait: 350 },
-    { text: `ciel`, cls: "term-line term-ok", wait: 220 },
+  // ===== Projects: texto Mostrar/Ocultar =====
+  document.querySelectorAll("details.project-details").forEach(det => {
+    const sum = det.querySelector("[data-summary]");
+    if (!sum) return;
+    det.addEventListener("toggle", () => {
+      sum.textContent = det.open ? "Ocultar" : "Mostrar";
+    });
+  });
 
-    { text: `└─$ echo "conhecimento é poder"`, cls: "term-line", wait: 260 },
-    { text: `conhecimento é poder`, cls: "term-line term-dim", wait: 200 },
+  // ===== Terminal Boot (com estilos) =====
+  const seg = (text, cls) => ({ text, cls });
 
-    { text: `└─$ echo "disciplina > ego"`, cls: "term-line", wait: 260 },
-    { text: `disciplina > ego`, cls: "term-line term-dim", wait: 200 },
+  const boot = [
+    // prompt + comando
+    { parts: [
+      seg("┌──(", "term-dim"),
+      seg("ciel", "term-user"),
+      seg("㉿", "term-dim"),
+      seg("kali", "term-host"),
+      seg(")-[~]", "term-dim"),
+    ], nl: true, wait: 160 },
+    { parts: [
+      seg("└─$ ", "term-prompt"),
+      seg("whoami", "term-cmd"),
+    ], nl: false, wait: 240 },
+    { parts: [ seg("ciel", "term-ok") ], nl: true, wait: 220 },
 
-    { text: `└─$ echo "silêncio. precisão. controle."`, cls: "term-line", wait: 260 },
-    { text: `silêncio. precisão. controle.`, cls: "term-line term-dim", wait: 240 },
+    { parts: [ seg("└─$ ", "term-prompt"), seg('echo "conhecimento é poder"', "term-cmd") ], nl: false, wait: 220 },
+    { parts: [ seg("conhecimento é poder", "term-dim") ], nl: true, wait: 200 },
 
-    { text: `└─$ init --modules panel projects tools`, cls: "term-line", wait: 340 },
-    { text: `[OK] carregando módulos...`, cls: "term-line term-ok", wait: 220 },
-    { text: `[OK] preparando interface...`, cls: "term-line term-ok", wait: 220 },
-    { text: `[OK] pronto.`, cls: "term-line term-ok", wait: 180 },
+    { parts: [ seg("└─$ ", "term-prompt"), seg('echo "disciplina > ego"', "term-cmd") ], nl: false, wait: 220 },
+    { parts: [ seg("disciplina > ego", "term-dim") ], nl: true, wait: 200 },
+
+    { parts: [ seg("└─$ ", "term-prompt"), seg('echo "silêncio. precisão. controle."', "term-cmd") ], nl: false, wait: 220 },
+    { parts: [ seg("silêncio. precisão. controle.", "term-dim") ], nl: true, wait: 210 },
+
+    { parts: [ seg("└─$ ", "term-prompt"), seg("init --modules panel projects tools", "term-cmd") ], nl: false, wait: 260 },
+    { parts: [ seg("[OK] ", "term-ok"), seg("carregando módulos...", "term-dim") ], nl: true, wait: 180 },
+    { parts: [ seg("[OK] ", "term-ok"), seg("preparando interface...", "term-dim") ], nl: true, wait: 180 },
+    { parts: [ seg("[OK] ", "term-ok"), seg("pronto.", "term-dim") ], nl: true, wait: 180 },
   ];
 
-  async function typeLine(text, cls = "term-line", speed = 12) {
-    if (!linesEl) return;
+  const escapeHtml = (s) =>
+    s.replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[c]));
 
-    const line = document.createElement("div");
-    line.className = cls;
-    linesEl.appendChild(line);
+  const renderParts = (parts) => {
+    return parts.map(p => `<span class="${p.cls}">${escapeHtml(p.text)}</span>`).join("");
+  };
 
-    // digitando com suporte a \n (multi-linha)
-    let out = "";
-    for (let i = 0; i < text.length; i++) {
-      out += text[i];
-      line.textContent = out;
-      await sleep(speed);
+  async function typeParts(parts, speed = 10) {
+    if (!currentEl) return;
+
+    // Digita char por char, mantendo classes por bloco
+    let html = "";
+    for (const p of parts) {
+      const text = p.text;
+      for (let i = 0; i < text.length; i++) {
+        const partial = escapeHtml(text.slice(0, i + 1));
+        const doneBefore = html;
+        const thisSpan = `<span class="${p.cls}">${partial}</span>`;
+        currentEl.innerHTML = doneBefore + thisSpan + `<span class="cursor" aria-hidden="true"></span>`;
+        await sleep(speed);
+      }
+      html += `<span class="${p.cls}">${escapeHtml(text)}</span>`;
     }
-    linesEl.scrollTop = linesEl.scrollHeight;
+    currentEl.innerHTML = html + `<span class="cursor" aria-hidden="true"></span>`;
   }
 
-  async function boot() {
-    if (!linesEl) return;
+  function commitCurrentLine() {
+    if (!linesEl || !currentEl) return;
+    const line = document.createElement("div");
+    line.className = "term-line";
+    // remove cursor da cópia
+    const clone = currentEl.cloneNode(true);
+    const cur = clone.querySelector(".cursor");
+    if (cur) cur.remove();
+    line.innerHTML = clone.innerHTML.trim();
+    linesEl.appendChild(line);
+    linesEl.scrollTop = linesEl.scrollHeight;
+    // limpa linha atual
+    currentEl.innerHTML = `<span class="cursor" aria-hidden="true"></span>`;
+  }
 
-    // reseta
+  async function runBoot() {
+    if (!linesEl || !currentEl) return;
+
+    // reset terminal
     linesEl.innerHTML = "";
+    currentEl.innerHTML = `<span class="cursor" aria-hidden="true"></span>`;
 
     // esconde botão até final
-    if (actions) {
-      actions.classList.add("hero-actions-hidden");
-      actions.classList.remove("hero-actions-visible");
+    if (actionsEl) {
+      actionsEl.classList.add("hero-actions-hidden");
+      actionsEl.classList.remove("hero-actions-visible");
     }
 
     await sleep(220);
 
-    for (const l of bootLines) {
-      await typeLine(l.text, l.cls, 10);
-      await sleep(l.wait);
+    for (const step of boot) {
+      await typeParts(step.parts, 10);
+      commitCurrentLine();
+      if (step.nl) {
+        // quebra visual (já commitou)
+      }
+      await sleep(step.wait);
     }
 
-    if (actions) {
-      actions.classList.remove("hero-actions-hidden");
-      actions.classList.add("hero-actions-visible");
+    // mostra botão
+    if (actionsEl) {
+      actionsEl.classList.remove("hero-actions-hidden");
+      actionsEl.classList.add("hero-actions-visible");
     }
   }
 
-  // ===== Troca de tela com wipe =====
+  // ===== Transição de tela =====
   const goHub = () => {
     if (!hero || !hub) return;
     if (hero.classList.contains("is-exiting")) return;
@@ -175,7 +234,7 @@
 
       body.classList.remove("is-wiping");
 
-      boot();
+      runBoot();
     }, 420);
   };
 
@@ -186,7 +245,7 @@
     if (back) goHero();
   });
 
-  // Init
+  // ===== Init =====
   initCursor();
-  window.addEventListener("load", boot);
+  window.addEventListener("load", runBoot);
 })();
