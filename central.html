@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ciel Sec — Central</title>
+
+  <!-- Fonts usadas no teu CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="cursor-hidden">
+  <a class="skip" href="#hub">Pular para a central</a>
+
+  <!-- Background layers (teu CSS já anima/parallax) -->
+  <div class="bg"></div>
+  <div class="grid"></div>
+  <div class="glow"></div>
+  <div class="scanlines"></div>
+
+  <!-- Cursor custom -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Wipe transition -->
+  <div class="transition-wipe" aria-hidden="true"></div>
+
+  <main class="shell">
+    <!-- =================== HERO / TERMINAL =================== -->
+    <section id="hero" class="screen is-active" aria-hidden="false">
+      <div class="hero-terminal">
+        <div class="terminal-window">
+          <div class="terminal-bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <div class="terminal-title">CIEL SEC :: boot sequence</div>
+          </div>
+
+          <div class="terminal-body">
+            <div class="terminal-watermark" aria-hidden="true">
+              <!-- SVG simples (pra “marca d’água”) -->
+              <svg viewBox="0 0 256 256" role="img" aria-label="Ciel Sec watermark">
+                <path d="M128 14l92 36v70c0 66-41 107-92 122C77 227 36 186 36 120V50l92-36Z"></path>
+                <path d="M92 132l26 26 54-70" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+
+            <!-- Boot lines (teu app.js digita aqui) -->
+            <div id="boot-lines" class="terminal-lines" aria-live="polite"></div>
+
+            <div class="terminal-footer">
+              <span class="term-cursor" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botão “Entrar” (teu app.js liga wipe + troca pra HUB) -->
+        <div id="hero-actions" class="hero-actions hero-actions-hidden">
+          <button id="enter-btn" class="btn" type="button">ENTRAR</button>
+        </div>
+
+        <div class="hero-foot">
+          <div>Central pessoal: <span>GeoIP</span> · <span>IP Tracker</span> · <span>DNS</span> · <span>WHOIS/RDAP</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== HUB / CENTRAL =================== -->
+    <section id="hub" class="screen" aria-hidden="true" tabindex="-1">
+      <header class="hub-header">
+        <div class="hub-head">
+          <div class="eyebrow">Central de Ferramentas</div>
+          <h2>Ferramentas de rede e OSINT leve — rápido, limpo e direto.</h2>
+        </div>
+        <div class="hub-line" aria-hidden="true"></div>
+        <button class="btn btn-ghost" type="button" data-action="back">VOLTAR</button>
+      </header>
+
+      <div class="hub-layout">
+        <!-- Menu -->
+        <nav class="hub-menu" aria-label="Módulos">
+          <button class="hub-btn is-active" type="button" data-panel="geoip" aria-selected="true">
+            <span class="icon">⌁</span> GEOIP
+          </button>
+          <button class="hub-btn" type="button" data-panel="iptrack" aria-selected="false">
+            <span class="icon">⟟</span> IP TRACKER
+          </button>
+          <button class="hub-btn" type="button" data-panel="dns" aria-selected="false">
+            <span class="icon">⎈</span> DNS
+          </button>
+          <button class="hub-btn" type="button" data-panel="whois" aria-selected="false">
+            <span class="icon">⟐</span> WHOIS / RDAP
+          </button>
+          <button class="hub-btn" type="button" data-panel="projects" aria-selected="false">
+            <span class="icon">▣</span> MEUS SCRIPTS
+          </button>
+        </nav>
+
+        <!-- Panels -->
+        <div class="hub-panels" role="region" aria-label="Painel">
+          <!-- GEOIP -->
+          <section class="hub-panel is-active" data-panel-id="geoip" hidden="false">
+            <h3>GeoIP</h3>
+            <p>Consulta geolocalização do IP (cidade/país/ASN/org). Ideal pra triagem rápida.</p>
+            <ul>
+              <li>Entrada: IPv4</li>
+              <li>Saída: localização + ASN/ORG + timezone</li>
+              <li>Dica: salva resultados no teu log / print pro relatório</li>
+            </ul>
+          </section>
+
+          <!-- IPTRACK -->
+          <section class="hub-panel" data-panel-id="iptrack" hidden>
+            <h3>IP Tracker</h3>
+            <p>“Tracker” no estilo OSINT leve: GeoIP + RDAP + reverse DNS (quando disponível).</p>
+            <ul>
+              <li>GeoIP (contexto)</li>
+              <li>RDAP (registro / handle / status)</li>
+              <li>Reverse DNS (PTR)</li>
+            </ul>
+          </section>
+
+          <!-- DNS -->
+          <section class="hub-panel" data-panel-id="dns" hidden>
+            <h3>DNS</h3>
+            <p>Resolve registros comuns (A/AAAA/MX/NS/TXT/CNAME/SOA/PTR).</p>
+            <ul>
+              <li>A/AAAA: endpoints</li>
+              <li>NS/SOA: infra</li>
+              <li>TXT: SPF/DMARC/validações</li>
+              <li>PTR: reverse</li>
+            </ul>
+          </section>
+
+          <!-- WHOIS -->
+          <section class="hub-panel" data-panel-id="whois" hidden>
+            <h3>WHOIS / RDAP</h3>
+            <p>WHOIS moderno via RDAP (mais compatível com browser e menos dor com CORS).</p>
+            <ul>
+              <li>Domínio: registrar/registrant (quando exposto), eventos, nameservers</li>
+              <li>IP: handle, status, entidades e datas</li>
+              <li>Bom pra relatório e validação de ownership</li>
+            </ul>
+          </section>
+
+          <!-- PROJECTS -->
+          <section class="hub-panel" data-panel-id="projects" hidden>
+            <div class="projects-header">
+              <h3>Meus scripts</h3>
+              <p>Cards com “drop” e código copiável. Você só troca os templates depois.</p>
+            </div>
+
+            <div class="projects-grid">
+              <!-- Project 1 -->
+              <article class="project-card" data-project="geoip">
+                <div class="project-head">
+                  <h4>GeoIP Quick</h4>
+                  <p>Consulta rápida de GeoIP com saída enxuta.</p>
+                </div>
+
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="geoip">ABRIR</button>
+                </div>
+
+                <div class="project-drop" id="drop-geoip" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <div class="drop-label">Uso</div>
+                        <div class="drop-value">Cole um IP e rode</div>
+                      </div>
+                      <div>
+                        <div class="drop-label">Saída</div>
+                        <div class="drop-value">cidade/país/ASN/ORG</div>
+                      </div>
+                    </div>
+
+                    <div class="drop-codebar">
+                      <div class="drop-label">Código</div>
+                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-geoip">COPIAR</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-geoip" data-template="tpl-geoip"></code></pre>
+                    <div class="drop-hint">Você pode substituir o template pelo teu script real depois.</div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Project 2 -->
+              <article class="project-card" data-project="dns">
+                <div class="project-head">
+                  <h4>DNS Resolve</h4>
+                  <p>Resolver DNS (A/AAAA/MX/NS/TXT/CNAME/SOA).</p>
+                </div>
+
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="dns">ABRIR</button>
+                </div>
+
+                <div class="project-drop" id="drop-dns" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <div class="drop-label">Uso</div>
+                        <div class="drop-value">dns example.com A</div>
+                      </div>
+                      <div>
+                        <div class="drop-label">Saída</div>
+                        <div class="drop-value">respostas + TTL</div>
+                      </div>
+                    </div>
+
+                    <div class="drop-codebar">
+                      <div class="drop-label">Código</div>
+                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-dns">COPIAR</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-dns" data-template="tpl-dns"></code></pre>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Project 3 -->
+              <article class="project-card" data-project="whois">
+                <div class="project-head">
+                  <h4>WHOIS via RDAP</h4>
+                  <p>Consulta RDAP (domínio/IP) com parsing básico pra relatório.</p>
+                </div>
+
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="whois">ABRIR</button>
+                </div>
+
+                <div class="project-drop" id="drop-whois" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <div class="drop-label">Uso</div>
+                        <div class="drop-value">whois example.com</div>
+                      </div>
+                      <div>
+                        <div class="drop-label">Fonte</div>
+                        <div class="drop-value">RDAP</div>
+                      </div>
+                    </div>
+
+                    <div class="drop-codebar">
+                      <div class="drop-label">Código</div>
+                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-whois">COPIAR</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-whois" data-template="tpl-whois"></code></pre>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Project 4 -->
+              <article class="project-card" data-project="iptrack">
+                <div class="project-head">
+                  <h4>IP Tracker (combo)</h4>
+                  <p>GeoIP + RDAP + PTR num fluxo só.</p>
+                </div>
+
+                <div class="project-actions">
+                  <button class="btn btn-ghost project-more" type="button" data-project-open="iptrack">ABRIR</button>
+                </div>
+
+                <div class="project-drop" id="drop-iptrack" aria-hidden="true">
+                  <div class="drop-inner">
+                    <div class="drop-top">
+                      <div>
+                        <div class="drop-label">Uso</div>
+                        <div class="drop-value">iptrack 1.1.1.1</div>
+                      </div>
+                      <div>
+                        <div class="drop-label">Saída</div>
+                        <div class="drop-value">contexto + registro</div>
+                      </div>
+                    </div>
+
+                    <div class="drop-codebar">
+                      <div class="drop-label">Código</div>
+                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-iptrack">COPIAR</button>
+                    </div>
+
+                    <pre class="code-block"><code id="code-iptrack" data-template="tpl-iptrack"></code></pre>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div>© <span id="year"></span> Ciel Sec · “método vence sorte”</div>
+      </footer>
+    </section>
+
+    <!-- Templates (teu JS “puxa” o conteúdo e coloca no <code>) -->
+    <template id="tpl-geoip">
+      <code>/* GeoIP Quick (exemplo)
+fetch("https://ipapi.co/8.8.8.8/json/")
+  .then(r =&gt; r.json())
+  .then(j =&gt; console.log(j));</code>
+    </template>
+
+    <template id="tpl-dns">
+      <code>/* DNS resolve (Google DNS over HTTPS)
+fetch("https://dns.google/resolve?name=example.com&amp;type=A")
+  .then(r =&gt; r.json())
+  .then(j =&gt; console.log(j));</code>
+    </template>
+
+    <template id="tpl-whois">
+      <code>/* RDAP (WHOIS moderno)
+fetch("https://rdap.org/domain/example.com", {
+  headers: { "accept": "application/rdap+json, application/json" }
+}).then(r =&gt; r.json())
+  .then(j =&gt; console.log(j));</code>
+    </template>
+
+    <template id="tpl-iptrack">
+      <code>/* IP Track (combo)
+Promise.all([
+  fetch("https://ipapi.co/1.1.1.1/json/").then(r =&gt; r.json()),
+  fetch("https://rdap.org/ip/1.1.1.1").then(r =&gt; r.json())
+]).then(([geo, rdap]) =&gt; {
+  console.log({ geo, rdap });
+});</code>
+    </template>
+  </main>
+
+  <script>
+    // ano no footer (sem depender do app.js)
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
