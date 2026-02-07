@@ -1,54 +1,52 @@
-// app.js — Ciel Sec
 (() => {
-  const enterBtn = document.getElementById("enterBtn");
   const year = document.getElementById("y");
-  const gate = document.getElementById("gate");
-
   if (year) year.textContent = String(new Date().getFullYear());
 
-  const enter = () => {
-    document.body.classList.add("entered");
-    enterBtn?.setAttribute("aria-expanded", "true");
-    // Move foco pro conteúdo depois da transição
-    window.setTimeout(() => {
-      const firstLink = document.querySelector(".topbar a, .chip, .card a");
-      firstLink?.focus?.();
-      // scroll suave pro topo do conteúdo (caso esteja em telas menores)
-      document.getElementById("desk")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 420);
+  const cursor = document.querySelector(".cursor");
+  const cursorBlur = document.querySelector(".cursor-blur");
+  const spotlight = document.querySelector(".spotlight");
+
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+  let currentX = targetX;
+  let currentY = targetY;
+  let rafId;
+
+  const move = () => {
+    currentX += (targetX - currentX) * 0.15;
+    currentY += (targetY - currentY) * 0.15;
+
+    if (cursor) cursor.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    if (cursorBlur) cursorBlur.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    if (spotlight) {
+      spotlight.style.setProperty("--mx", `${currentX}px`);
+      spotlight.style.setProperty("--my", `${currentY}px`);
+    }
+
+    rafId = requestAnimationFrame(move);
   };
 
-  enterBtn?.addEventListener("click", enter);
-
-  // Teclado: Enter/Espaço na tela inicial
-  gate?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      enter();
+  const start = (event) => {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    if (!document.body.classList.contains("has-pointer")) {
+      document.body.classList.add("has-pointer");
     }
+    if (!rafId) rafId = requestAnimationFrame(move);
+  };
+
+  window.addEventListener("mousemove", start);
+  window.addEventListener("touchmove", (event) => {
+    if (!event.touches.length) return;
+    targetX = event.touches[0].clientX;
+    targetY = event.touches[0].clientY;
   });
 
-  // Filtro de cards por tags
-  const chips = Array.from(document.querySelectorAll(".chip"));
-  const cards = Array.from(document.querySelectorAll(".card"));
-
-  const setActiveChip = (btn) => {
-    chips.forEach(c => c.classList.toggle("is-active", c === btn));
-  };
-
-  const filterCards = (key) => {
-    cards.forEach(card => {
-      const tags = (card.getAttribute("data-tags") || "").split(/\s+/).filter(Boolean);
-      const show = key === "all" ? true : tags.includes(key);
-      card.style.display = show ? "" : "none";
-    });
-  };
-
-  chips.forEach(chip => {
-    chip.addEventListener("click", () => {
-      const key = chip.getAttribute("data-filter") || "all";
-      setActiveChip(chip);
-      filterCards(key);
-    });
+  window.addEventListener("mouseleave", () => {
+    document.body.classList.remove("has-pointer");
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
   });
 })();
