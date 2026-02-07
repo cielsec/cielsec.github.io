@@ -30,71 +30,46 @@
   <main class="shell" id="app" data-app>
     <!-- HERO / TERMINAL -->
     <section class="screen hero-screen is-active" id="hero" data-screen="hero" aria-label="Tela inicial">
-      <div class="hero-core">
-        <header class="hero-top">
-          <div class="brand">
-            <div class="brand-logo" aria-hidden="true">
-              <svg viewBox="0 0 160 160" role="img" aria-label="Storm Central">
-                <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
-                <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
-                <line x1="80" y1="28" x2="80" y2="132" />
-              </svg>
-            </div>
-            <div class="brand-text">
-              <h1 class="hero-title">STORM CENTRAL</h1>
-              <p class="hero-sub">Seja bem-vindo.</p>
-            </div>
-          </div>
-        </header>
+  <div class="hero-core hero-terminal">
+    <div class="terminal-window" role="region" aria-label="Terminal de inicialização">
+      <div class="terminal-bar" aria-hidden="true">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="terminal-title">ciel@stormcentral: ~</span>
+      </div>
 
-        <div class="hero-line" aria-hidden="true"></div>
-
-        <!-- Terminal -->
-        <section class="terminal" aria-label="Terminal">
-          <div class="terminal-bar" aria-hidden="true">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="terminal-title">kali@stormcentral: ~</span>
-          </div>
-
-          <div class="terminal-body">
-            <p class="term-line">
-              <span class="prompt">┌──(</span><span class="user">ciel</span><span class="prompt">㉿</span><span class="host">kali</span><span class="prompt">)-[~]</span>
-            </p>
-
-            <p class="term-line type type-1">
-              <span class="prompt">└─$ </span><span class="cmd">cat welcome.txt</span><span class="caret"></span>
-            </p>
-
-            <div class="term-output reveal reveal-1">
-              <p>Storm Central online.</p>
-              <p>Interface: painel / projetos / ferramentas.</p>
-              <p>Status: pronto.</p>
-            </div>
-
-            <p class="term-line type type-2">
-              <span class="prompt">└─$ </span><span class="cmd">./enter --mode panel</span><span class="caret"></span>
-            </p>
-
-            <div class="term-output reveal reveal-2">
-              <p>Iniciando sessão...</p>
-              <p>Carregando módulos...</p>
-              <p class="ok">OK</p>
-            </div>
-          </div>
-        </section>
-
-        <div class="hero-actions">
-          <button class="btn btn-primary" id="enter-btn" type="button" data-action="enter" aria-controls="hub" aria-expanded="false">
-            ENTRAR
-          </button>
-          <button class="btn btn-ghost" type="button" data-action="peek" aria-controls="hub">
-            VER SEÇÕES
-          </button>
+      <div class="terminal-body">
+        <!-- watermark logo -->
+        <div class="terminal-watermark" aria-hidden="true">
+          <svg viewBox="0 0 160 160">
+            <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
+            <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
+            <line x1="80" y1="28" x2="80" y2="132" />
+          </svg>
         </div>
 
-        <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
+        <div class="terminal-lines" id="boot-lines" aria-live="polite"></div>
+
+        <div class="terminal-footer">
+          <span class="cursor" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-actions hero-actions-hidden" id="hero-actions">
+      <button class="btn btn-primary" id="enter-btn" type="button" data-action="enter" aria-controls="hub" aria-expanded="false">
+        ENTRAR
+      </button>
+    </div>
+
+    <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
+  </div>
+
+  <!-- overlay de transição -->
+  <div class="transition-wipe" aria-hidden="true"></div>
+</section>
+
 
         <noscript>
           <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
