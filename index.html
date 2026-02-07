@@ -8,7 +8,6 @@
   <meta name="description" content="Storm Central: hub para operações, pesquisa e engenharia." />
   <title>Storm Central</title>
 
-  <!-- Fonts (mantive as tuas) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -18,554 +17,250 @@
 </head>
 
 <body>
-  <!-- FX layers -->
   <div class="bg" aria-hidden="true"></div>
   <div class="grid" aria-hidden="true"></div>
   <div class="glow" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
   <a class="skip" href="#hub">Pular para o painel</a>
 
   <main class="shell" id="app" data-app>
-    <!-- HERO -->
-    <section
-      class="screen hero-screen is-active"
-      id="hero"
-      data-screen="hero"
-      aria-label="Tela inicial"
-    >
+    <!-- HERO / TERMINAL -->
+    <section class="screen hero-screen is-active" id="hero" data-screen="hero" aria-label="Tela inicial">
       <div class="hero-core">
-        <div class="hero-logo" aria-hidden="true">
-          <svg viewBox="0 0 160 160" role="img" aria-label="Storm Central">
-            <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
-            <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
-            <line x1="80" y1="28" x2="80" y2="132" />
-          </svg>
-        </div>
-
-        <h1 class="hero-title">STORM CENTRAL</h1>
-
-        <figure class="hero-quote" aria-label="Mensagem">
-          <blockquote>“Precisão silenciosa, impacto absoluto.”</blockquote>
-          <figcaption>— Diretriz Operacional</figcaption>
-        </figure>
+        <header class="hero-top">
+          <div class="brand">
+            <div class="brand-logo" aria-hidden="true">
+              <svg viewBox="0 0 160 160" role="img" aria-label="Storm Central">
+                <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
+                <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
+                <line x1="80" y1="28" x2="80" y2="132" />
+              </svg>
+            </div>
+            <div class="brand-text">
+              <h1 class="hero-title">STORM CENTRAL</h1>
+              <p class="hero-sub">Seja bem-vindo.</p>
+            </div>
+          </div>
+        </header>
 
         <div class="hero-line" aria-hidden="true"></div>
 
-        <p class="hero-welcome">Bem-vindo ao StormCentral.</p>
+        <!-- Terminal -->
+        <section class="terminal" aria-label="Terminal">
+          <div class="terminal-bar" aria-hidden="true">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">kali@stormcentral: ~</span>
+          </div>
+
+          <div class="terminal-body">
+            <p class="term-line">
+              <span class="prompt">┌──(</span><span class="user">ciel</span><span class="prompt">㉿</span><span class="host">kali</span><span class="prompt">)-[~]</span>
+            </p>
+
+            <p class="term-line type type-1">
+              <span class="prompt">└─$ </span><span class="cmd">cat welcome.txt</span><span class="caret"></span>
+            </p>
+
+            <div class="term-output reveal reveal-1">
+              <p>Storm Central online.</p>
+              <p>Interface: painel / projetos / ferramentas.</p>
+              <p>Status: pronto.</p>
+            </div>
+
+            <p class="term-line type type-2">
+              <span class="prompt">└─$ </span><span class="cmd">./enter --mode panel</span><span class="caret"></span>
+            </p>
+
+            <div class="term-output reveal reveal-2">
+              <p>Iniciando sessão...</p>
+              <p>Carregando módulos...</p>
+              <p class="ok">OK</p>
+            </div>
+          </div>
+        </section>
 
         <div class="hero-actions">
-          <button
-            class="btn btn-primary"
-            id="enter-btn"
-            type="button"
-            data-action="enter"
-            aria-controls="hub"
-            aria-expanded="false"
-          >
+          <button class="btn btn-primary" id="enter-btn" type="button" data-action="enter" aria-controls="hub" aria-expanded="false">
             ENTRAR
           </button>
-
-          <button
-            class="btn btn-ghost"
-            type="button"
-            data-action="peek"
-            aria-controls="hub"
-          >
-            Ver seções
+          <button class="btn btn-ghost" type="button" data-action="peek" aria-controls="hub">
+            VER SEÇÕES
           </button>
         </div>
 
+        <p class="hero-foot">Autor: <span>Ciel Sec</span></p>
+
         <noscript>
-          <p class="noscript">
-            JavaScript desativado: o painel ainda existe, role a página para acessar.
-          </p>
+          <p class="noscript">JavaScript desativado: role a página para acessar o painel.</p>
         </noscript>
       </div>
     </section>
 
     <!-- HUB -->
-    <section
-      class="screen hub-screen"
-      id="hub"
-      data-screen="hub"
-      aria-label="Painel"
-      aria-hidden="true"
-      tabindex="-1"
-    >
+    <section class="screen hub-screen" id="hub" data-screen="hub" aria-label="Painel" aria-hidden="true" tabindex="-1">
       <header class="hub-header">
         <div class="hub-head">
           <p class="eyebrow">Painel Central</p>
           <h2>Operações, pesquisa e inteligência.</h2>
         </div>
+
         <div class="hub-line" aria-hidden="true"></div>
 
         <div class="hub-actions">
-          <button class="btn btn-ghost" type="button" data-action="back" aria-controls="hero">
-            Voltar
-          </button>
+          <button class="btn btn-ghost" type="button" data-action="back" aria-controls="hero">Voltar</button>
         </div>
       </header>
 
       <div class="hub-layout">
-        <!-- MENU -->
-        <nav class="hub-menu" aria-label="Seções principais" role="tablist">
-          <button
-            class="hub-btn is-active"
-            type="button"
-            role="tab"
-            aria-selected="true"
-            aria-controls="panel-grupo"
-            id="tab-grupo"
-            data-panel="grupo"
-          >
-            <span class="icon" aria-hidden="true">◎</span>
-            Grupo
+        <nav class="hub-menu" aria-label="Seções" role="tablist">
+          <button class="hub-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-grupo" id="tab-grupo" data-panel="grupo">
+            <span class="icon" aria-hidden="true">◎</span> Grupo
           </button>
-
-          <button
-            class="hub-btn"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="panel-ferramentas"
-            id="tab-ferramentas"
-            data-panel="ferramentas"
-          >
-            <span class="icon" aria-hidden="true">⌁</span>
-            Ferramentas
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-ferramentas" id="tab-ferramentas" data-panel="ferramentas">
+            <span class="icon" aria-hidden="true">⌁</span> Ferramentas
           </button>
-
-          <button
-            class="hub-btn"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="panel-artigos"
-            id="tab-artigos"
-            data-panel="artigos"
-          >
-            <span class="icon" aria-hidden="true">⌬</span>
-            Artigos
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-artigos" id="tab-artigos" data-panel="artigos">
+            <span class="icon" aria-hidden="true">⌬</span> Artigos
           </button>
-
-          <button
-            class="hub-btn"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="panel-suporte"
-            id="tab-suporte"
-            data-panel="suporte"
-          >
-            <span class="icon" aria-hidden="true">◇</span>
-            Suporte
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-suporte" id="tab-suporte" data-panel="suporte">
+            <span class="icon" aria-hidden="true">◇</span> Suporte
           </button>
-
-          <button
-            class="hub-btn"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="panel-projetos"
-            id="tab-projetos"
-            data-panel="projetos"
-          >
-            <span class="icon" aria-hidden="true">⬡</span>
-            Projetos
+          <button class="hub-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-projetos" id="tab-projetos" data-panel="projetos">
+            <span class="icon" aria-hidden="true">⬡</span> Projetos
           </button>
         </nav>
 
-        <!-- PANELS -->
         <div class="hub-panels" role="region" aria-label="Conteúdo da seção">
-          <article
-            class="hub-panel is-active"
-            role="tabpanel"
-            tabindex="0"
-            id="panel-grupo"
-            aria-labelledby="tab-grupo"
-            data-panel-id="grupo"
-          >
+          <article class="hub-panel is-active" role="tabpanel" tabindex="0" id="panel-grupo" aria-labelledby="tab-grupo" data-panel-id="grupo">
             <h3>Grupo</h3>
-            <p>Núcleo multidisciplinar focado em engenharia reversa, inteligência e resposta a incidentes.</p>
+            <p>Núcleo voltado a pesquisa, laboratório e validação.</p>
             <ul>
-              <li>Rotinas de laboratório e validação.</li>
-              <li>Documentação técnica para times internos.</li>
-              <li>Monitoramento contínuo de superfícies críticas.</li>
+              <li>Rotina de testes e evidências.</li>
+              <li>Documentação técnica interna.</li>
+              <li>Monitoramento de superfícies críticas.</li>
             </ul>
           </article>
 
-          <article
-            class="hub-panel"
-            role="tabpanel"
-            tabindex="0"
-            id="panel-ferramentas"
-            aria-labelledby="tab-ferramentas"
-            data-panel-id="ferramentas"
-            hidden
-          >
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-ferramentas" aria-labelledby="tab-ferramentas" data-panel-id="ferramentas" hidden>
             <h3>Ferramentas</h3>
-            <p>Toolkit dedicado a coleta, triagem e enriquecimento de dados com automação auditável.</p>
+            <p>Conjunto de scripts utilitários e automação.</p>
             <ul>
-              <li>Recon e enumeração de ativos.</li>
-              <li>Pipeline de análise com prioridade.</li>
-              <li>Playbooks versionados.</li>
+              <li>Enumeração e coleta.</li>
+              <li>Triagem e priorização.</li>
+              <li>Playbooks e logs.</li>
             </ul>
           </article>
 
-          <article
-            class="hub-panel"
-            role="tabpanel"
-            tabindex="0"
-            id="panel-artigos"
-            aria-labelledby="tab-artigos"
-            data-panel-id="artigos"
-            hidden
-          >
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-artigos" aria-labelledby="tab-artigos" data-panel-id="artigos" hidden>
             <h3>Artigos</h3>
-            <p>Pesquisa aplicada: estudos de caso, lições aprendidas e revisão de operações.</p>
+            <p>Notas técnicas, estudos e guias.</p>
             <ul>
-              <li>Briefings e tendências.</li>
-              <li>Hardening e arquitetura.</li>
-              <li>Guias de análise rápida.</li>
+              <li>Casos e lições.</li>
+              <li>Arquitetura e hardening.</li>
+              <li>Análise rápida.</li>
             </ul>
           </article>
 
-          <article
-            class="hub-panel"
-            role="tabpanel"
-            tabindex="0"
-            id="panel-suporte"
-            aria-labelledby="tab-suporte"
-            data-panel-id="suporte"
-            hidden
-          >
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-suporte" aria-labelledby="tab-suporte" data-panel-id="suporte" hidden>
             <h3>Suporte</h3>
-            <p>Canal de coordenação, triagem e implementação de contramedidas.</p>
+            <p>Canal direto para coordenação e triagem.</p>
             <ul>
-              <li>Onboarding para equipes.</li>
+              <li>Onboarding.</li>
               <li>Resposta assistida.</li>
-              <li>Treinamento e consultoria.</li>
+              <li>Treinamento.</li>
             </ul>
           </article>
 
-          <article
-            class="hub-panel"
-            role="tabpanel"
-            tabindex="0"
-            id="panel-projetos"
-            aria-labelledby="tab-projetos"
-            data-panel-id="projetos"
-            hidden
-          >
+          <article class="hub-panel" role="tabpanel" tabindex="0" id="panel-projetos" aria-labelledby="tab-projetos" data-panel-id="projetos" hidden>
             <h3>Projetos</h3>
-            <p>Portfólio de iniciativas e laboratórios internos.</p>
+            <p>Lista de scripts e projetos ativos.</p>
             <ul>
-              <li>Coleta modular.</li>
-              <li>Dashboards e visibilidade.</li>
-              <li>Testes controlados.</li>
+              <li>Ferramentas internas.</li>
+              <li>Utilitários.</li>
+              <li>Laboratório.</li>
             </ul>
           </article>
         </div>
       </div>
 
-      <!-- PROJETOS -->
       <section class="projects" id="projects" aria-label="Projetos">
         <header class="projects-header">
-          <p class="eyebrow">Open-source | Forense | Pentest | Code</p>
-          <h2>Projetos ativos</h2>
+          <p class="eyebrow">Projetos</p>
+          <h2>Scripts</h2>
         </header>
 
         <div class="projects-grid">
-          <!-- CARD 1 -->
-          <article class="project-card" data-project="havijpy">
+          <article class="project-card">
             <header class="project-head">
               <h3>havijpy_sqlmap_gui.py</h3>
-              <p>Interface que executa SQLmap e exibe o output em tempo real.</p>
+              <p>Interface que executa SQLmap e mostra saída em tempo real.</p>
             </header>
 
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar projeto</summary>
-
+              <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
-                <div class="project-frame">
-                  <img
-                    src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
-                    alt="Imagem ilustrativa do projeto"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                <p>Controle de execução, logs instantâneos e suporte a parâmetros personalizados.</p>
-
-                <div class="code-tools">
-                  <button class="btn btn-ghost" type="button" data-copy="#code-havijpy">
-                    Copiar código
-                  </button>
-                </div>
-
-                <pre class="code-block" id="code-havijpy"><code>#!/usr/bin/env python3
-import sys, subprocess, threading
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QTextEdit, QLabel
-
-class App(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("HavijPy - SQLmap GUI")
-        self.proc = None
-
-        self.url = QLineEdit()
-        self.url.setPlaceholderText("URL alvo (ex: https://site.com/item.php?id=1)")
-        self.args = QLineEdit()
-        self.args.setPlaceholderText("Args extras (ex: --dbs --batch)")
-        self.log = QTextEdit(); self.log.setReadOnly(True)
-
-        run = QPushButton("Rodar"); stop = QPushButton("Parar")
-        run.clicked.connect(self.run_sqlmap); stop.clicked.connect(self.stop_sqlmap)
-
-        top = QHBoxLayout(); top.addWidget(QLabel("URL:")); top.addWidget(self.url)
-        mid = QHBoxLayout(); mid.addWidget(QLabel("Args:")); mid.addWidget(self.args)
-
-        btns = QHBoxLayout(); btns.addWidget(run); btns.addWidget(stop)
-
-        layout = QVBoxLayout(self)
-        layout.addLayout(top); layout.addLayout(mid); layout.addLayout(btns); layout.addWidget(self.log)
-
-    def run_sqlmap(self):
-        if self.proc: return
-        u = self.url.text().strip()
-        extra = self.args.text().strip().split() if self.args.text().strip() else []
-        if not u:
-            self.log.append("[-] Informe uma URL.")
-            return
-        cmd = ["sqlmap", "-u", u, "--batch"] + extra
-        self.log.append("[*] " + " ".join(cmd))
-        self.proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
-
-        def reader():
-            for line in self.proc.stdout:
-                self.log.append(line.rstrip())
-            code = self.proc.wait()
-            self.log.append(f"[+] Finalizado (exit={code})")
-            self.proc = None
-
-        threading.Thread(target=reader, daemon=True).start()
-
-    def stop_sqlmap(self):
-        if self.proc:
-            self.proc.terminate()
-            self.log.append("[*] Processo finalizado.")
-            self.proc = None
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    w = App(); w.resize(900, 520); w.show()
-    sys.exit(app.exec())</code></pre>
-
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
             </details>
           </article>
 
-          <!-- CARD 2 -->
-          <article class="project-card" data-project="pentest-central">
+          <article class="project-card">
             <header class="project-head">
               <h3>pentest_central.py</h3>
-              <p>Centraliza execuções de ferramentas e consolida logs por operação.</p>
+              <p>Centraliza execuções e organiza logs.</p>
             </header>
 
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar projeto</summary>
-
+              <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
-                <div class="project-frame">
-                  <img
-                    src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=900&q=80"
-                    alt="Imagem ilustrativa do projeto"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                <p>Fluxo de Nmap, Ffuf e Nuclei com logs por data.</p>
-
-                <div class="code-tools">
-                  <button class="btn btn-ghost" type="button" data-copy="#code-central">
-                    Copiar código
-                  </button>
-                </div>
-
-                <pre class="code-block" id="code-central"><code>#!/usr/bin/env python3
-import subprocess, datetime, pathlib
-
-BASE = pathlib.Path("logs")
-BASE.mkdir(exist_ok=True)
-
-def run(name, cmd):
-    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    out = BASE / f"{name}_{ts}.log"
-    print(f"[+] {name} -> {out}")
-    with out.open("w", encoding="utf-8") as f:
-        p = subprocess.Popen(cmd, stdout=f, stderr=subprocess.STDOUT, text=True)
-        return p.wait()
-
-def main():
-    print("1) Nmap\\n2) Ffuf\\n3) Nuclei")
-    opt = input("> ").strip()
-    if opt == "1":
-        target = input("Alvo: ").strip()
-        return run("nmap", ["nmap", "-sV", "-sC", "-Pn", target])
-    if opt == "2":
-        url = input("URL (com FUZZ): ").strip()
-        word = input("Wordlist: ").strip()
-        return run("ffuf", ["ffuf", "-u", url, "-w", word, "-mc", "all", "-fc", "404"])
-    if opt == "3":
-        target = input("Alvo: ").strip()
-        return run("nuclei", ["nuclei", "-u", target])
-    print("[-] Opção inválida.")
-    return 1
-
-if __name__ == "__main__":
-    raise SystemExit(main())</code></pre>
-
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
             </details>
           </article>
 
-          <!-- CARD 3 -->
-          <article class="project-card" data-project="recon">
+          <article class="project-card">
             <header class="project-head">
               <h3>recon_automation.sh</h3>
-              <p>Automação de enumeração básica e organização de resultados.</p>
+              <p>Automação de enumeração e organização de resultados.</p>
             </header>
 
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar projeto</summary>
-
+              <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
-                <div class="project-frame">
-                  <img
-                    src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&w=900&q=80"
-                    alt="Imagem ilustrativa do projeto"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                <p>Subdomínios, probe HTTP e varredura.</p>
-
-                <div class="code-tools">
-                  <button class="btn btn-ghost" type="button" data-copy="#code-recon">
-                    Copiar código
-                  </button>
-                </div>
-
-                <pre class="code-block" id="code-recon"><code>#!/usr/bin/env bash
-set -euo pipefail
-
-TARGET="${1:-}"
-OUT="recon_out"
-mkdir -p "$OUT"
-
-if [[ -z "$TARGET" ]]; then
-  echo "Uso: $0 dominio.com"
-  exit 1
-fi
-
-echo "[*] Subdomains"
-subfinder -d "$TARGET" -silent | tee "$OUT/subs.txt" >/dev/null
-
-echo "[*] HTTP probe"
-httpx -l "$OUT/subs.txt" -silent -o "$OUT/live.txt"
-
-echo "[*] Nuclei"
-nuclei -l "$OUT/live.txt" -silent -o "$OUT/nuclei.txt"
-
-echo "[+] Pronto: $OUT/"</code></pre>
-
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
             </details>
           </article>
 
-          <!-- CARD 4 -->
-          <article class="project-card" data-project="privesc">
+          <article class="project-card">
             <header class="project-head">
               <h3>privesc_pack.sh</h3>
-              <p>Coleta informações do host e executa helpers de enum.</p>
+              <p>Coleta informações do host e organiza saída.</p>
             </header>
 
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar projeto</summary>
-
+              <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
-                <div class="project-frame">
-                  <img
-                    src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=900&q=80"
-                    alt="Imagem ilustrativa do projeto"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                <p>Inventário rápido de sistema, processos e permissões.</p>
-
-                <div class="code-tools">
-                  <button class="btn btn-ghost" type="button" data-copy="#code-privesc">
-                    Copiar código
-                  </button>
-                </div>
-
-                <pre class="code-block" id="code-privesc"><code>#!/usr/bin/env bash
-set -euo pipefail
-
-OUT="privesc_out_$(date +%Y%m%d_%H%M%S)"
-mkdir -p "$OUT"
-
-echo "[*] Sistema" | tee "$OUT/info.txt"
-uname -a | tee -a "$OUT/info.txt"
-id | tee -a "$OUT/info.txt"
-whoami | tee -a "$OUT/info.txt"
-
-echo "[*] Processos" > "$OUT/ps.txt"
-ps auxww > "$OUT/ps.txt"
-
-echo "[*] SUID/SGID (pode demorar)"
-find / -perm -4000 -type f 2>/dev/null > "$OUT/suid.txt"
-find / -perm -2000 -type f 2>/dev/null > "$OUT/sgid.txt"
-
-echo "[+] Saída em: $OUT/"</code></pre>
-
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
             </details>
           </article>
 
-          <!-- CARD 5 -->
-          <article class="project-card" data-project="webdav">
+          <article class="project-card">
             <header class="project-head">
               <h3>ciel.pl</h3>
-              <p>Detecção e enumeração de WebDAV via OPTIONS.</p>
+              <p>Detecção e enumeração de WebDAV.</p>
             </header>
 
             <details class="project-details">
-              <summary class="btn btn-ghost">Mostrar projeto</summary>
-
+              <summary class="btn btn-ghost">Mostrar</summary>
               <div class="project-body">
-                <div class="project-frame">
-                  <img
-                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=80"
-                    alt="Imagem ilustrativa do projeto"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                <p>Parser de URL/headers com destaque de métodos suportados e sinais de WebDAV.</p>
-
                 <p class="project-meta">Autor: Ciel Sec</p>
               </div>
             </details>
@@ -574,7 +269,7 @@ echo "[+] Saída em: $OUT/"</code></pre>
       </section>
 
       <footer class="site-footer" role="contentinfo">
-        <p>Programado por StormCentral / Host by CielSec</p>
+        <p>Programado por Ciel Sec</p>
       </footer>
     </section>
   </main>
