@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b0612" />
-  <title>Ciel Sec</title>
+  <meta name="theme-color" content="#09050f" />
+  <meta name="description" content="Blog da Ciel Sec com notas de laboratório, guias e lançamentos." />
+  <title>Ciel Sec | Blog</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Fonte opcional (se você preferir 100% offline, apague as 2 linhas acima e a linha abaixo) -->
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
   <script defer src="app.js"></script>
@@ -17,218 +17,194 @@
 
 <body>
   <div class="bg" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="spotlight" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-blur" aria-hidden="true"></div>
 
-  <!-- VIEW 1: Gate / Landing -->
-  <section id="gate" class="view view-gate" aria-label="Tela inicial">
-    <div class="wrap">
-      <div class="mark" aria-hidden="true">
-        <img src="logo.svg" alt="" class="logo" />
+  <header class="site-header">
+    <div class="brand">
+      <img src="logo.svg" alt="Logo Ciel Sec" class="logo" />
+      <div>
+        <div class="brand-title">CIEL SEC</div>
+        <div class="brand-sub">Diário de laboratório & segurança</div>
       </div>
-
-      <h1 class="title">
-        <span class="title-strong">CIEL</span>
-        <span class="title-soft">SEC</span>
-      </h1>
-
-      <p class="subtitle">
-        Uma vitrine neon de scripts, automações e projetos do meu laboratório.
-      </p>
-
-      <p class="signature">— Team Ciel</p>
-
-      <div class="rules">
-        <div class="rule"></div>
-        <div class="rule rule-thin"></div>
-      </div>
-
-      <div class="welcome">Seja bem-vindo!</div>
-
-      <div class="rules rules-bottom">
-        <div class="rule rule-thin"></div>
-        <div class="rule"></div>
-      </div>
-
-      <button id="enterBtn" class="btn btn-primary" type="button" aria-controls="desk" aria-expanded="false">
-        ENTRAR
-      </button>
-
-      <p class="hint">Dica: pressione <kbd>Enter</kbd> ou <kbd>Espaço</kbd>.</p>
     </div>
-  </section>
 
-  <!-- VIEW 2: Portfolio / Conteúdo -->
-  <section id="desk" class="view view-desk" aria-label="Conteúdo do site">
-    <header class="topbar">
-      <div class="topbar-left">
-        <img src="logo.svg" alt="Logo Ciel Sec" class="logo logo-sm" />
-        <div class="brand">
-          <div class="brand-title">Ciel Sec</div>
-          <div class="brand-sub">Scripts & projetos</div>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#destaque">Destaque</a>
+      <a href="#posts">Posts</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <button class="btn btn-ghost" type="button">Assinar</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">Blog Ciel Sec • 2024</p>
+        <h1>Inteligência ofensiva, refinada. Insights, playbooks e bastidores.</h1>
+        <p class="hero-text">
+          Um espaço para compartilhar análises, ferramentas e estudos de caso com uma estética
+          minimalista e precisa — inspirado na elegância futurista do Archon.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" type="button">Explorar artigos</button>
+          <button class="btn btn-ghost" type="button">Falar comigo</button>
+        </div>
+        <div class="hero-meta">
+          <span>Atualizado semanalmente</span>
+          <span>•</span>
+          <span>Guides práticos</span>
+          <span>•</span>
+          <span>Design neon discreto</span>
         </div>
       </div>
-
-      <nav class="topbar-nav" aria-label="Navegação">
-        <a href="#scripts" class="navlink">Scripts</a>
-        <a href="#projetos" class="navlink">Projetos</a>
-        <a href="#contato" class="navlink">Contato</a>
-      </nav>
-    </header>
-
-    <main class="content">
-      <section class="hero-mini">
-        <h2>Minha bancada</h2>
-        <p>
-          Aqui você lista seus scripts e ferramentas. Tudo editável: títulos, descrições e links.
-          (Procure por <code>EDITA_AQUI</code> no HTML.)
-        </p>
-      </section>
-
-      <section id="scripts" class="grid-section">
-        <div class="section-head">
-          <h3>Scripts</h3>
-          <div class="chips">
-            <button class="chip is-active" data-filter="all" type="button">Todos</button>
-            <button class="chip" data-filter="python" type="button">Python</button>
-            <button class="chip" data-filter="bash" type="button">Bash</button>
-            <button class="chip" data-filter="web" type="button">Web</button>
+      <aside class="hero-panel">
+        <div class="panel-card">
+          <p class="panel-title">Radar</p>
+          <h2>Operações silenciosas em 3 camadas</h2>
+          <p>Estrutura modular para recon, exploração e extração com métricas claras.</p>
+          <button class="btn btn-primary" type="button">Ler agora</button>
+        </div>
+        <div class="panel-mini">
+          <div>
+            <p class="panel-label">Tempo médio de leitura</p>
+            <strong>8 min</strong>
+          </div>
+          <div>
+            <p class="panel-label">Nível</p>
+            <strong>Intermediário</strong>
           </div>
         </div>
+      </aside>
+    </section>
 
-        <div class="cards" id="cards">
-          <!-- EDITA_AQUI: copie/duplique cards e ajuste -->
-          <article class="card" data-tags="python web">
-            <div class="card-top">
-              <div class="badge">PY</div>
-              <h4 class="card-title">Scanner de endpoints</h4>
-            </div>
-            <p class="card-desc">
-              Enumeração de rotas + coleta de headers e fingerprint. Saída em JSON/HTML.
-            </p>
-            <div class="tagrow">
-              <span class="tag">python</span><span class="tag">enum</span><span class="tag">report</span>
-            </div>
-            <div class="card-actions">
-              <a class="btn btn-ghost" href="#" onclick="return false;">README</a>
-              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
-            </div>
-          </article>
-
-          <article class="card" data-tags="bash">
-            <div class="card-top">
-              <div class="badge">SH</div>
-              <h4 class="card-title">Recon rápido</h4>
-            </div>
-            <p class="card-desc">
-              Pipeline agressivo com subdomínios → portas → web scan → output organizado.
-            </p>
-            <div class="tagrow">
-              <span class="tag">bash</span><span class="tag">recon</span><span class="tag">automation</span>
-            </div>
-            <div class="card-actions">
-              <a class="btn btn-ghost" href="#" onclick="return false;">README</a>
-              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
-            </div>
-          </article>
-
-          <article class="card" data-tags="python">
-            <div class="card-top">
-              <div class="badge">PY</div>
-              <h4 class="card-title">Wordlist builder</h4>
-            </div>
-            <p class="card-desc">
-              Gera wordlists “inteligentes” com mutações, regras e scoring simples.
-            </p>
-            <div class="tagrow">
-              <span class="tag">python</span><span class="tag">wordlist</span><span class="tag">rules</span>
-            </div>
-            <div class="card-actions">
-              <a class="btn btn-ghost" href="#" onclick="return false;">README</a>
-              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
-            </div>
-          </article>
-
-          <article class="card" data-tags="web">
-            <div class="card-top">
-              <div class="badge">WEB</div>
-              <h4 class="card-title">Dashboard de logs</h4>
-            </div>
-            <p class="card-desc">
-              Interface neon minimal pra visualizar resultados, filtros e exportação.
-            </p>
-            <div class="tagrow">
-              <span class="tag">web</span><span class="tag">ui</span><span class="tag">logs</span>
-            </div>
-            <div class="card-actions">
-              <a class="btn btn-ghost" href="#" onclick="return false;">Demo</a>
-              <a class="btn btn-primary" href="#" onclick="return false;">Repo</a>
-            </div>
-          </article>
+    <section id="destaque" class="featured">
+      <div class="featured-card">
+        <div class="featured-text">
+          <p class="eyebrow">Destaque</p>
+          <h2>Guia de hardening em pipelines CI/CD</h2>
+          <p>
+            Estratégias de observabilidade, rotação de segredos e política zero-trust para reduzir
+            superfícies de ataque antes do deploy.
+          </p>
+          <div class="featured-actions">
+            <button class="btn btn-primary" type="button">Ler artigo</button>
+            <button class="btn btn-ghost" type="button">Salvar</button>
+          </div>
         </div>
-      </section>
-
-      <section id="projetos" class="grid-section">
-        <div class="section-head">
-          <h3>Projetos</h3>
-          <p class="section-note">Coisas maiores/mais completas.</p>
+        <div class="featured-meta">
+          <div>
+            <p class="panel-label">Categoria</p>
+            <strong>DevSecOps</strong>
+          </div>
+          <div>
+            <p class="panel-label">Tempo</p>
+            <strong>12 min</strong>
+          </div>
+          <div>
+            <p class="panel-label">Autor</p>
+            <strong>Team Ciel</strong>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="cards two">
-          <article class="card wide">
-            <div class="card-top">
-              <div class="badge">LAB</div>
-              <h4 class="card-title">Ciel Sec Toolkit</h4>
-            </div>
-            <p class="card-desc">
-              Coleção modular: scanners, parsers, automação e relatórios — tudo plugável.
-            </p>
-            <div class="tagrow">
-              <span class="tag">toolkit</span><span class="tag">modules</span><span class="tag">reports</span>
-            </div>
-            <div class="card-actions">
-              <a class="btn btn-ghost" href="#" onclick="return false;">Docs</a>
-              <a class="btn btn-primary" href="#" onclick="return false;">Repo</a>
-            </div>
-          </article>
-
-          <article class="card wide">
-            <div class="card-top">
-              <div class="badge">UI</div>
-              <h4 class="card-title">Painel neon</h4>
-            </div>
-            <p class="card-desc">
-              Base de frontend com transições, cards e filtros. Perfeito pra plugar suas ferramentas.
-            </p>
-            <div class="tagrow">
-              <span class="tag">frontend</span><span class="tag">neon</span><span class="tag">animation</span>
-            </div>
-            <div class="card-actions">
-              <a class="btn btn-ghost" href="#" onclick="return false;">Template</a>
-              <a class="btn btn-primary" href="#" onclick="return false;">Download</a>
-            </div>
-          </article>
+    <section id="posts" class="posts">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Últimos posts</p>
+          <h2>Notas do laboratório</h2>
         </div>
-      </section>
-
-      <section id="contato" class="grid-section">
-        <div class="section-head">
-          <h3>Contato</h3>
-          <p class="section-note">Coloque seus links aqui.</p>
+        <div class="filters">
+          <button class="chip is-active" type="button">Todos</button>
+          <button class="chip" type="button">Threat Intel</button>
+          <button class="chip" type="button">Automação</button>
+          <button class="chip" type="button">Ferramentas</button>
         </div>
+      </div>
 
-        <div class="contact">
-          <!-- EDITA_AQUI -->
-          <a class="contact-link" href="#" onclick="return false;">GitHub</a>
-          <a class="contact-link" href="#" onclick="return false;">Discord</a>
-          <a class="contact-link" href="#" onclick="return false;">E-mail</a>
+      <div class="post-grid">
+        <article class="post-card">
+          <p class="post-tag">Threat Intel</p>
+          <h3>Mapeando superfícies expostas com precisão cirúrgica</h3>
+          <p class="post-excerpt">Checklist visual para catalogar APIs, subdomínios e buckets públicos.</p>
+          <div class="post-meta">
+            <span>5 min</span>
+            <span>•</span>
+            <span>15 Apr</span>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <p class="post-tag">Automação</p>
+          <h3>Playbook de recon contínuo com alertas em tempo real</h3>
+          <p class="post-excerpt">Integração entre scanners, webhooks e painéis de resposta rápida.</p>
+          <div class="post-meta">
+            <span>7 min</span>
+            <span>•</span>
+            <span>10 Apr</span>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <p class="post-tag">Ferramentas</p>
+          <h3>Toolkit modular para equipes enxutas</h3>
+          <p class="post-excerpt">Organize scripts em camadas reutilizáveis e compartilhe com segurança.</p>
+          <div class="post-meta">
+            <span>9 min</span>
+            <span>•</span>
+            <span>02 Apr</span>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <p class="post-tag">Threat Intel</p>
+          <h3>Observabilidade em tempos de ataques silenciosos</h3>
+          <p class="post-excerpt">Como ler sinais fracos em logs e construir narrativas claras.</p>
+          <div class="post-meta">
+            <span>6 min</span>
+            <span>•</span>
+            <span>28 Mar</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="newsletter" class="newsletter">
+      <div class="newsletter-card">
+        <div>
+          <p class="eyebrow">Newsletter</p>
+          <h2>Uma curadoria mensal com o que realmente importa.</h2>
+          <p>Insights de campo, templates e análises condensadas direto no seu e-mail.</p>
         </div>
-      </section>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Seu melhor e-mail" aria-label="Seu e-mail" />
+          <button class="btn btn-primary" type="submit">Quero receber</button>
+        </form>
+      </div>
+    </section>
 
-      <footer class="footer">
-        <span>© <span id="y"></span> Ciel Sec</span>
-        <span class="sep">•</span>
-        <span class="muted">Neon, mas com personalidade própria.</span>
-      </footer>
-    </main>
-  </section>
+    <section id="contato" class="contact">
+      <div>
+        <p class="eyebrow">Contato</p>
+        <h2>Vamos colaborar.</h2>
+      </div>
+      <div class="contact-links">
+        <a href="#" onclick="return false;">GitHub</a>
+        <a href="#" onclick="return false;">LinkedIn</a>
+        <a href="#" onclick="return false;">E-mail</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="y"></span> Ciel Sec</span>
+    <span>•</span>
+    <span>Design inspirado no minimalismo futurista.</span>
+  </footer>
 </body>
 </html>
