@@ -31,6 +31,10 @@ body{
   min-height:100vh;
 }
 
+body.intro-active{
+  overflow:hidden;
+}
+
 .bg,
 .noise,
 .spotlight{
@@ -96,6 +100,75 @@ body{
 
 body.has-pointer .cursor,
 body.has-pointer .cursor-blur{ opacity:1; }
+
+.intro{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 24px;
+  z-index:30;
+  background: radial-gradient(480px 280px at 50% 30%, rgba(159,91,255,.15), transparent 70%);
+  backdrop-filter: blur(2px);
+  transition: opacity .6s ease, transform .6s ease, visibility .6s ease;
+}
+
+.intro-card{
+  width:min(520px, 92vw);
+  padding: 40px 36px;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  background: rgba(9,6,18,.8);
+  box-shadow: 0 24px 60px var(--shadow);
+}
+
+.intro-eyebrow{
+  font-family: var(--mono);
+  letter-spacing: .36em;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgba(247,245,255,.6);
+  margin: 0 0 16px;
+}
+
+.intro h1{
+  margin: 0 0 12px;
+  font-size: clamp(36px, 6vw, 60px);
+  letter-spacing: .3em;
+  font-family: var(--mono);
+}
+
+.intro-sub{
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.intro-btn{
+  padding-inline: 26px;
+}
+
+.site-content{
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events:none;
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+body:not(.intro-active) .site-content{
+  opacity:1;
+  transform: translateY(0);
+  pointer-events:auto;
+}
+
+body:not(.intro-active) .intro{
+  opacity:0;
+  transform: translateY(-10px);
+  visibility:hidden;
+  pointer-events:none;
+}
 
 main{
   width:min(1180px, 92vw);
@@ -524,10 +597,11 @@ main{
   .panel-card, .panel-mini{ padding: 22px; }
   .newsletter-form{ width:100%; }
   .newsletter-form input{ width:100%; }
+  .intro-card{ padding: 32px 24px; }
 }
 
 @media (prefers-reduced-motion: reduce){
   *{ scroll-behavior:auto !important; }
-  .post-card, .btn, .nav a{ transition: none !important; }
+  .post-card, .btn, .nav a, .intro, .site-content{ transition: none !important; }
   .cursor, .cursor-blur{ display:none !important; }
 }

@@ -2,6 +2,20 @@
   const year = document.getElementById("y");
   if (year) year.textContent = String(new Date().getFullYear());
 
+  const intro = document.getElementById("intro");
+  const introButton = document.getElementById("intro-enter");
+
+  if (introButton) {
+    introButton.addEventListener("click", () => {
+      document.body.classList.remove("intro-active");
+      if (intro) {
+        window.setTimeout(() => {
+          intro.setAttribute("aria-hidden", "true");
+        }, 700);
+      }
+    });
+  }
+
   const cursor = document.querySelector(".cursor");
   const cursorBlur = document.querySelector(".cursor-blur");
   const spotlight = document.querySelector(".spotlight");

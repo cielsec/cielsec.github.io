@@ -22,72 +22,82 @@
   <script defer src="app.js?v=2024-09-02"></script>
 </head>
 
-<body>
+<body class="intro-active">
   <div class="bg" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
   <div class="spotlight" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"></div>
   <div class="cursor-blur" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <div class="brand">
-      <img src="logo.svg" alt="Logo Ciel Sec" class="logo" />
-      <div>
-        <div class="brand-title">CIEL SEC</div>
-        <div class="brand-sub">Diário de laboratório & segurança</div>
-      </div>
+  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <div class="intro-card">
+      <p class="intro-eyebrow">Bem-vindo</p>
+      <h1 id="intro-title">CIEL SEC</h1>
+      <p class="intro-sub">Inteligência ofensiva, refinada.</p>
+      <button class="btn btn-primary intro-btn" type="button" id="intro-enter">Entrar</button>
     </div>
+  </div>
 
-    <nav class="nav" aria-label="Navegação principal">
-      <a href="#destaque">Destaque</a>
-      <a href="#posts">Posts</a>
-      <a href="#newsletter">Newsletter</a>
-      <a href="#contato">Contato</a>
-    </nav>
-
-    <button class="btn btn-ghost" type="button">Assinar</button>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">Blog Ciel Sec • 2024</p>
-        <h1>Inteligência ofensiva, refinada. Insights, playbooks e bastidores.</h1>
-        <p class="hero-text">
-          Um espaço para compartilhar análises, ferramentas e estudos de caso com uma estética
-          minimalista e precisa — inspirado na elegância futurista do Archon.
-        </p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" type="button">Explorar artigos</button>
-          <button class="btn btn-ghost" type="button">Falar comigo</button>
-        </div>
-        <div class="hero-meta">
-          <span>Atualizado semanalmente</span>
-          <span>•</span>
-          <span>Guides práticos</span>
-          <span>•</span>
-          <span>Design neon discreto</span>
+  <div class="site-content" id="site-content">
+    <header class="site-header">
+      <div class="brand">
+        <img src="logo.svg" alt="Logo Ciel Sec" class="logo" />
+        <div>
+          <div class="brand-title">CIEL SEC</div>
+          <div class="brand-sub">Diário de laboratório & segurança</div>
         </div>
       </div>
-      <aside class="hero-panel">
-        <div class="panel-card">
-          <p class="panel-title">Radar</p>
-          <h2>Operações silenciosas em 3 camadas</h2>
-          <p>Estrutura modular para recon, exploração e extração com métricas claras.</p>
-          <button class="btn btn-primary" type="button">Ler agora</button>
-        </div>
-        <div class="panel-mini">
-          <div>
-            <p class="panel-label">Tempo médio de leitura</p>
-            <strong>8 min</strong>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="#destaque">Destaque</a>
+        <a href="#posts">Posts</a>
+        <a href="#newsletter">Newsletter</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <button class="btn btn-ghost" type="button">Assinar</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">Blog Ciel Sec • 2024</p>
+          <h1>Inteligência ofensiva, refinada. Insights, playbooks e bastidores.</h1>
+          <p class="hero-text">
+            Um espaço para compartilhar análises, ferramentas e estudos de caso com uma estética
+            minimalista e precisa — inspirado na elegância futurista do Archon.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button">Explorar artigos</button>
+            <button class="btn btn-ghost" type="button">Falar comigo</button>
           </div>
-          <div>
-            <p class="panel-label">Nível</p>
-            <strong>Intermediário</strong>
+          <div class="hero-meta">
+            <span>Atualizado semanalmente</span>
+            <span>•</span>
+            <span>Guides práticos</span>
+            <span>•</span>
+            <span>Design neon discreto</span>
           </div>
         </div>
-      </aside>
-    </section>
+        <aside class="hero-panel">
+          <div class="panel-card">
+            <p class="panel-title">Radar</p>
+            <h2>Operações silenciosas em 3 camadas</h2>
+            <p>Estrutura modular para recon, exploração e extração com métricas claras.</p>
+            <button class="btn btn-primary" type="button">Ler agora</button>
+          </div>
+          <div class="panel-mini">
+            <div>
+              <p class="panel-label">Tempo médio de leitura</p>
+              <strong>8 min</strong>
+            </div>
+            <div>
+              <p class="panel-label">Nível</p>
+              <strong>Intermediário</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
 
     <section id="destaque" class="featured">
       <div class="featured-card">
@@ -206,12 +216,13 @@
         <a href="#" onclick="return false;">E-mail</a>
       </div>
     </section>
-  </main>
+    </main>
 
-  <footer class="footer">
-    <span>© <span id="y"></span> Ciel Sec</span>
-    <span>•</span>
-    <span>Design inspirado no minimalismo futurista.</span>
-  </footer>
+    <footer class="footer">
+      <span>© <span id="y"></span> Ciel Sec</span>
+      <span>•</span>
+      <span>Design inspirado no minimalismo futurista.</span>
+    </footer>
+  </div>
 </body>
 </html>
