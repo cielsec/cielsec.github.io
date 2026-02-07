@@ -1,66 +1,86 @@
-(() => {
-  const year = document.getElementById("y");
-  if (year) year.textContent = String(new Date().getFullYear());
+const body = document.body;
+const enterBtn = document.getElementById("enter-btn");
+const hero = document.getElementById("hero");
+const hub = document.getElementById("hub");
+const hubButtons = document.querySelectorAll(".hub-btn");
+const hubPanels = document.querySelectorAll(".hub-panel");
+const projectCards = document.querySelectorAll(".project-card");
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorRing = document.querySelector(".cursor-ring");
 
-  const intro = document.getElementById("intro");
-  const introButton = document.getElementById("intro-enter");
+const setScrollVar = () => {
+  document.documentElement.style.setProperty("--scroll", `${window.scrollY}px`);
+};
 
-  if (introButton) {
-    introButton.addEventListener("click", () => {
-      document.body.classList.remove("intro-active");
-      if (intro) {
-        window.setTimeout(() => {
-          intro.setAttribute("aria-hidden", "true");
-        }, 700);
-      }
-    });
+const showHub = () => {
+  if (hero.classList.contains("is-exiting")) {
+    return;
   }
+  hero.classList.add("is-exiting");
+  hero.setAttribute("aria-hidden", "true");
+  setTimeout(() => {
+    hero.classList.remove("is-active");
+    hub.classList.add("is-active");
+    hub.removeAttribute("aria-hidden");
+    hub.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 420);
+};
 
-  const cursor = document.querySelector(".cursor");
-  const cursorBlur = document.querySelector(".cursor-blur");
-  const spotlight = document.querySelector(".spotlight");
+const activatePanel = (target) => {
+  hubButtons.forEach((btn) => btn.classList.remove("is-active"));
+  hubPanels.forEach((panel) => panel.classList.remove("is-active"));
+  const activeButton = document.querySelector(`.hub-btn[data-panel="${target}"]`);
+  const activePanel = document.getElementById(`panel-${target}`);
+  if (activeButton && activePanel) {
+    activeButton.classList.add("is-active");
+    activePanel.classList.add("is-active");
+  }
+};
 
-  let targetX = window.innerWidth / 2;
-  let targetY = window.innerHeight / 2;
-  let currentX = targetX;
-  let currentY = targetY;
-  let rafId;
+const initCursor = () => {
+  if (!cursorDot || !cursorRing) return;
 
-  const move = () => {
-    currentX += (targetX - currentX) * 0.15;
-    currentY += (targetY - currentY) * 0.15;
-
-    if (cursor) cursor.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    if (cursorBlur) cursorBlur.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    if (spotlight) {
-      spotlight.style.setProperty("--mx", `${currentX}px`);
-      spotlight.style.setProperty("--my", `${currentY}px`);
-    }
-
-    rafId = requestAnimationFrame(move);
+  const updateCursor = (event) => {
+    const { clientX, clientY } = event;
+    cursorDot.style.left = `${clientX}px`;
+    cursorDot.style.top = `${clientY}px`;
+    cursorRing.style.left = `${clientX}px`;
+    cursorRing.style.top = `${clientY}px`;
   };
 
-  const start = (event) => {
-    targetX = event.clientX;
-    targetY = event.clientY;
-    if (!document.body.classList.contains("has-pointer")) {
-      document.body.classList.add("has-pointer");
-    }
-    if (!rafId) rafId = requestAnimationFrame(move);
-  };
+  document.addEventListener("mousemove", updateCursor);
+  document.addEventListener("mouseleave", () => body.classList.add("cursor-hidden"));
+  document.addEventListener("mouseenter", () => body.classList.remove("cursor-hidden"));
 
-  window.addEventListener("mousemove", start);
-  window.addEventListener("touchmove", (event) => {
-    if (!event.touches.length) return;
-    targetX = event.touches[0].clientX;
-    targetY = event.touches[0].clientY;
+  const hoverTargets = document.querySelectorAll("button, a");
+  hoverTargets.forEach((target) => {
+    target.addEventListener("mouseenter", () => body.classList.add("cursor-hover"));
+    target.addEventListener("mouseleave", () => body.classList.remove("cursor-hover"));
   });
 
-  window.addEventListener("mouseleave", () => {
-    document.body.classList.remove("has-pointer");
-    if (rafId) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-    }
+  if (window.matchMedia("(pointer: coarse)").matches) {
+    body.classList.add("cursor-hidden");
+  }
+};
+
+enterBtn?.addEventListener("click", showHub);
+
+hubButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    activatePanel(button.dataset.panel);
   });
-})();
+});
+
+projectCards.forEach((card) => {
+  const toggle = card.querySelector(".project-toggle");
+  if (!toggle) return;
+  toggle.addEventListener("click", () => {
+    const isOpen = card.classList.toggle("is-open");
+    toggle.textContent = isOpen ? "Ocultar projeto" : "Mostrar projeto";
+  });
+});
+
+window.addEventListener("scroll", setScrollVar, { passive: true });
+window.addEventListener("load", setScrollVar);
+
+initCursor();

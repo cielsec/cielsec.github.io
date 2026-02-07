@@ -3,226 +3,244 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#09050f" />
-  <meta name="description" content="Blog da Ciel Sec com notas de laboratório, guias e lançamentos." />
-  <title>Ciel Sec | Blog</title>
+  <meta name="theme-color" content="#050707" />
+  <meta name="description" content="Storm Central: hub dark neon para operações, pesquisa e engenharia ofensiva." />
+  <title>Storm Central</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <style>
-    html, body {
-      margin: 0;
-      background: #05030a;
-      color: #f7f5ff;
-    }
-  </style>
-  <link rel="stylesheet" href="styles.css?v=2024-09-02" />
-  <script defer src="app.js?v=2024-09-02"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
 </head>
-
-<body class="intro-active">
+<body>
   <div class="bg" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="spotlight" aria-hidden="true"></div>
-  <div class="cursor" aria-hidden="true"></div>
-  <div class="cursor-blur" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
 
-  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
-    <div class="intro-card">
-      <p class="intro-eyebrow">Bem-vindo</p>
-      <h1 id="intro-title">CIEL SEC</h1>
-      <p class="intro-sub">Inteligência ofensiva, refinada.</p>
-      <button class="btn btn-primary intro-btn" type="button" id="intro-enter">Entrar</button>
-    </div>
-  </div>
+  <main class="shell">
+    <section class="screen hero-screen is-active" id="hero">
+      <div class="hero-core">
+        <div class="hero-logo" aria-hidden="true">
+          <svg viewBox="0 0 160 160" role="img" aria-label="Storm Central">
+            <polygon points="80,10 150,50 150,110 80,150 10,110 10,50" />
+            <polyline points="80,28 130,60 130,100 80,132 30,100 30,60 80,28" />
+            <line x1="80" y1="28" x2="80" y2="132" />
+          </svg>
+        </div>
+        <h1 class="hero-title">STORM CENTRAL</h1>
+        <div class="hero-quote">
+          <p>"Precisão silenciosa, impacto absoluto."</p>
+          <span>— Diretriz Operacional</span>
+        </div>
+        <div class="hero-line" aria-hidden="true"></div>
+        <p class="hero-welcome">Bem-vindo ao StormCentral.</p>
+        <button class="btn btn-primary" id="enter-btn" type="button">ENTRAR</button>
+      </div>
+    </section>
 
-  <div class="site-content" id="site-content">
-    <header class="site-header">
-      <div class="brand">
-        <img src="logo.svg" alt="Logo Ciel Sec" class="logo" />
+    <section class="screen hub-screen" id="hub" aria-hidden="true">
+      <header class="hub-header">
         <div>
-          <div class="brand-title">CIEL SEC</div>
-          <div class="brand-sub">Diário de laboratório & segurança</div>
+          <p class="eyebrow">Painel Central</p>
+          <h2>Operações, pesquisa e inteligência ofensiva.</h2>
+        </div>
+        <div class="hub-line" aria-hidden="true"></div>
+      </header>
+
+      <div class="hub-layout">
+        <nav class="hub-menu" aria-label="Seções principais">
+          <button class="hub-btn is-active" data-panel="grupo" type="button">
+            <span class="icon">◎</span>
+            Grupo
+          </button>
+          <button class="hub-btn" data-panel="ferramentas" type="button">
+            <span class="icon">⌁</span>
+            Ferramentas
+          </button>
+          <button class="hub-btn" data-panel="artigos" type="button">
+            <span class="icon">⌬</span>
+            Artigos
+          </button>
+          <button class="hub-btn" data-panel="suporte" type="button">
+            <span class="icon">◇</span>
+            Suporte
+          </button>
+          <button class="hub-btn" data-panel="projetos" type="button">
+            <span class="icon">⬡</span>
+            Projetos
+          </button>
+        </nav>
+
+        <div class="hub-panels">
+          <article class="hub-panel is-active" id="panel-grupo">
+            <h3>Grupo</h3>
+            <p>
+              Núcleo multidisciplinar focado em engenharia reversa, inteligência de ameaças e
+              resposta a incidentes com metodologia operacional rigorosa.
+            </p>
+            <ul>
+              <li>Rotinas de laboratório e validação de TTPs.</li>
+              <li>Documentação técnica para times internos.</li>
+              <li>Monitoramento contínuo de superfícies críticas.</li>
+            </ul>
+          </article>
+          <article class="hub-panel" id="panel-ferramentas">
+            <h3>Ferramentas</h3>
+            <p>
+              Toolkit dedicado a coleta, triagem e enriquecimento de dados em operações de campo,
+              com automação segura e auditável.
+            </p>
+            <ul>
+              <li>Recon e enumeração de ativos em múltiplas camadas.</li>
+              <li>Pipeline de análise com alertas por prioridade.</li>
+              <li>Playbooks versionados e rastreáveis.</li>
+            </ul>
+          </article>
+          <article class="hub-panel" id="panel-artigos">
+            <h3>Artigos</h3>
+            <p>
+              Pesquisa aplicada em defesa ofensiva: estudos de caso, lições aprendidas e revisão de
+              operações com foco em mitigação.
+            </p>
+            <ul>
+              <li>Briefings de inteligência e tendências.</li>
+              <li>Arquiteturas seguras e hardening.</li>
+              <li>Guia para análises forenses rápidas.</li>
+            </ul>
+          </article>
+          <article class="hub-panel" id="panel-suporte">
+            <h3>Suporte</h3>
+            <p>
+              Canal direto para coordenação tática, triagem de incidentes e implementação de
+              contramedidas em produção.
+            </p>
+            <ul>
+              <li>Onboarding seguro para equipes.</li>
+              <li>Resposta assistida e pós-incidente.</li>
+              <li>Consultoria técnica e treinamento.</li>
+            </ul>
+          </article>
+          <article class="hub-panel" id="panel-projetos">
+            <h3>Projetos</h3>
+            <p>
+              Portfólio de iniciativas open-source e laboratórios internos voltados a segurança
+              ofensiva e engenharia de dados.
+            </p>
+            <ul>
+              <li>Frameworks de coleta modular.</li>
+              <li>Dashboards de visibilidade em tempo real.</li>
+              <li>Testes de intrusão controlados.</li>
+            </ul>
+          </article>
         </div>
       </div>
 
-      <nav class="nav" aria-label="Navegação principal">
-        <a href="#destaque">Destaque</a>
-        <a href="#posts">Posts</a>
-        <a href="#newsletter">Newsletter</a>
-        <a href="#contato">Contato</a>
-      </nav>
-
-      <button class="btn btn-ghost" type="button">Assinar</button>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="hero-content">
-          <p class="eyebrow">Blog Ciel Sec • 2024</p>
-          <h1>Inteligência ofensiva, refinada. Insights, playbooks e bastidores.</h1>
-          <p class="hero-text">
-            Um espaço para compartilhar análises, ferramentas e estudos de caso com uma estética
-            minimalista e precisa — inspirado na elegância futurista do Archon.
-          </p>
-          <div class="hero-actions">
-            <button class="btn btn-primary" type="button">Explorar artigos</button>
-            <button class="btn btn-ghost" type="button">Falar comigo</button>
-          </div>
-          <div class="hero-meta">
-            <span>Atualizado semanalmente</span>
-            <span>•</span>
-            <span>Guides práticos</span>
-            <span>•</span>
-            <span>Design neon discreto</span>
-          </div>
+      <section class="projects" id="projects">
+        <div class="projects-header">
+          <p class="eyebrow">Open-source | Forense | Pentest | Code</p>
+          <h2>Projetos ativos</h2>
         </div>
-        <aside class="hero-panel">
-          <div class="panel-card">
-            <p class="panel-title">Radar</p>
-            <h2>Operações silenciosas em 3 camadas</h2>
-            <p>Estrutura modular para recon, exploração e extração com métricas claras.</p>
-            <button class="btn btn-primary" type="button">Ler agora</button>
-          </div>
-          <div class="panel-mini">
-            <div>
-              <p class="panel-label">Tempo médio de leitura</p>
-              <strong>8 min</strong>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-head">
+              <h3>havijpy_sqlmap_gui.py</h3>
+              <p>Interface gráfica que executa SQLmap e exibe o output em tempo real.</p>
             </div>
-            <div>
-              <p class="panel-label">Nível</p>
-              <strong>Intermediário</strong>
+            <button class="btn btn-ghost project-toggle" type="button">Mostrar projeto</button>
+            <div class="project-body">
+              <div class="project-frame">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" alt="Interface de monitoramento de execução" loading="lazy" />
+              </div>
+              <p>
+                GUI em PyQt com controle de execução, logs instantâneos e suporte a parâmetros
+                personalizados para operações de análise.
+              </p>
+              <p class="project-meta">Autor: Ciel Sec</p>
             </div>
-          </div>
-        </aside>
+          </article>
+
+          <article class="project-card">
+            <div class="project-head">
+              <h3>pentest_central.py</h3>
+              <p>Centraliza execuções de ferramentas e consolida logs por operação.</p>
+            </div>
+            <button class="btn btn-ghost project-toggle" type="button">Mostrar projeto</button>
+            <div class="project-body">
+              <div class="project-frame">
+                <img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=900&q=80" alt="Console de operações centralizadas" loading="lazy" />
+              </div>
+              <p>
+                Orquestra fluxo de Nmap, Ffuf e Nuclei com logs versionados por data para auditoria.
+              </p>
+              <p class="project-meta">Autor: Ciel Sec</p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-head">
+              <h3>Cracker.sh</h3>
+              <p>Automação de enumeração básica e organização de resultados.</p>
+            </div>
+            <button class="btn btn-ghost project-toggle" type="button">Mostrar projeto</button>
+            <div class="project-body">
+              <div class="project-frame">
+                <img src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&w=900&q=80" alt="Pipeline de enumeração" loading="lazy" />
+              </div>
+              <p>
+                Fluxo direto: subdomains, HTTP probe e análise com Nuclei, mantendo evidências
+                organizadas por alvo.
+              </p>
+              <p class="project-meta">Autor: Ciel Sec</p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-head">
+              <h3>privesc_pack.sh</h3>
+              <p>Coleta informações do host e executa helpers de enum/privesc.</p>
+            </div>
+            <button class="btn btn-ghost project-toggle" type="button">Mostrar projeto</button>
+            <div class="project-body">
+              <div class="project-frame">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=900&q=80" alt="Coleta de dados do host" loading="lazy" />
+              </div>
+              <p>
+                Pacote de coleta com inventário do sistema, processos e permissões críticas para
+                acelerar triagens de escalonamento.
+              </p>
+              <p class="project-meta">Autor: Ciel Sec</p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-head">
+              <h3>WebDav Detector (ciel.pl)</h3>
+              <p>Detecção e enumeração de WebDAV via OPTIONS com parsing avançado.</p>
+            </div>
+            <button class="btn btn-ghost project-toggle" type="button">Mostrar projeto</button>
+            <div class="project-body">
+              <div class="project-frame">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=80" alt="Relatório de detecção WebDAV" loading="lazy" />
+              </div>
+              <p>
+                Parser dedicado para URL, host e headers, com destaque de métodos suportados e
+                indicadores de WebDAV para análise segura.
+              </p>
+              <p class="project-meta">Autor: Ciel Sec</p>
+            </div>
+          </article>
+        </div>
       </section>
 
-    <section id="destaque" class="featured">
-      <div class="featured-card">
-        <div class="featured-text">
-          <p class="eyebrow">Destaque</p>
-          <h2>Guia de hardening em pipelines CI/CD</h2>
-          <p>
-            Estratégias de observabilidade, rotação de segredos e política zero-trust para reduzir
-            superfícies de ataque antes do deploy.
-          </p>
-          <div class="featured-actions">
-            <button class="btn btn-primary" type="button">Ler artigo</button>
-            <button class="btn btn-ghost" type="button">Salvar</button>
-          </div>
-        </div>
-        <div class="featured-meta">
-          <div>
-            <p class="panel-label">Categoria</p>
-            <strong>DevSecOps</strong>
-          </div>
-          <div>
-            <p class="panel-label">Tempo</p>
-            <strong>12 min</strong>
-          </div>
-          <div>
-            <p class="panel-label">Autor</p>
-            <strong>Team Ciel</strong>
-          </div>
-        </div>
-      </div>
+      <footer class="site-footer">
+        <p>Programado por StormCentral / Host by CielSec</p>
+      </footer>
     </section>
-
-    <section id="posts" class="posts">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Últimos posts</p>
-          <h2>Notas do laboratório</h2>
-        </div>
-        <div class="filters">
-          <button class="chip is-active" type="button">Todos</button>
-          <button class="chip" type="button">Threat Intel</button>
-          <button class="chip" type="button">Automação</button>
-          <button class="chip" type="button">Ferramentas</button>
-        </div>
-      </div>
-
-      <div class="post-grid">
-        <article class="post-card">
-          <p class="post-tag">Threat Intel</p>
-          <h3>Mapeando superfícies expostas com precisão cirúrgica</h3>
-          <p class="post-excerpt">Checklist visual para catalogar APIs, subdomínios e buckets públicos.</p>
-          <div class="post-meta">
-            <span>5 min</span>
-            <span>•</span>
-            <span>15 Apr</span>
-          </div>
-        </article>
-
-        <article class="post-card">
-          <p class="post-tag">Automação</p>
-          <h3>Playbook de recon contínuo com alertas em tempo real</h3>
-          <p class="post-excerpt">Integração entre scanners, webhooks e painéis de resposta rápida.</p>
-          <div class="post-meta">
-            <span>7 min</span>
-            <span>•</span>
-            <span>10 Apr</span>
-          </div>
-        </article>
-
-        <article class="post-card">
-          <p class="post-tag">Ferramentas</p>
-          <h3>Toolkit modular para equipes enxutas</h3>
-          <p class="post-excerpt">Organize scripts em camadas reutilizáveis e compartilhe com segurança.</p>
-          <div class="post-meta">
-            <span>9 min</span>
-            <span>•</span>
-            <span>02 Apr</span>
-          </div>
-        </article>
-
-        <article class="post-card">
-          <p class="post-tag">Threat Intel</p>
-          <h3>Observabilidade em tempos de ataques silenciosos</h3>
-          <p class="post-excerpt">Como ler sinais fracos em logs e construir narrativas claras.</p>
-          <div class="post-meta">
-            <span>6 min</span>
-            <span>•</span>
-            <span>28 Mar</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="newsletter" class="newsletter">
-      <div class="newsletter-card">
-        <div>
-          <p class="eyebrow">Newsletter</p>
-          <h2>Uma curadoria mensal com o que realmente importa.</h2>
-          <p>Insights de campo, templates e análises condensadas direto no seu e-mail.</p>
-        </div>
-        <form class="newsletter-form">
-          <input type="email" placeholder="Seu melhor e-mail" aria-label="Seu e-mail" />
-          <button class="btn btn-primary" type="submit">Quero receber</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="contato" class="contact">
-      <div>
-        <p class="eyebrow">Contato</p>
-        <h2>Vamos colaborar.</h2>
-      </div>
-      <div class="contact-links">
-        <a href="#" onclick="return false;">GitHub</a>
-        <a href="#" onclick="return false;">LinkedIn</a>
-        <a href="#" onclick="return false;">E-mail</a>
-      </div>
-    </section>
-    </main>
-
-    <footer class="footer">
-      <span>© <span id="y"></span> Ciel Sec</span>
-      <span>•</span>
-      <span>Design inspirado no minimalismo futurista.</span>
-    </footer>
-  </div>
+  </main>
 </body>
 </html>
