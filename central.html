@@ -16,7 +16,7 @@
 <body class="cursor-hidden">
   <a class="skip" href="#hub">Pular para a central</a>
 
-  <!-- Background layers (teu CSS já anima/parallax) -->
+  <!-- Background layers -->
   <div class="bg"></div>
   <div class="grid"></div>
   <div class="glow"></div>
@@ -43,7 +43,6 @@
 
           <div class="terminal-body">
             <div class="terminal-watermark" aria-hidden="true">
-              <!-- SVG simples (pra “marca d’água”) -->
               <svg viewBox="0 0 256 256" role="img" aria-label="Ciel Sec watermark">
                 <path d="M128 14l92 36v70c0 66-41 107-92 122C77 227 36 186 36 120V50l92-36Z"></path>
                 <path d="M92 132l26 26 54-70" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -59,13 +58,12 @@
           </div>
         </div>
 
-        <!-- Botão “Entrar” (teu app.js liga wipe + troca pra HUB) -->
         <div id="hero-actions" class="hero-actions hero-actions-hidden">
           <button id="enter-btn" class="btn" type="button">ENTRAR</button>
         </div>
 
         <div class="hero-foot">
-          <div>Central pessoal: <span>GeoIP</span> · <span>IP Tracker</span> · <span>DNS</span> · <span>WHOIS/RDAP</span></div>
+          <div>Central: <span>GeoIP</span> · <span>IP Tracker</span> · <span>DNS</span> · <span>WHOIS/RDAP</span></div>
         </div>
       </div>
     </section>
@@ -75,7 +73,7 @@
       <header class="hub-header">
         <div class="hub-head">
           <div class="eyebrow">Central de Ferramentas</div>
-          <h2>Ferramentas de rede e OSINT leve — rápido, limpo e direto.</h2>
+          <h2>Escolhe o host, roda a ação e lê o resultado no console.</h2>
         </div>
         <div class="hub-line" aria-hidden="true"></div>
         <button class="btn btn-ghost" type="button" data-action="back">VOLTAR</button>
@@ -84,7 +82,10 @@
       <div class="hub-layout">
         <!-- Menu -->
         <nav class="hub-menu" aria-label="Módulos">
-          <button class="hub-btn is-active" type="button" data-panel="geoip" aria-selected="true">
+          <button class="hub-btn is-active" type="button" data-panel="central" aria-selected="true">
+            <span class="icon">▣</span> CENTRAL
+          </button>
+          <button class="hub-btn" type="button" data-panel="geoip" aria-selected="false">
             <span class="icon">⌁</span> GEOIP
           </button>
           <button class="hub-btn" type="button" data-panel="iptrack" aria-selected="false">
@@ -96,203 +97,141 @@
           <button class="hub-btn" type="button" data-panel="whois" aria-selected="false">
             <span class="icon">⟐</span> WHOIS / RDAP
           </button>
-          <button class="hub-btn" type="button" data-panel="projects" aria-selected="false">
-            <span class="icon">▣</span> MEUS SCRIPTS
-          </button>
         </nav>
 
         <!-- Panels -->
         <div class="hub-panels" role="region" aria-label="Painel">
-          <!-- GEOIP -->
-          <section class="hub-panel is-active" data-panel-id="geoip" hidden="false">
+          <!-- CENTRAL (console + ações) -->
+          <section class="hub-panel is-active" data-panel-id="central" hidden="false">
+            <h3>Central</h3>
+            <p>Input do alvo + botões de ação + console de resultados (funcionando em GitHub Pages).</p>
+
+            <!-- Painel de controle reutilizando o estilo do teu "card" -->
+            <article class="project-card" style="margin-top:14px;">
+              <div class="project-head">
+                <h4>Alvo / Host</h4>
+                <p>IPv4 ou domínio. Enter roda uma ação “inteligente”.</p>
+              </div>
+
+              <div style="margin-top:12px; display:grid; gap:10px;">
+                <div style="display:grid; gap:8px;">
+                  <div class="drop-label">Host</div>
+                  <input id="tool-host"
+                         list="host-sugestoes"
+                         placeholder="8.8.8.8 | 1.1.1.1 | example.com"
+                         spellcheck="false"
+                         autocomplete="off"
+                         style="
+                           width:100%;
+                           padding:12px 14px;
+                           border-radius:12px;
+                           border:1px solid rgba(0,255,153,.22);
+                           background:rgba(0,0,0,.22);
+                           color:rgba(228,241,236,.92);
+                           outline:none;
+                         " />
+                  <datalist id="host-sugestoes">
+                    <option value="8.8.8.8"></option>
+                    <option value="1.1.1.1"></option>
+                    <option value="9.9.9.9"></option>
+                    <option value="example.com"></option>
+                    <option value="cloudflare.com"></option>
+                  </datalist>
+                </div>
+
+                <div style="display:grid; gap:8px;">
+                  <div class="drop-label">DNS Type (quando usar DNS/PTR)</div>
+                  <select id="tool-dns-type"
+                          style="
+                            width:100%;
+                            padding:12px 14px;
+                            border-radius:12px;
+                            border:1px solid rgba(0,255,153,.22);
+                            background:rgba(0,0,0,.22);
+                            color:rgba(228,241,236,.92);
+                            outline:none;
+                          ">
+                    <option value="A">A</option>
+                    <option value="AAAA">AAAA</option>
+                    <option value="MX">MX</option>
+                    <option value="NS">NS</option>
+                    <option value="TXT">TXT</option>
+                    <option value="CNAME">CNAME</option>
+                    <option value="SOA">SOA</option>
+                    <option value="PTR">PTR (Reverse)</option>
+                  </select>
+                </div>
+
+                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:4px;">
+                  <button class="btn" type="button" data-tool="geoip">GEOIP</button>
+                  <button class="btn" type="button" data-tool="iptrack">IPTRACK</button>
+                  <button class="btn" type="button" data-tool="dns">DNS</button>
+                  <button class="btn" type="button" data-tool="whois">WHOIS</button>
+                  <button class="btn btn-ghost" type="button" id="tool-clear">CLEAR</button>
+                  <button class="btn btn-ghost" type="button" id="tool-copy">COPIAR</button>
+                </div>
+
+                <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                  <div class="drop-label">Status:</div>
+                  <div id="tool-status" class="drop-value" style="color:rgba(0,255,153,.75)">READY</div>
+                  <div class="drop-label" style="margin-left:auto;">Fonte:</div>
+                  <div class="drop-value" style="opacity:.9">ipapi/ipwho · dns.google · rdap.org</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" style="margin-top:14px;">
+              <div class="project-head">
+                <h4>Console</h4>
+                <p>Resultados e erros aparecem aqui. (Perfeito pra print/relatório)</p>
+              </div>
+
+              <div class="drop-codebar">
+                <div class="drop-label">Output</div>
+                <div class="drop-value" id="tool-meta" style="opacity:.8;">—</div>
+              </div>
+
+              <pre class="code-block" style="min-height:220px;"><code id="tool-output"></code></pre>
+              <div class="drop-hint">Dica: se algum endpoint bloquear CORS, você vai ver o erro no console (aí só com proxy/back-end).</div>
+            </article>
+          </section>
+
+          <!-- Painéis explicativos (pra bater com teu menu) -->
+          <section class="hub-panel" data-panel-id="geoip" hidden>
             <h3>GeoIP</h3>
-            <p>Consulta geolocalização do IP (cidade/país/ASN/org). Ideal pra triagem rápida.</p>
+            <p>Geolocalização + ASN/ORG + timezone. Use IPv4.</p>
             <ul>
               <li>Entrada: IPv4</li>
-              <li>Saída: localização + ASN/ORG + timezone</li>
-              <li>Dica: salva resultados no teu log / print pro relatório</li>
+              <li>Saída: cidade/país/coords/ASN/org</li>
             </ul>
           </section>
 
-          <!-- IPTRACK -->
           <section class="hub-panel" data-panel-id="iptrack" hidden>
             <h3>IP Tracker</h3>
-            <p>“Tracker” no estilo OSINT leve: GeoIP + RDAP + reverse DNS (quando disponível).</p>
+            <p>Combo: GeoIP + RDAP + Reverse DNS (PTR) quando existir.</p>
             <ul>
-              <li>GeoIP (contexto)</li>
-              <li>RDAP (registro / handle / status)</li>
-              <li>Reverse DNS (PTR)</li>
+              <li>GeoIP</li>
+              <li>RDAP (registro / entidades)</li>
+              <li>PTR (reverse)</li>
             </ul>
           </section>
 
-          <!-- DNS -->
           <section class="hub-panel" data-panel-id="dns" hidden>
             <h3>DNS</h3>
-            <p>Resolve registros comuns (A/AAAA/MX/NS/TXT/CNAME/SOA/PTR).</p>
+            <p>Resolver DNS via DNS-over-HTTPS (Google). Use domínio (ou PTR com IP).</p>
             <ul>
-              <li>A/AAAA: endpoints</li>
-              <li>NS/SOA: infra</li>
-              <li>TXT: SPF/DMARC/validações</li>
-              <li>PTR: reverse</li>
+              <li>A/AAAA/MX/NS/TXT/CNAME/SOA</li>
+              <li>PTR: reverse de IPv4</li>
             </ul>
           </section>
 
-          <!-- WHOIS -->
           <section class="hub-panel" data-panel-id="whois" hidden>
             <h3>WHOIS / RDAP</h3>
-            <p>WHOIS moderno via RDAP (mais compatível com browser e menos dor com CORS).</p>
+            <p>RDAP é o “WHOIS moderno” e geralmente funciona melhor no browser do que WHOIS clássico.</p>
             <ul>
-              <li>Domínio: registrar/registrant (quando exposto), eventos, nameservers</li>
-              <li>IP: handle, status, entidades e datas</li>
-              <li>Bom pra relatório e validação de ownership</li>
+              <li>Domínio ou IP</li>
+              <li>Status, eventos, nameservers, entidades (quando expostas)</li>
             </ul>
-          </section>
-
-          <!-- PROJECTS -->
-          <section class="hub-panel" data-panel-id="projects" hidden>
-            <div class="projects-header">
-              <h3>Meus scripts</h3>
-              <p>Cards com “drop” e código copiável. Você só troca os templates depois.</p>
-            </div>
-
-            <div class="projects-grid">
-              <!-- Project 1 -->
-              <article class="project-card" data-project="geoip">
-                <div class="project-head">
-                  <h4>GeoIP Quick</h4>
-                  <p>Consulta rápida de GeoIP com saída enxuta.</p>
-                </div>
-
-                <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" data-project-open="geoip">ABRIR</button>
-                </div>
-
-                <div class="project-drop" id="drop-geoip" aria-hidden="true">
-                  <div class="drop-inner">
-                    <div class="drop-top">
-                      <div>
-                        <div class="drop-label">Uso</div>
-                        <div class="drop-value">Cole um IP e rode</div>
-                      </div>
-                      <div>
-                        <div class="drop-label">Saída</div>
-                        <div class="drop-value">cidade/país/ASN/ORG</div>
-                      </div>
-                    </div>
-
-                    <div class="drop-codebar">
-                      <div class="drop-label">Código</div>
-                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-geoip">COPIAR</button>
-                    </div>
-
-                    <pre class="code-block"><code id="code-geoip" data-template="tpl-geoip"></code></pre>
-                    <div class="drop-hint">Você pode substituir o template pelo teu script real depois.</div>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Project 2 -->
-              <article class="project-card" data-project="dns">
-                <div class="project-head">
-                  <h4>DNS Resolve</h4>
-                  <p>Resolver DNS (A/AAAA/MX/NS/TXT/CNAME/SOA).</p>
-                </div>
-
-                <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" data-project-open="dns">ABRIR</button>
-                </div>
-
-                <div class="project-drop" id="drop-dns" aria-hidden="true">
-                  <div class="drop-inner">
-                    <div class="drop-top">
-                      <div>
-                        <div class="drop-label">Uso</div>
-                        <div class="drop-value">dns example.com A</div>
-                      </div>
-                      <div>
-                        <div class="drop-label">Saída</div>
-                        <div class="drop-value">respostas + TTL</div>
-                      </div>
-                    </div>
-
-                    <div class="drop-codebar">
-                      <div class="drop-label">Código</div>
-                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-dns">COPIAR</button>
-                    </div>
-
-                    <pre class="code-block"><code id="code-dns" data-template="tpl-dns"></code></pre>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Project 3 -->
-              <article class="project-card" data-project="whois">
-                <div class="project-head">
-                  <h4>WHOIS via RDAP</h4>
-                  <p>Consulta RDAP (domínio/IP) com parsing básico pra relatório.</p>
-                </div>
-
-                <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" data-project-open="whois">ABRIR</button>
-                </div>
-
-                <div class="project-drop" id="drop-whois" aria-hidden="true">
-                  <div class="drop-inner">
-                    <div class="drop-top">
-                      <div>
-                        <div class="drop-label">Uso</div>
-                        <div class="drop-value">whois example.com</div>
-                      </div>
-                      <div>
-                        <div class="drop-label">Fonte</div>
-                        <div class="drop-value">RDAP</div>
-                      </div>
-                    </div>
-
-                    <div class="drop-codebar">
-                      <div class="drop-label">Código</div>
-                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-whois">COPIAR</button>
-                    </div>
-
-                    <pre class="code-block"><code id="code-whois" data-template="tpl-whois"></code></pre>
-                  </div>
-                </div>
-              </article>
-
-              <!-- Project 4 -->
-              <article class="project-card" data-project="iptrack">
-                <div class="project-head">
-                  <h4>IP Tracker (combo)</h4>
-                  <p>GeoIP + RDAP + PTR num fluxo só.</p>
-                </div>
-
-                <div class="project-actions">
-                  <button class="btn btn-ghost project-more" type="button" data-project-open="iptrack">ABRIR</button>
-                </div>
-
-                <div class="project-drop" id="drop-iptrack" aria-hidden="true">
-                  <div class="drop-inner">
-                    <div class="drop-top">
-                      <div>
-                        <div class="drop-label">Uso</div>
-                        <div class="drop-value">iptrack 1.1.1.1</div>
-                      </div>
-                      <div>
-                        <div class="drop-label">Saída</div>
-                        <div class="drop-value">contexto + registro</div>
-                      </div>
-                    </div>
-
-                    <div class="drop-codebar">
-                      <div class="drop-label">Código</div>
-                      <button class="btn btn-ghost copy-btn" type="button" data-copy="#code-iptrack">COPIAR</button>
-                    </div>
-
-                    <pre class="code-block"><code id="code-iptrack" data-template="tpl-iptrack"></code></pre>
-                  </div>
-                </div>
-              </article>
-            </div>
           </section>
         </div>
       </div>
@@ -301,46 +240,292 @@
         <div>© <span id="year"></span> Ciel Sec · “método vence sorte”</div>
       </footer>
     </section>
-
-    <!-- Templates (teu JS “puxa” o conteúdo e coloca no <code>) -->
-    <template id="tpl-geoip">
-      <code>/* GeoIP Quick (exemplo)
-fetch("https://ipapi.co/8.8.8.8/json/")
-  .then(r =&gt; r.json())
-  .then(j =&gt; console.log(j));</code>
-    </template>
-
-    <template id="tpl-dns">
-      <code>/* DNS resolve (Google DNS over HTTPS)
-fetch("https://dns.google/resolve?name=example.com&amp;type=A")
-  .then(r =&gt; r.json())
-  .then(j =&gt; console.log(j));</code>
-    </template>
-
-    <template id="tpl-whois">
-      <code>/* RDAP (WHOIS moderno)
-fetch("https://rdap.org/domain/example.com", {
-  headers: { "accept": "application/rdap+json, application/json" }
-}).then(r =&gt; r.json())
-  .then(j =&gt; console.log(j));</code>
-    </template>
-
-    <template id="tpl-iptrack">
-      <code>/* IP Track (combo)
-Promise.all([
-  fetch("https://ipapi.co/1.1.1.1/json/").then(r =&gt; r.json()),
-  fetch("https://rdap.org/ip/1.1.1.1").then(r =&gt; r.json())
-]).then(([geo, rdap]) =&gt; {
-  console.log({ geo, rdap });
-});</code>
-    </template>
   </main>
 
+  <!-- ====== TOOL ENGINE (inline, sem mexer no teu app.js) ====== -->
   <script>
-    // ano no footer (sem depender do app.js)
+    (function(){
+      const hostEl = document.getElementById("tool-host");
+      const typeEl = document.getElementById("tool-dns-type");
+      const outEl  = document.getElementById("tool-output");
+      const metaEl = document.getElementById("tool-meta");
+      const stEl   = document.getElementById("tool-status");
+      const btnClear = document.getElementById("tool-clear");
+      const btnCopy  = document.getElementById("tool-copy");
+
+      let lastTool = "geoip";
+
+      const now = () => new Date().toLocaleString("pt-BR");
+      const setStatus = (t, c) => {
+        stEl.textContent = t;
+        stEl.style.color =
+          c === "ok" ? "rgba(0,255,153,.85)" :
+          c === "bad" ? "rgba(255,77,77,.90)" :
+          c === "warn" ? "rgba(255,210,77,.95)" :
+          "rgba(0,255,153,.75)";
+      };
+
+      const clear = () => {
+        outEl.textContent = "";
+        metaEl.textContent = "—";
+        setStatus("READY","ok");
+      };
+
+      const log = (s="") => {
+        outEl.textContent += s + "\n";
+      };
+
+      const hr = () => log("─".repeat(72));
+
+      const isIPv4 = (ip) => /^(\d{1,3}\.){3}\d{1,3}$/.test(ip) && ip.split(".").every(n => +n>=0 && +n<=255);
+      const looksDomain = (d) => !!d && !/\s/.test(d) && d.includes(".") && /^[a-zA-Z0-9.-]+$/.test(d) && !d.startsWith(".") && !d.endsWith(".");
+      const ipToPTR = (ip) => ip.split(".").reverse().join(".") + ".in-addr.arpa";
+
+      async function fetchJson(url, opts={}, timeoutMs=12000){
+        const ctrl = new AbortController();
+        const t = setTimeout(()=>ctrl.abort(), timeoutMs);
+        try{
+          const r = await fetch(url, { ...opts, signal: ctrl.signal });
+          if(!r.ok){
+            const tx = await r.text().catch(()=> "");
+            throw new Error(`HTTP ${r.status} — ${tx.slice(0,180)}`);
+          }
+          const ct = r.headers.get("content-type") || "";
+          if(ct.includes("json")) return await r.json();
+          const tx = await r.text();
+          try { return JSON.parse(tx); } catch { return { raw: tx }; }
+        } finally {
+          clearTimeout(t);
+        }
+      }
+
+      async function geoip(ip){
+        setStatus("WORKING","warn");
+        metaEl.textContent = `GeoIP :: ${ip} :: ${now()}`;
+        log(`$ geoip ${ip}`);
+        try{
+          // ipapi (principal)
+          let j;
+          try{
+            j = await fetchJson(`https://ipapi.co/${encodeURIComponent(ip)}/json/`);
+            if(j?.error) throw new Error(j?.reason || "ipapi error");
+            log(`IP: ${j.ip || ip}`);
+            log(`Local: ${j.city || "-"}, ${j.region || "-"} — ${j.country_name || "-"} (${j.country || "-"})`);
+            log(`Coords: ${j.latitude ?? "-"}, ${j.longitude ?? "-"}`);
+            log(`ASN: ${j.asn || "-"} | Org: ${j.org || "-"} `);
+            log(`Timezone: ${j.timezone || "-"}`);
+          } catch {
+            // fallback ipwho.is
+            j = await fetchJson(`https://ipwho.is/${encodeURIComponent(ip)}`);
+            if(j?.success === false) throw new Error(j?.message || "ipwho error");
+            log(`IP: ${j.ip || ip}`);
+            log(`Local: ${j.city || "-"}, ${j.region || "-"} — ${j.country || "-"} (${j.country_code || "-"})`);
+            log(`Coords: ${j.latitude ?? "-"}, ${j.longitude ?? "-"}`);
+            log(`ASN: ${j.connection?.asn || "-"} | Org: ${j.connection?.org || "-"} `);
+            log(`Timezone: ${j.timezone?.id || "-"}`);
+          }
+
+          setStatus("OK","ok");
+        } catch(e){
+          setStatus("FAIL","bad");
+          log(`ERRO geoip: ${e.message}`);
+        }
+        hr();
+      }
+
+      async function dns(name, type){
+        setStatus("WORKING","warn");
+        metaEl.textContent = `DNS :: ${name} :: ${type} :: ${now()}`;
+        log(`$ dns ${name} ${type}`);
+        try{
+          const url = `https://dns.google/resolve?name=${encodeURIComponent(name)}&type=${encodeURIComponent(type)}`;
+          const j = await fetchJson(url);
+          if(j?.Status !== 0) log(`DNS Status != 0 (${j.Status}).`);
+
+          if(j?.Answer?.length){
+            for(const a of j.Answer){
+              log(`${a.name}  TYPE=${a.type}  TTL=${a.TTL}  ${a.data}`);
+            }
+          } else {
+            log("Sem Answer. Tentando Authority/Additional...");
+            if(j?.Authority?.length) for(const a of j.Authority) log(`[AUTH] ${a.name} TYPE=${a.type} TTL=${a.TTL} ${a.data}`);
+            if(j?.Additional?.length) for(const a of j.Additional) log(`[ADD]  ${a.name} TYPE=${a.type} TTL=${a.TTL} ${a.data}`);
+            if(!j?.Authority?.length && !j?.Additional?.length) log("Nada retornado.");
+          }
+
+          setStatus("OK","ok");
+        } catch(e){
+          setStatus("FAIL","bad");
+          log(`ERRO dns: ${e.message}`);
+        }
+        hr();
+      }
+
+      async function rdap(target){
+        setStatus("WORKING","warn");
+        metaEl.textContent = `RDAP :: ${target} :: ${now()}`;
+        log(`$ whois ${target}`);
+        try{
+          const url = isIPv4(target)
+            ? `https://rdap.org/ip/${encodeURIComponent(target)}`
+            : `https://rdap.org/domain/${encodeURIComponent(target)}`;
+
+          const j = await fetchJson(url, { headers: { "accept": "application/rdap+json, application/json" } });
+
+          log(`Handle: ${j.handle || "-"}`);
+          if(j.ldhName) log(`Nome: ${j.ldhName}`);
+          if(j.status) log(`Status: ${Array.isArray(j.status) ? j.status.join(", ") : j.status}`);
+
+          if(Array.isArray(j.events)){
+            for(const ev of j.events){
+              if(ev?.eventAction && ev?.eventDate){
+                const key = (ev.eventAction || "").toLowerCase();
+                if(["registration","last changed","expiration","transfer","last update of rdap database"].includes(key)){
+                  log(`${ev.eventAction}: ${ev.eventDate}`);
+                }
+              }
+            }
+          }
+
+          if(Array.isArray(j.nameservers) && j.nameservers.length){
+            log("Nameservers:");
+            for(const ns of j.nameservers.slice(0, 25)){
+              log(` - ${ns.ldhName || ns.name || "-"}`);
+            }
+          }
+
+          setStatus("OK","ok");
+        } catch(e){
+          setStatus("FAIL","bad");
+          log(`ERRO whois/rdap: ${e.message}`);
+          log("Obs: WHOIS clássico geralmente quebra por CORS; RDAP é o caminho certo no browser.");
+        }
+        hr();
+      }
+
+      async function iptrack(ip){
+        setStatus("WORKING","warn");
+        metaEl.textContent = `IPTRACK :: ${ip} :: ${now()}`;
+        log(`$ iptrack ${ip}`);
+        try{
+          hr();
+          await geoip(ip);
+          await rdap(ip);
+
+          // Reverse DNS (PTR) se escolhido ou sempre (aqui sempre)
+          const ptr = ipToPTR(ip);
+          await dns(ptr, "PTR");
+
+          setStatus("OK","ok");
+        } catch(e){
+          setStatus("FAIL","bad");
+          log(`ERRO iptrack: ${e.message}`);
+          hr();
+        }
+      }
+
+      async function run(tool){
+        const host = (hostEl.value || "").trim();
+        const type = (typeEl.value || "A").toUpperCase();
+        if(!host){
+          setStatus("SEM HOST","bad");
+          metaEl.textContent = "Informe um host/IP.";
+          return;
+        }
+
+        lastTool = tool;
+
+        // auto PTR: se DNS + PTR e host é IP, converte.
+        if(tool === "dns"){
+          if(type === "PTR"){
+            if(!isIPv4(host)){
+              setStatus("PTR precisa IP","bad");
+              metaEl.textContent = "PTR precisa de IPv4.";
+              return;
+            }
+            return dns(ipToPTR(host), "PTR");
+          }
+          return dns(host, type);
+        }
+
+        if(tool === "geoip"){
+          if(!isIPv4(host)){
+            setStatus("GeoIP precisa IP","bad");
+            metaEl.textContent = "GeoIP precisa de IPv4.";
+            return;
+          }
+          return geoip(host);
+        }
+
+        if(tool === "iptrack"){
+          if(!isIPv4(host)){
+            setStatus("IPTRACK precisa IP","bad");
+            metaEl.textContent = "IPTRACK precisa de IPv4.";
+            return;
+          }
+          return iptrack(host);
+        }
+
+        if(tool === "whois"){
+          if(!isIPv4(host) && !looksDomain(host)){
+            setStatus("Host inválido","bad");
+            metaEl.textContent = "Use IPv4 ou domínio.";
+            return;
+          }
+          return rdap(host);
+        }
+      }
+
+      // Botões de tool
+      document.addEventListener("click", (e) => {
+        const b = e.target.closest?.("[data-tool]");
+        if(b){
+          run(b.getAttribute("data-tool"));
+          return;
+        }
+      });
+
+      btnClear?.addEventListener("click", clear);
+
+      btnCopy?.addEventListener("click", async () => {
+        const txt = outEl.textContent || "";
+        if(!txt.trim()) return;
+        try{
+          await navigator.clipboard.writeText(txt);
+          setStatus("COPIADO ✓","ok");
+          setTimeout(()=> setStatus("READY","ok"), 900);
+        } catch {
+          setStatus("FALHA copy","bad");
+        }
+      });
+
+      // Enter “inteligente”
+      hostEl?.addEventListener("keydown", (e) => {
+        if(e.key !== "Enter") return;
+        const host = (hostEl.value || "").trim();
+        if(isIPv4(host)){
+          run(lastTool === "dns" ? "iptrack" : lastTool); // se tava em dns, vai iptrack
+        } else if(looksDomain(host)){
+          run(lastTool === "geoip" || lastTool === "iptrack" ? "dns" : lastTool);
+        } else {
+          setStatus("Host inválido","bad");
+          metaEl.textContent = "Formato inválido.";
+        }
+      });
+
+      // Boot
+      clear();
+      log(`[${now()}] Ciel Sec Central pronta.`);
+      log(`Dica: host + GEOIP / IPTRACK / DNS / WHOIS. (Enter roda rápido)`);
+      hr();
+    })();
+  </script>
+
+  <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 
+  <!-- teu app.js continua comandando boot/wipe/tabs/cursor -->
   <script src="app.js"></script>
 </body>
 </html>
