@@ -64,6 +64,47 @@
 
         <div class="hero-foot">
           <div>Central: <span>GeoIP</span> · <span>IP Tracker</span> · <span>DNS</span> · <span>WHOIS/RDAP</span></div>
+          <section class="hub-panel" data-panel-id="dstatl7" hidden>
+  <h3>Dstat L7</h3>
+  <p>Render do gráfico remoto (L7). Usa o mesmo host/IP do input da Central.</p>
+
+  <article class="project-card" style="margin-top:14px;">
+    <div class="project-head">
+      <h4>Graph</h4>
+      <p>Fonte: vedbex · endpoint /tools/ajax/dstat/L7/graph</p>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+      <button class="btn" type="button" id="dstat-refresh">RECARREGAR</button>
+      <button class="btn btn-ghost" type="button" id="dstat-open">ABRIR EM NOVA ABA</button>
+
+      <div style="display:flex; align-items:center; gap:10px; margin-left:auto;">
+        <div class="drop-label">Status:</div>
+        <div id="dstat-status" class="drop-value" style="color:rgba(0,255,153,.75)">READY</div>
+      </div>
+    </div>
+
+    <div class="drop-codebar" style="margin-top:12px;">
+      <div class="drop-label">URL</div>
+      <div class="drop-value" id="dstat-url" style="opacity:.85">—</div>
+    </div>
+
+    <!-- Render principal -->
+    <div style="margin-top:12px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,255,153,.18); background:rgba(0,0,0,.18);">
+      <img id="dstat-img"
+           alt="Dstat L7 graph"
+           style="display:block; width:100%; height:auto;"
+           loading="lazy"
+           referrerpolicy="no-referrer"
+      />
+    </div>
+
+    <!-- Fallback caso o endpoint não seja imagem direta (opcional) -->
+    <div class="drop-hint" style="margin-top:10px;">
+      Se não aparecer nada, pode ser que o endpoint devolva HTML/JS ou bloqueie hotlink. Aí usa “Abrir em nova aba”.
+    </div>
+  </article>
+</section>
         </div>
       </div>
     </section>
