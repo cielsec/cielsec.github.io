@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Ciel Sec Central - Ferramentas de análise de rede: GeoIP, IP Tracker, DNS, WHOIS/RDAP e Dstat L7" />
+  <meta name="theme-color" content="#00ff99" />
   <title>Ciel Sec — Central</title>
 
-  <!-- Fonts usadas no teu CSS -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,65 +16,68 @@
 </head>
 
 <body class="cursor-hidden">
-  <a class="skip" href="#hub">Pular para a central</a>
+  <a class="skip-link" href="#hub">Pular para a central</a>
 
   <!-- Background layers -->
-  <div class="bg"></div>
-  <div class="grid"></div>
-  <div class="glow"></div>
-  <div class="scanlines"></div>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
 
-  <!-- Cursor custom -->
+  <!-- Custom cursor -->
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
-  <!-- Wipe transition -->
+  <!-- Transition overlay -->
   <div class="transition-wipe" aria-hidden="true"></div>
 
   <main class="shell">
-    <!-- =================== HERO / TERMINAL =================== -->
-    <section id="hero" class="screen is-active" aria-hidden="false">
+    <!-- HERO / TERMINAL -->
+    <section id="hero" class="screen is-active" aria-label="Tela inicial">
       <div class="hero-terminal">
-        <div class="terminal-window">
-          <div class="terminal-bar">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <div class="terminal-title">CIEL SEC :: boot sequence</div>
-          </div>
+        <article class="terminal-window">
+          <header class="terminal-bar">
+            <div class="terminal-controls" aria-hidden="true">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <h1 class="terminal-title">CIEL SEC :: boot sequence</h1>
+          </header>
 
           <div class="terminal-body">
             <div class="terminal-watermark" aria-hidden="true">
-              <svg viewBox="0 0 256 256" role="img" aria-label="Ciel Sec watermark">
-                <path d="M128 14l92 36v70c0 66-41 107-92 122C77 227 36 186 36 120V50l92-36Z"></path>
-                <path d="M92 132l26 26 54-70" stroke-linecap="round" stroke-linejoin="round"></path>
+              <svg viewBox="0 0 256 256" aria-hidden="true">
+                <path d="M128 14l92 36v70c0 66-41 107-92 122C77 227 36 186 36 120V50l92-36Z" />
+                <path d="M92 132l26 26 54-70" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </div>
 
-            <!-- Boot lines (teu app.js digita aqui) -->
-            <div id="boot-lines" class="terminal-lines" aria-live="polite"></div>
+            <div id="boot-lines" class="terminal-lines" aria-live="polite" aria-atomic="true"></div>
 
-            <div class="terminal-footer">
+            <footer class="terminal-footer">
               <span class="term-cursor" aria-hidden="true"></span>
-            </div>
+            </footer>
           </div>
-        </div>
+        </article>
 
         <div id="hero-actions" class="hero-actions hero-actions-hidden">
-          <button id="enter-btn" class="btn" type="button">ENTRAR</button>
+          <button id="enter-btn" class="btn btn-primary" type="button">
+            ENTRAR
+          </button>
         </div>
 
-        <div class="hero-foot">
-          <div>Central: <span>GeoIP</span> · <span>IP Tracker</span> · <span>DNS</span> · <span>WHOIS/RDAP</span></div>
-        </div>
+        <footer class="hero-foot">
+          <p>Central: <span>GeoIP</span> · <span>IP Tracker</span> · <span>DNS</span> · <span>WHOIS/RDAP</span></p>
+        </footer>
       </div>
     </section>
 
-    <!-- =================== HUB / CENTRAL =================== -->
-    <section id="hub" class="screen" aria-hidden="true" tabindex="-1">
+    <!-- HUB / CENTRAL -->
+    <section id="hub" class="screen" aria-label="Central de ferramentas" tabindex="-1">
       <header class="hub-header">
         <div class="hub-head">
-          <div class="eyebrow">Central de Ferramentas</div>
+          <p class="eyebrow">Central de Ferramentas</p>
           <h2>Escolhe o host, roda a ação e lê o resultado no console.</h2>
         </div>
         <div class="hub-line" aria-hidden="true"></div>
@@ -80,94 +85,97 @@
       </header>
 
       <div class="hub-layout">
-        <!-- Menu -->
-        <nav class="hub-menu" aria-label="Módulos">
-          <button class="hub-btn is-active" type="button" data-panel="central" aria-selected="true">
-            <span class="icon">▣</span> CENTRAL
-          </button>
-          <button class="hub-btn" type="button" data-panel="geoip" aria-selected="false">
-            <span class="icon">⌁</span> GEOIP
-          </button>
-          <button class="hub-btn" type="button" data-panel="iptrack" aria-selected="false">
-            <span class="icon">⟟</span> IP TRACKER
-          </button>
-          <button class="hub-btn" type="button" data-panel="dns" aria-selected="false">
-            <span class="icon">⎈</span> DNS
-          </button>
-          <button class="hub-btn" type="button" data-panel="whois" aria-selected="false">
-            <span class="icon">⟐</span> WHOIS / RDAP
-          </button>
-
-          <!-- NOVA ABA -->
-          <button class="hub-btn" type="button" data-panel="dstatl7" aria-selected="false">
-            <span class="icon">▦</span> DSTAT L7
-          </button>
+        <!-- Navigation -->
+        <nav class="hub-menu" aria-label="Módulos de ferramentas">
+          <ul class="hub-menu-list">
+            <li>
+              <button class="hub-btn is-active" type="button" data-panel="central" aria-selected="true">
+                <span class="icon" aria-hidden="true">▣</span>
+                <span class="label">CENTRAL</span>
+              </button>
+            </li>
+            <li>
+              <button class="hub-btn" type="button" data-panel="geoip" aria-selected="false">
+                <span class="icon" aria-hidden="true">⌁</span>
+                <span class="label">GEOIP</span>
+              </button>
+            </li>
+            <li>
+              <button class="hub-btn" type="button" data-panel="iptrack" aria-selected="false">
+                <span class="icon" aria-hidden="true">⟟</span>
+                <span class="label">IP TRACKER</span>
+              </button>
+            </li>
+            <li>
+              <button class="hub-btn" type="button" data-panel="dns" aria-selected="false">
+                <span class="icon" aria-hidden="true">⎈</span>
+                <span class="label">DNS</span>
+              </button>
+            </li>
+            <li>
+              <button class="hub-btn" type="button" data-panel="whois" aria-selected="false">
+                <span class="icon" aria-hidden="true">⟐</span>
+                <span class="label">WHOIS / RDAP</span>
+              </button>
+            </li>
+            <li>
+              <button class="hub-btn" type="button" data-panel="dstatl7" aria-selected="false">
+                <span class="icon" aria-hidden="true">▦</span>
+                <span class="label">DSTAT L7</span>
+              </button>
+            </li>
+          </ul>
         </nav>
 
         <!-- Panels -->
-        <div class="hub-panels" role="region" aria-label="Painel">
-          <!-- CENTRAL (console + ações) -->
-          <section class="hub-panel is-active" data-panel-id="central" hidden="false">
-            <h3>Central</h3>
-            <p>Input do alvo + botões de ação + console de resultados (funcionando em GitHub Pages).</p>
+        <div class="hub-panels" role="region" aria-label="Painéis de ferramentas">
+          <!-- CENTRAL -->
+          <section class="hub-panel is-active" data-panel-id="central" aria-labelledby="panel-central-heading">
+            <h3 id="panel-central-heading">Central</h3>
+            <p class="panel-description">Input do alvo + botões de ação + console de resultados.</p>
 
-            <!-- Painel de controle reutilizando o estilo do teu "card" -->
-            <article class="project-card" style="margin-top:14px;">
-              <div class="project-head">
+            <article class="project-card control-panel">
+              <header class="project-head">
                 <h4>Alvo / Host</h4>
-                <p>IPv4 ou domínio. Enter roda uma ação “inteligente”.</p>
-              </div>
+                <p>IPv4 ou domínio. Enter roda uma ação "inteligente".</p>
+              </header>
 
-              <div style="margin-top:12px; display:grid; gap:10px;">
-                <div style="display:grid; gap:8px;">
-                  <div class="drop-label">Host</div>
-                  <input id="tool-host"
-                         list="host-sugestoes"
-                         placeholder="8.8.8.8 | 1.1.1.1 | example.com"
-                         spellcheck="false"
-                         autocomplete="off"
-                         style="
-                           width:100%;
-                           padding:12px 14px;
-                           border-radius:12px;
-                           border:1px solid rgba(0,255,153,.22);
-                           background:rgba(0,0,0,.22);
-                           color:rgba(228,241,236,.92);
-                           outline:none;
-                         " />
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="tool-host" class="drop-label">Host</label>
+                  <input 
+                    id="tool-host"
+                    list="host-sugestoes"
+                    placeholder="8.8.8.8 | 1.1.1.1 | example.com"
+                    spellcheck="false"
+                    autocomplete="off"
+                    aria-describedby="host-help"
+                  />
                   <datalist id="host-sugestoes">
-                    <option value="8.8.8.8"></option>
-                    <option value="1.1.1.1"></option>
-                    <option value="9.9.9.9"></option>
-                    <option value="example.com"></option>
-                    <option value="cloudflare.com"></option>
+                    <option value="8.8.8.8">Google DNS</option>
+                    <option value="1.1.1.1">Cloudflare DNS</option>
+                    <option value="9.9.9.9">Quad9</option>
+                    <option value="example.com">Example Domain</option>
+                    <option value="cloudflare.com">Cloudflare</option>
                   </datalist>
+                  <small id="host-help" class="sr-only">Digite um endereço IP ou nome de domínio</small>
                 </div>
 
-                <div style="display:grid; gap:8px;">
-                  <div class="drop-label">DNS Type (quando usar DNS/PTR)</div>
-                  <select id="tool-dns-type"
-                          style="
-                            width:100%;
-                            padding:12px 14px;
-                            border-radius:12px;
-                            border:1px solid rgba(0,255,153,.22);
-                            background:rgba(0,0,0,.22);
-                            color:rgba(228,241,236,.92);
-                            outline:none;
-                          ">
-                    <option value="A">A</option>
-                    <option value="AAAA">AAAA</option>
-                    <option value="MX">MX</option>
-                    <option value="NS">NS</option>
-                    <option value="TXT">TXT</option>
-                    <option value="CNAME">CNAME</option>
-                    <option value="SOA">SOA</option>
-                    <option value="PTR">PTR (Reverse)</option>
+                <div class="form-group">
+                  <label for="tool-dns-type" class="drop-label">DNS Type (quando usar DNS/PTR)</label>
+                  <select id="tool-dns-type">
+                    <option value="A">A (IPv4)</option>
+                    <option value="AAAA">AAAA (IPv6)</option>
+                    <option value="MX">MX (Mail Exchange)</option>
+                    <option value="NS">NS (Name Server)</option>
+                    <option value="TXT">TXT (Text)</option>
+                    <option value="CNAME">CNAME (Canonical Name)</option>
+                    <option value="SOA">SOA (Start of Authority)</option>
+                    <option value="PTR">PTR (Reverse DNS)</option>
                   </select>
                 </div>
 
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:4px;">
+                <div class="action-buttons">
                   <button class="btn" type="button" data-tool="geoip">GEOIP</button>
                   <button class="btn" type="button" data-tool="iptrack">IPTRACK</button>
                   <button class="btn" type="button" data-tool="dns">DNS</button>
@@ -176,168 +184,184 @@
                   <button class="btn btn-ghost" type="button" id="tool-copy">COPIAR</button>
                 </div>
 
-                <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                  <div class="drop-label">Status:</div>
-                  <div id="tool-status" class="drop-value" style="color:rgba(0,255,153,.75)">READY</div>
-                  <div class="drop-label" style="margin-left:auto;">Fonte:</div>
-                  <div class="drop-value" style="opacity:.9">ipapi/ipwho · dns.google · rdap.org</div>
+                <div class="status-bar">
+                  <div class="status-item">
+                    <span class="drop-label">Status:</span>
+                    <output id="tool-status" class="drop-value status-ready">READY</output>
+                  </div>
+                  <div class="status-item source-info">
+                    <span class="drop-label">Fonte:</span>
+                    <span class="drop-value">ipapi/ipwho · dns.google · rdap.org</span>
+                  </div>
                 </div>
               </div>
             </article>
 
-            <article class="project-card" style="margin-top:14px;">
-              <div class="project-head">
+            <article class="project-card console-panel">
+              <header class="project-head">
                 <h4>Console</h4>
-                <p>Resultados e erros aparecem aqui. (Perfeito pra print/relatório)</p>
-              </div>
+                <p>Resultados e erros aparecem aqui.</p>
+              </header>
 
               <div class="drop-codebar">
-                <div class="drop-label">Output</div>
-                <div class="drop-value" id="tool-meta" style="opacity:.8;">—</div>
+                <span class="drop-label">Output</span>
+                <output id="tool-meta" class="drop-value">—</output>
               </div>
 
-              <pre class="code-block" style="min-height:220px;"><code id="tool-output"></code></pre>
-              <div class="drop-hint">Dica: se algum endpoint bloquear CORS, você vai ver o erro no console (aí só com proxy/back-end).</div>
+              <pre class="code-block"><code id="tool-output"></code></pre>
+              <p class="drop-hint">Dica: se algum endpoint bloquear CORS, você vai ver o erro no console.</p>
             </article>
           </section>
 
-          <!-- Painéis explicativos (pra bater com teu menu) -->
-          <section class="hub-panel" data-panel-id="geoip" hidden>
-            <h3>GeoIP</h3>
+          <!-- GEOIP -->
+          <section class="hub-panel" data-panel-id="geoip" aria-labelledby="panel-geoip-heading" hidden>
+            <h3 id="panel-geoip-heading">GeoIP</h3>
             <p>Geolocalização + ASN/ORG + timezone. Use IPv4.</p>
-            <ul>
-              <li>Entrada: IPv4</li>
-              <li>Saída: cidade/país/coords/ASN/org</li>
+            <ul class="feature-list">
+              <li><strong>Entrada:</strong> IPv4</li>
+              <li><strong>Saída:</strong> cidade/país/coordenadas/ASN/organização</li>
             </ul>
           </section>
 
-          <section class="hub-panel" data-panel-id="iptrack" hidden>
-            <h3>IP Tracker</h3>
+          <!-- IP TRACKER -->
+          <section class="hub-panel" data-panel-id="iptrack" aria-labelledby="panel-iptrack-heading" hidden>
+            <h3 id="panel-iptrack-heading">IP Tracker</h3>
             <p>Combo: GeoIP + RDAP + Reverse DNS (PTR) quando existir.</p>
-            <ul>
-              <li>GeoIP</li>
+            <ul class="feature-list">
+              <li>GeoIP detalhado</li>
               <li>RDAP (registro / entidades)</li>
-              <li>PTR (reverse)</li>
+              <li>PTR (reverse DNS)</li>
             </ul>
           </section>
 
-          <section class="hub-panel" data-panel-id="dns" hidden>
-            <h3>DNS</h3>
+          <!-- DNS -->
+          <section class="hub-panel" data-panel-id="dns" aria-labelledby="panel-dns-heading" hidden>
+            <h3 id="panel-dns-heading">DNS</h3>
             <p>Resolver DNS via DNS-over-HTTPS (Google). Use domínio (ou PTR com IP).</p>
-            <ul>
+            <ul class="feature-list">
               <li>A/AAAA/MX/NS/TXT/CNAME/SOA</li>
               <li>PTR: reverse de IPv4</li>
             </ul>
           </section>
 
-          <section class="hub-panel" data-panel-id="whois" hidden>
-            <h3>WHOIS / RDAP</h3>
-            <p>RDAP é o “WHOIS moderno” e geralmente funciona melhor no browser do que WHOIS clássico.</p>
-            <ul>
+          <!-- WHOIS -->
+          <section class="hub-panel" data-panel-id="whois" aria-labelledby="panel-whois-heading" hidden>
+            <h3 id="panel-whois-heading">WHOIS / RDAP</h3>
+            <p>RDAP é o "WHOIS moderno" e geralmente funciona melhor no browser do que WHOIS clássico.</p>
+            <ul class="feature-list">
               <li>Domínio ou IP</li>
-              <li>Status, eventos, nameservers, entidades (quando expostas)</li>
+              <li>Status, eventos, nameservers, entidades</li>
             </ul>
           </section>
 
-          <!-- =================== NOVO PAINEL: DSTAT L7 =================== -->
-          <section class="hub-panel" data-panel-id="dstatl7" hidden>
-            <h3>Dstat L7</h3>
+          <!-- DSTAT L7 -->
+          <section class="hub-panel" data-panel-id="dstatl7" aria-labelledby="panel-dstat-heading" hidden>
+            <h3 id="panel-dstat-heading">Dstat L7</h3>
             <p>Gráfico remoto L7 (vedbex). Usa o mesmo host/IP do input da Central.</p>
 
-            <article class="project-card" style="margin-top:14px;">
-              <div class="project-head">
+            <article class="project-card">
+              <header class="project-head">
                 <h4>Graph</h4>
                 <p>Render do endpoint /tools/ajax/dstat/L7/graph</p>
-              </div>
+              </header>
 
-              <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
-                <button class="btn" type="button" id="dstat-refresh">RECARREGAR</button>
-                <button class="btn btn-ghost" type="button" id="dstat-open">ABRIR EM NOVA ABA</button>
-
-                <div style="display:flex; align-items:center; gap:10px; margin-left:auto;">
-                  <div class="drop-label">Status:</div>
-                  <div id="dstat-status" class="drop-value" style="color:rgba(0,255,153,.75)">READY</div>
+              <div class="dstat-controls">
+                <div class="action-buttons">
+                  <button class="btn" type="button" id="dstat-refresh">RECARREGAR</button>
+                  <button class="btn btn-ghost" type="button" id="dstat-open">ABRIR EM NOVA ABA</button>
+                </div>
+                
+                <div class="status-item">
+                  <span class="drop-label">Status:</span>
+                  <output id="dstat-status" class="drop-value status-ready">READY</output>
                 </div>
               </div>
 
-              <div class="drop-codebar" style="margin-top:12px;">
-                <div class="drop-label">URL</div>
-                <div class="drop-value" id="dstat-url" style="opacity:.85">—</div>
+              <div class="drop-codebar">
+                <span class="drop-label">URL</span>
+                <output id="dstat-url" class="drop-value">—</output>
               </div>
 
-              <div style="margin-top:12px; border-radius:14px; overflow:hidden; border:1px solid rgba(0,255,153,.18); background:rgba(0,0,0,.18);">
-                <img id="dstat-img"
-                     alt="Dstat L7 graph"
-                     style="display:block; width:100%; height:auto;"
-                     loading="lazy"
-                     referrerpolicy="no-referrer"
+              <figure class="dstat-figure">
+                <img 
+                  id="dstat-img"
+                  alt="Gráfico Dstat L7 - estatísticas de rede"
+                  loading="lazy"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
                 />
-              </div>
+              </figure>
 
-              <div class="drop-hint" style="margin-top:10px;">
-                Se não aparecer, pode ser bloqueio de hotlink/embeds. Usa “Abrir em nova aba”.
-              </div>
+              <p class="drop-hint">Se não aparecer, pode ser bloqueio de hotlink/embeds. Use "Abrir em nova aba".</p>
             </article>
           </section>
         </div>
       </div>
 
       <footer class="site-footer">
-        <div>© <span id="year"></span> Ciel Sec · “método vence sorte”</div>
+        <p>© <time id="year"></time> Ciel Sec · "método vence sorte"</p>
       </footer>
     </section>
   </main>
 
-  <!-- ====== TOOL ENGINE (inline, sem mexer no teu app.js) ====== -->
+  <!-- Tool Engine -->
   <script>
-    (function(){
-      const hostEl = document.getElementById("tool-host");
-      const typeEl = document.getElementById("tool-dns-type");
-      const outEl  = document.getElementById("tool-output");
-      const metaEl = document.getElementById("tool-meta");
-      const stEl   = document.getElementById("tool-status");
-      const btnClear = document.getElementById("tool-clear");
-      const btnCopy  = document.getElementById("tool-copy");
-
-      let lastTool = "geoip";
-
-      const now = () => new Date().toLocaleString("pt-BR");
-      const setStatus = (t, c) => {
-        stEl.textContent = t;
-        stEl.style.color =
-          c === "ok" ? "rgba(0,255,153,.85)" :
-          c === "bad" ? "rgba(255,77,77,.90)" :
-          c === "warn" ? "rgba(255,210,77,.95)" :
-          "rgba(0,255,153,.75)";
+    (function() {
+      'use strict';
+      
+      // Elements
+      const els = {
+        host: document.getElementById('tool-host'),
+        type: document.getElementById('tool-dns-type'),
+        output: document.getElementById('tool-output'),
+        meta: document.getElementById('tool-meta'),
+        status: document.getElementById('tool-status'),
+        clear: document.getElementById('tool-clear'),
+        copy: document.getElementById('tool-copy'),
+        dstatImg: document.getElementById('dstat-img'),
+        dstatUrl: document.getElementById('dstat-url'),
+        dstatStatus: document.getElementById('dstat-status'),
+        dstatRefresh: document.getElementById('dstat-refresh'),
+        dstatOpen: document.getElementById('dstat-open'),
+        year: document.getElementById('year')
       };
 
+      let lastTool = 'geoip';
+      let dstatDebounce;
+
+      // Utilities
+      const now = () => new Date().toLocaleString('pt-BR');
+      const isIPv4 = ip => /^(\d{1,3}\.){3}\d{1,3}$/.test(ip) && ip.split('.').every(n => +n >= 0 && +n <= 255);
+      const looksDomain = d => !!d && !/\s/.test(d) && d.includes('.') && /^[a-zA-Z0-9.-]+$/.test(d) && !d.startsWith('.') && !d.endsWith('.');
+      const ipToPTR = ip => ip.split('.').reverse().join('.') + '.in-addr.arpa';
+
+      const setStatus = (text, type) => {
+        els.status.textContent = text;
+        els.status.className = 'drop-value status-' + (type || 'ready');
+        const colors = { ok: 'rgba(0,255,153,.85)', bad: 'rgba(255,77,77,.90)', warn: 'rgba(255,210,77,.95)', ready: 'rgba(0,255,153,.75)' };
+        els.status.style.color = colors[type] || colors.ready;
+      };
+
+      const log = (s = '') => els.output.textContent += s + '\n';
+      const hr = () => log('─'.repeat(72));
       const clear = () => {
-        outEl.textContent = "";
-        metaEl.textContent = "—";
-        setStatus("READY","ok");
+        els.output.textContent = '';
+        els.meta.textContent = '—';
+        setStatus('READY', 'ok');
       };
 
-      const log = (s="") => {
-        outEl.textContent += s + "\n";
-      };
-
-      const hr = () => log("─".repeat(72));
-
-      const isIPv4 = (ip) => /^(\d{1,3}\.){3}\d{1,3}$/.test(ip) && ip.split(".").every(n => +n>=0 && +n<=255);
-      const looksDomain = (d) => !!d && !/\s/.test(d) && d.includes(".") && /^[a-zA-Z0-9.-]+$/.test(d) && !d.startsWith(".") && !d.endsWith(".");
-      const ipToPTR = (ip) => ip.split(".").reverse().join(".") + ".in-addr.arpa";
-
-      async function fetchJson(url, opts={}, timeoutMs=12000){
+      // Fetch with timeout
+      async function fetchJson(url, opts = {}, timeoutMs = 12000) {
         const ctrl = new AbortController();
-        const t = setTimeout(()=>ctrl.abort(), timeoutMs);
-        try{
+        const t = setTimeout(() => ctrl.abort(), timeoutMs);
+        try {
           const r = await fetch(url, { ...opts, signal: ctrl.signal });
-          if(!r.ok){
-            const tx = await r.text().catch(()=> "");
-            throw new Error(`HTTP ${r.status} — ${tx.slice(0,180)}`);
+          if (!r.ok) {
+            const tx = await r.text().catch(() => '');
+            throw new Error(`HTTP ${r.status} — ${tx.slice(0, 180)}`);
           }
-          const ct = r.headers.get("content-type") || "";
-          if(ct.includes("json")) return await r.json();
+          const ct = r.headers.get('content-type') || '';
+          if (ct.includes('json')) return await r.json();
           const tx = await r.text();
           try { return JSON.parse(tx); } catch { return { raw: tx }; }
         } finally {
@@ -345,293 +369,261 @@
         }
       }
 
-      async function geoip(ip){
-        setStatus("WORKING","warn");
-        metaEl.textContent = `GeoIP :: ${ip} :: ${now()}`;
+      // Tools
+      async function geoip(ip) {
+        setStatus('WORKING', 'warn');
+        els.meta.textContent = `GeoIP :: ${ip} :: ${now()}`;
         log(`$ geoip ${ip}`);
-        try{
-          // ipapi (principal)
+        try {
           let j;
-          try{
+          try {
             j = await fetchJson(`https://ipapi.co/${encodeURIComponent(ip)}/json/`);
-            if(j?.error) throw new Error(j?.reason || "ipapi error");
+            if (j?.error) throw new Error(j?.reason || 'ipapi error');
             log(`IP: ${j.ip || ip}`);
-            log(`Local: ${j.city || "-"}, ${j.region || "-"} — ${j.country_name || "-"} (${j.country || "-"})`);
-            log(`Coords: ${j.latitude ?? "-"}, ${j.longitude ?? "-"}`);
-            log(`ASN: ${j.asn || "-"} | Org: ${j.org || "-"} `);
-            log(`Timezone: ${j.timezone || "-"}`);
+            log(`Local: ${j.city || '-'}, ${j.region || '-'} — ${j.country_name || '-'} (${j.country || '-'})`);
+            log(`Coords: ${j.latitude ?? '-'}, ${j.longitude ?? '-'}`);
+            log(`ASN: ${j.asn || '-'} | Org: ${j.org || '-'}`);
+            log(`Timezone: ${j.timezone || '-'}`);
           } catch {
-            // fallback ipwho.is
             j = await fetchJson(`https://ipwho.is/${encodeURIComponent(ip)}`);
-            if(j?.success === false) throw new Error(j?.message || "ipwho error");
+            if (j?.success === false) throw new Error(j?.message || 'ipwho error');
             log(`IP: ${j.ip || ip}`);
-            log(`Local: ${j.city || "-"}, ${j.region || "-"} — ${j.country || "-"} (${j.country_code || "-"})`);
-            log(`Coords: ${j.latitude ?? "-"}, ${j.longitude ?? "-"}`);
-            log(`ASN: ${j.connection?.asn || "-"} | Org: ${j.connection?.org || "-"} `);
-            log(`Timezone: ${j.timezone?.id || "-"}`);
+            log(`Local: ${j.city || '-'}, ${j.region || '-'} — ${j.country || '-'} (${j.country_code || '-'})`);
+            log(`Coords: ${j.latitude ?? '-'}, ${j.longitude ?? '-'}`);
+            log(`ASN: ${j.connection?.asn || '-'} | Org: ${j.connection?.org || '-'}`);
+            log(`Timezone: ${j.timezone?.id || '-'}`);
           }
-
-          setStatus("OK","ok");
-        } catch(e){
-          setStatus("FAIL","bad");
+          setStatus('OK', 'ok');
+        } catch (e) {
+          setStatus('FAIL', 'bad');
           log(`ERRO geoip: ${e.message}`);
         }
         hr();
       }
 
-      async function dns(name, type){
-        setStatus("WORKING","warn");
-        metaEl.textContent = `DNS :: ${name} :: ${type} :: ${now()}`;
+      async function dns(name, type) {
+        setStatus('WORKING', 'warn');
+        els.meta.textContent = `DNS :: ${name} :: ${type} :: ${now()}`;
         log(`$ dns ${name} ${type}`);
-        try{
+        try {
           const url = `https://dns.google/resolve?name=${encodeURIComponent(name)}&type=${encodeURIComponent(type)}`;
           const j = await fetchJson(url);
-          if(j?.Status !== 0) log(`DNS Status != 0 (${j.Status}).`);
-
-          if(j?.Answer?.length){
-            for(const a of j.Answer){
-              log(`${a.name}  TYPE=${a.type}  TTL=${a.TTL}  ${a.data}`);
-            }
+          if (j?.Status !== 0) log(`DNS Status != 0 (${j.Status}).`);
+          
+          if (j?.Answer?.length) {
+            for (const a of j.Answer) log(`${a.name}  TYPE=${a.type}  TTL=${a.TTL}  ${a.data}`);
           } else {
-            log("Sem Answer. Tentando Authority/Additional...");
-            if(j?.Authority?.length) for(const a of j.Authority) log(`[AUTH] ${a.name} TYPE=${a.type} TTL=${a.TTL} ${a.data}`);
-            if(j?.Additional?.length) for(const a of j.Additional) log(`[ADD]  ${a.name} TYPE=${a.type} TTL=${a.TTL} ${a.data}`);
-            if(!j?.Authority?.length && !j?.Additional?.length) log("Nada retornado.");
+            log('Sem Answer. Tentando Authority/Additional...');
+            if (j?.Authority?.length) for (const a of j.Authority) log(`[AUTH] ${a.name} TYPE=${a.type} TTL=${a.TTL} ${a.data}`);
+            if (j?.Additional?.length) for (const a of j.Additional) log(`[ADD]  ${a.name} TYPE=${a.type} TTL=${a.TTL} ${a.data}`);
+            if (!j?.Authority?.length && !j?.Additional?.length) log('Nada retornado.');
           }
-
-          setStatus("OK","ok");
-        } catch(e){
-          setStatus("FAIL","bad");
+          setStatus('OK', 'ok');
+        } catch (e) {
+          setStatus('FAIL', 'bad');
           log(`ERRO dns: ${e.message}`);
         }
         hr();
       }
 
-      async function rdap(target){
-        setStatus("WORKING","warn");
-        metaEl.textContent = `RDAP :: ${target} :: ${now()}`;
+      async function rdap(target) {
+        setStatus('WORKING', 'warn');
+        els.meta.textContent = `RDAP :: ${target} :: ${now()}`;
         log(`$ whois ${target}`);
-        try{
-          const url = isIPv4(target)
+        try {
+          const url = isIPv4(target) 
             ? `https://rdap.org/ip/${encodeURIComponent(target)}`
             : `https://rdap.org/domain/${encodeURIComponent(target)}`;
-
-          const j = await fetchJson(url, { headers: { "accept": "application/rdap+json, application/json" } });
-
-          log(`Handle: ${j.handle || "-"}`);
-          if(j.ldhName) log(`Nome: ${j.ldhName}`);
-          if(j.status) log(`Status: ${Array.isArray(j.status) ? j.status.join(", ") : j.status}`);
-
-          if(Array.isArray(j.events)){
-            for(const ev of j.events){
-              if(ev?.eventAction && ev?.eventDate){
-                const key = (ev.eventAction || "").toLowerCase();
-                if(["registration","last changed","expiration","transfer","last update of rdap database"].includes(key)){
+          const j = await fetchJson(url, { headers: { accept: 'application/rdap+json, application/json' } });
+          
+          log(`Handle: ${j.handle || '-'}`);
+          if (j.ldhName) log(`Nome: ${j.ldhName}`);
+          if (j.status) log(`Status: ${Array.isArray(j.status) ? j.status.join(', ') : j.status}`);
+          
+          if (Array.isArray(j.events)) {
+            for (const ev of j.events) {
+              if (ev?.eventAction && ev?.eventDate) {
+                const key = (ev.eventAction || '').toLowerCase();
+                if (['registration', 'last changed', 'expiration', 'transfer', 'last update of rdap database'].includes(key)) {
                   log(`${ev.eventAction}: ${ev.eventDate}`);
                 }
               }
             }
           }
-
-          if(Array.isArray(j.nameservers) && j.nameservers.length){
-            log("Nameservers:");
-            for(const ns of j.nameservers.slice(0, 25)){
-              log(` - ${ns.ldhName || ns.name || "-"}`);
-            }
+          
+          if (Array.isArray(j.nameservers) && j.nameservers.length) {
+            log('Nameservers:');
+            for (const ns of j.nameservers.slice(0, 25)) log(` - ${ns.ldhName || ns.name || '-'}`);
           }
-
-          setStatus("OK","ok");
-        } catch(e){
-          setStatus("FAIL","bad");
+          setStatus('OK', 'ok');
+        } catch (e) {
+          setStatus('FAIL', 'bad');
           log(`ERRO whois/rdap: ${e.message}`);
-          log("Obs: WHOIS clássico geralmente quebra por CORS; RDAP é o caminho certo no browser.");
+          log('Obs: WHOIS clássico geralmente quebra por CORS; RDAP é o caminho certo no browser.');
         }
         hr();
       }
 
-      async function iptrack(ip){
-        setStatus("WORKING","warn");
-        metaEl.textContent = `IPTRACK :: ${ip} :: ${now()}`;
+      async function iptrack(ip) {
+        setStatus('WORKING', 'warn');
+        els.meta.textContent = `IPTRACK :: ${ip} :: ${now()}`;
         log(`$ iptrack ${ip}`);
-        try{
+        try {
           hr();
           await geoip(ip);
           await rdap(ip);
-
-          // Reverse DNS (PTR) se escolhido ou sempre (aqui sempre)
-          const ptr = ipToPTR(ip);
-          await dns(ptr, "PTR");
-
-          setStatus("OK","ok");
-        } catch(e){
-          setStatus("FAIL","bad");
+          await dns(ipToPTR(ip), 'PTR');
+          setStatus('OK', 'ok');
+        } catch (e) {
+          setStatus('FAIL', 'bad');
           log(`ERRO iptrack: ${e.message}`);
           hr();
         }
       }
 
-      async function run(tool){
-        const host = (hostEl.value || "").trim();
-        const type = (typeEl.value || "A").toUpperCase();
-        if(!host){
-          setStatus("SEM HOST","bad");
-          metaEl.textContent = "Informe um host/IP.";
+      // Main run function
+      async function run(tool) {
+        const host = (els.host.value || '').trim();
+        const type = (els.type.value || 'A').toUpperCase();
+        if (!host) {
+          setStatus('SEM HOST', 'bad');
+          els.meta.textContent = 'Informe um host/IP.';
           return;
         }
 
         lastTool = tool;
 
-        // auto PTR: se DNS + PTR e host é IP, converte.
-        if(tool === "dns"){
-          if(type === "PTR"){
-            if(!isIPv4(host)){
-              setStatus("PTR precisa IP","bad");
-              metaEl.textContent = "PTR precisa de IPv4.";
+        if (tool === 'dns') {
+          if (type === 'PTR') {
+            if (!isIPv4(host)) {
+              setStatus('PTR precisa IP', 'bad');
+              els.meta.textContent = 'PTR precisa de IPv4.';
               return;
             }
-            return dns(ipToPTR(host), "PTR");
+            return dns(ipToPTR(host), 'PTR');
           }
           return dns(host, type);
         }
 
-        if(tool === "geoip"){
-          if(!isIPv4(host)){
-            setStatus("GeoIP precisa IP","bad");
-            metaEl.textContent = "GeoIP precisa de IPv4.";
+        if (tool === 'geoip') {
+          if (!isIPv4(host)) {
+            setStatus('GeoIP precisa IP', 'bad');
+            els.meta.textContent = 'GeoIP precisa de IPv4.';
             return;
           }
           return geoip(host);
         }
 
-        if(tool === "iptrack"){
-          if(!isIPv4(host)){
-            setStatus("IPTRACK precisa IP","bad");
-            metaEl.textContent = "IPTRACK precisa de IPv4.";
+        if (tool === 'iptrack') {
+          if (!isIPv4(host)) {
+            setStatus('IPTRACK precisa IP', 'bad');
+            els.meta.textContent = 'IPTRACK precisa de IPv4.';
             return;
           }
           return iptrack(host);
         }
 
-        if(tool === "whois"){
-          if(!isIPv4(host) && !looksDomain(host)){
-            setStatus("Host inválido","bad");
-            metaEl.textContent = "Use IPv4 ou domínio.";
+        if (tool === 'whois') {
+          if (!isIPv4(host) && !looksDomain(host)) {
+            setStatus('Host inválido', 'bad');
+            els.meta.textContent = 'Use IPv4 ou domínio.';
             return;
           }
           return rdap(host);
         }
       }
 
-      // Botões de tool
-      document.addEventListener("click", (e) => {
-        const b = e.target.closest?.("[data-tool]");
-        if(b){
-          run(b.getAttribute("data-tool"));
+      // Event listeners
+      document.addEventListener('click', e => {
+        const b = e.target.closest?.('[data-tool]');
+        if (b) {
+          run(b.getAttribute('data-tool'));
           return;
         }
       });
 
-      btnClear?.addEventListener("click", clear);
+      els.clear?.addEventListener('click', clear);
 
-      btnCopy?.addEventListener("click", async () => {
-        const txt = outEl.textContent || "";
-        if(!txt.trim()) return;
-        try{
+      els.copy?.addEventListener('click', async () => {
+        const txt = els.output.textContent || '';
+        if (!txt.trim()) return;
+        try {
           await navigator.clipboard.writeText(txt);
-          setStatus("COPIADO ✓","ok");
-          setTimeout(()=> setStatus("READY","ok"), 900);
+          setStatus('COPIADO ✓', 'ok');
+          setTimeout(() => setStatus('READY', 'ok'), 900);
         } catch {
-          setStatus("FALHA copy","bad");
+          setStatus('FALHA copy', 'bad');
         }
       });
 
-      // Enter “inteligente”
-      hostEl?.addEventListener("keydown", (e) => {
-        if(e.key !== "Enter") return;
-        const host = (hostEl.value || "").trim();
-        if(isIPv4(host)){
-          run(lastTool === "dns" ? "iptrack" : lastTool); // se tava em dns, vai iptrack
-        } else if(looksDomain(host)){
-          run(lastTool === "geoip" || lastTool === "iptrack" ? "dns" : lastTool);
+      els.host?.addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        const host = (els.host.value || '').trim();
+        if (isIPv4(host)) {
+          run(lastTool === 'dns' ? 'iptrack' : lastTool);
+        } else if (looksDomain(host)) {
+          run(lastTool === 'geoip' || lastTool === 'iptrack' ? 'dns' : lastTool);
         } else {
-          setStatus("Host inválido","bad");
-          metaEl.textContent = "Formato inválido.";
+          setStatus('Host inválido', 'bad');
+          els.meta.textContent = 'Formato inválido.';
         }
       });
 
-      // =================== DSTAT L7 ===================
-      const dstatImg = document.getElementById("dstat-img");
-      const dstatUrlEl = document.getElementById("dstat-url");
-      const dstatStatus = document.getElementById("dstat-status");
-      const dstatRefresh = document.getElementById("dstat-refresh");
-      const dstatOpen = document.getElementById("dstat-open");
-
-      const setDstatStatus = (t, c) => {
-        if(!dstatStatus) return;
-        dstatStatus.textContent = t;
-        dstatStatus.style.color =
-          c === "ok" ? "rgba(0,255,153,.85)" :
-          c === "bad" ? "rgba(255,77,77,.90)" :
-          c === "warn" ? "rgba(255,210,77,.95)" :
-          "rgba(0,255,153,.75)";
+      // Dstat L7
+      const setDstatStatus = (text, type) => {
+        if (!els.dstatStatus) return;
+        els.dstatStatus.textContent = text;
+        els.dstatStatus.className = 'drop-value status-' + type;
+        const colors = { ok: 'rgba(0,255,153,.85)', bad: 'rgba(255,77,77,.90)', warn: 'rgba(255,210,77,.95)', ready: 'rgba(0,255,153,.75)' };
+        els.dstatStatus.style.color = colors[type] || colors.ready;
       };
 
-      const buildDstatUrl = (ipOrHost) => {
-        const ip = encodeURIComponent(ipOrHost);
-        return `https://www.vedbex.com/tools/ajax/dstat/L7/graph?ip=${ip}&title=false`;
-      };
+      const buildDstatUrl = ipOrHost => `https://www.vedbex.com/tools/ajax/dstat/L7/graph?ip=${encodeURIComponent(ipOrHost)}&title=false`;
 
       const loadDstat = () => {
-        const host = (hostEl?.value || "").trim();
-        if(!host){
-          setDstatStatus("SEM HOST", "bad");
-          if(dstatUrlEl) dstatUrlEl.textContent = "Informe um host/IP na aba Central.";
-          if(dstatImg) dstatImg.removeAttribute("src");
+        const host = (els.host?.value || '').trim();
+        if (!host) {
+          setDstatStatus('SEM HOST', 'bad');
+          if (els.dstatUrl) els.dstatUrl.textContent = 'Informe um host/IP na aba Central.';
+          if (els.dstatImg) els.dstatImg.removeAttribute('src');
           return;
         }
 
         const url = buildDstatUrl(host);
-        if(dstatUrlEl) dstatUrlEl.textContent = url;
+        if (els.dstatUrl) els.dstatUrl.textContent = url;
 
-        const bust = (url.includes("?") ? "&" : "?") + "t=" + Date.now();
-
-        setDstatStatus("LOADING", "warn");
-        if(dstatImg){
-          dstatImg.onload = () => setDstatStatus("OK", "ok");
-          dstatImg.onerror = () => setDstatStatus("FAIL", "bad");
-          dstatImg.src = url + bust;
+        setDstatStatus('LOADING', 'warn');
+        if (els.dstatImg) {
+          els.dstatImg.onload = () => setDstatStatus('OK', 'ok');
+          els.dstatImg.onerror = () => setDstatStatus('FAIL', 'bad');
+          els.dstatImg.src = url + '&t=' + Date.now();
         }
       };
 
-      dstatRefresh?.addEventListener("click", loadDstat);
-      dstatOpen?.addEventListener("click", () => {
-        const host = (hostEl?.value || "").trim();
-        if(!host) return;
-        window.open(buildDstatUrl(host), "_blank", "noopener,noreferrer");
+      els.dstatRefresh?.addEventListener('click', loadDstat);
+      els.dstatOpen?.addEventListener('click', () => {
+        const host = (els.host?.value || '').trim();
+        if (!host) return;
+        window.open(buildDstatUrl(host), '_blank', 'noopener,noreferrer');
       });
 
-      let dstatDebounce;
-      hostEl?.addEventListener("input", () => {
+      els.host?.addEventListener('input', () => {
         clearTimeout(dstatDebounce);
         dstatDebounce = setTimeout(loadDstat, 450);
       });
 
-      // Boot
+      // Init
       clear();
       log(`[${now()}] Ciel Sec Central pronta.`);
-      log(`Dica: host + GEOIP / IPTRACK / DNS / WHOIS. (Enter roda rápido)`);
+      log('Dica: host + GEOIP / IPTRACK / DNS / WHOIS. (Enter roda rápido)');
       hr();
-
-      // opcional: tenta carregar dstat se já tiver host
       loadDstat();
+      
+      // Set year
+      if (els.year) els.year.textContent = new Date().getFullYear();
     })();
   </script>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-
-  <!-- teu app.js continua comandando boot/wipe/tabs/cursor -->
   <script src="app.js"></script>
 </body>
 </html>
