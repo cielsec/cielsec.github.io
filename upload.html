@@ -1,584 +1,159 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Ciel Sec — Rootz Drop</title>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ciel Sec — Upload Admin</title>
   <style>
     :root{
-      --bg:#05060a;
-      --bg2:#090b14;
-      --txt:#e9ecff;
-      --muted:#a8b0d6;
-      --line:rgba(255,255,255,.08);
-      --card:rgba(10,12,24,.55);
-      --card2:rgba(10,12,24,.72);
-      --neon:#8a5cff;
-      --neon2:#00e0ff;
-      --ok:#3cff9a;
-      --bad:#ff4d6d;
-      --r:18px;
-      --t:.35s;
-      --shadow: 0 0 40px rgba(138,92,255,.18);
       color-scheme: dark;
+      --bg:#05060a; --bg2:#090b14; --txt:#e9ecff; --muted:#a8b0d6;
+      --line:rgba(255,255,255,.10); --card:rgba(10,12,24,.62);
+      --neon:#8a5cff; --neon2:#00e0ff; --r:18px;
+      --shadow:0 0 40px rgba(138,92,255,.18);
+      --t:.25s;
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
     body{
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      min-height:100vh;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--txt);
       background:
         radial-gradient(900px 500px at 20% 10%, rgba(138,92,255,.18), transparent 60%),
         radial-gradient(900px 500px at 80% 20%, rgba(0,224,255,.12), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      color:var(--txt);
+        linear-gradient(180deg,var(--bg),var(--bg2));
       overflow-x:hidden;
     }
-
-    /* Background FX */
-    .bg{position:fixed; inset:0; pointer-events:none; z-index:-1}
-    .grid{
-      position:absolute; inset:-2px;
+    .bg{position:fixed;inset:0;pointer-events:none;z-index:-1}
+    .bg::before{
+      content:"";position:absolute;inset:-2px;opacity:.35;
       background:
         linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 46px 46px;
-      mask-image: radial-gradient(circle at 50% 20%, #000 0, #000 40%, transparent 70%);
-      opacity:.35;
+      background-size:46px 46px;
+      mask-image:radial-gradient(circle at 50% 20%, #000 0, #000 40%, transparent 70%);
     }
-    .glow{
-      position:absolute; inset:0;
-      background:
-        radial-gradient(600px 300px at 30% 20%, rgba(138,92,255,.28), transparent 60%),
-        radial-gradient(600px 300px at 75% 25%, rgba(0,224,255,.20), transparent 60%);
-      filter: blur(12px);
-      opacity:.65;
-    }
-    .scan{
-      position:absolute; inset:0;
-      background: repeating-linear-gradient(180deg,
-        rgba(255,255,255,.05) 0px,
-        rgba(255,255,255,.05) 1px,
-        transparent 3px,
-        transparent 8px
-      );
-      opacity:.08;
+    .bg::after{
+      content:"";position:absolute;inset:0;opacity:.10;
+      background:repeating-linear-gradient(180deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 3px,transparent 8px);
     }
 
-    /* Layout */
-    .top{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:18px 22px;
-      border-bottom:1px solid var(--line);
-      background: rgba(5,6,10,.35);
-      backdrop-filter: blur(10px);
-      position:sticky; top:0; z-index:10;
+    header{
+      position:sticky;top:0;z-index:10;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 20px;border-bottom:1px solid var(--line);
+      background:rgba(5,6,10,.35);backdrop-filter:blur(10px);
     }
+    .brand{display:flex;align-items:center;gap:10px}
+    .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--neon),var(--neon2));box-shadow:0 0 18px rgba(138,92,255,.65)}
+    .tag{font-size:12px;color:var(--muted);padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03)}
 
-    .brand{display:flex; align-items:center; gap:10px}
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: linear-gradient(90deg, var(--neon), var(--neon2));
-      box-shadow: 0 0 18px rgba(138,92,255,.65);
-    }
-    .name{font-weight:800; letter-spacing:.4px}
-    .tag{
-      font-size:12px; color:var(--muted);
-      padding:4px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background: rgba(255,255,255,.03);
-    }
+    main{max-width:980px;margin:0 auto;padding:28px 18px 80px}
+    h1{font-size:40px;letter-spacing:-.8px;line-height:1.05;text-shadow:0 0 22px rgba(138,92,255,.18)}
+    p{color:var(--muted);margin-top:10px;line-height:1.6;max-width:65ch}
 
-    .actions{display:flex; gap:10px; align-items:center}
-
-    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 90px}
-
-    .hero{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:22px;
-      align-items:start;
-      margin-top:22px;
-    }
-
-    @media (max-width: 920px){
-      .hero{grid-template-columns:1fr}
-    }
-
-    .hero-copy h1{
-      font-size:42px;
-      line-height:1.06;
-      letter-spacing:-.8px;
-      margin-bottom:10px;
-      text-shadow: 0 0 22px rgba(138,92,255,.18);
-    }
-    .hero-copy p{
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.6;
-      max-width:58ch;
-    }
-
-    .hero-copy code{
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--line);
-      padding:2px 6px;
-      border-radius:8px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:.92em;
-    }
-
-    .pillrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
-    .pill{
-      font-size:12px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color:var(--txt);
-    }
-    .pill.muted{color:var(--muted)}
-    .pill.ok{border-color: rgba(60,255,154,.25); box-shadow: 0 0 0 1px rgba(60,255,154,.12) inset}
-    .pill.bad{border-color: rgba(255,77,109,.25); box-shadow: 0 0 0 1px rgba(255,77,109,.12) inset}
-
-    /* Cards */
     .card{
+      margin-top:18px;
       border:1px solid var(--line);
-      border-radius: var(--r);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
+      border-radius:var(--r);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      padding:16px;
     }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(600px 260px at 20% 0%, rgba(138,92,255,.18), transparent 60%),
-                  radial-gradient(600px 260px at 80% 0%, rgba(0,224,255,.12), transparent 60%);
-      pointer-events:none;
-      opacity:.8;
-    }
-    .card > *{position:relative}
-
-    .panel{padding:16px}
-    .panel-head{
-      display:flex; justify-content:space-between; gap:12px;
-      border-bottom:1px solid var(--line);
-      padding-bottom:12px;
-      margin-bottom:12px;
-    }
-    .title{font-weight:800; letter-spacing:.4px}
-    .sub{color:var(--muted); font-size:12px; margin-top:3px}
-
-    .mini{display:flex; gap:8px; align-items:center}
-    .mini-k{
-      font-size:11px; color:var(--muted);
-      border:1px solid var(--line);
-      padding:4px 8px; border-radius:999px;
-      background: rgba(255,255,255,.03);
-    }
-    .mini-v{
-      font-size:11px;
-      padding:4px 10px;
-      border-radius:999px;
-      border:1px solid rgba(138,92,255,.25);
-      background: rgba(138,92,255,.08);
-    }
-
-    /* Drop zone */
     .drop{
+      margin-top:12px;
       display:block;
-      border-radius: calc(var(--r) - 4px);
-      border: 1px dashed rgba(255,255,255,.18);
-      background: rgba(0,0,0,.18);
+      border-radius:calc(var(--r) - 4px);
+      border:1px dashed rgba(255,255,255,.18);
+      background:rgba(0,0,0,.18);
       padding:16px;
       cursor:pointer;
-      transition: transform var(--t), border-color var(--t), background var(--t);
-      outline:none;
+      transition:transform var(--t),border-color var(--t),background var(--t);
       user-select:none;
     }
-    .drop:hover{
-      transform: translateY(-1px);
-      border-color: rgba(138,92,255,.45);
-      background: rgba(138,92,255,.06);
-    }
-    .drop.dragover{
-      border-color: rgba(0,224,255,.55);
-      box-shadow: 0 0 0 2px rgba(0,224,255,.16) inset, 0 0 28px rgba(0,224,255,.12);
-      background: rgba(0,224,255,.06);
-    }
-    .drop-inner{display:flex; gap:14px; align-items:center}
-    .icon{
-      width:46px; height:46px; border-radius:14px;
-      display:grid; place-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      font-weight:900;
-    }
-    .drop-text{display:flex; flex-direction:column; gap:2px}
-    .drop-text strong{font-size:14px}
-    .drop-text span{font-size:12px; color:var(--muted)}
-    .drop-hint{margin-top:10px; font-size:12px; color:var(--muted)}
-
-    /* Buttons */
-    .row{display:flex; gap:10px; margin-top:12px}
+    .drop:hover{transform:translateY(-1px);border-color:rgba(138,92,255,.45);background:rgba(138,92,255,.06)}
+    .row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
     .btn{
-      border:none;
-      cursor:pointer;
-      border-radius: 14px;
-      padding:10px 14px;
-      font-weight:750;
-      color:#06060a;
-      background: linear-gradient(90deg, var(--neon), var(--neon2));
-      box-shadow: 0 8px 22px rgba(138,92,255,.16);
-      transition: transform var(--t), filter var(--t);
+      border:none;cursor:pointer;border-radius:14px;padding:10px 14px;
+      font-weight:800;color:#06060a;background:linear-gradient(90deg,var(--neon),var(--neon2));
+      transition:transform var(--t),filter var(--t);
     }
-    .btn:hover{transform: translateY(-1px); filter: brightness(1.05)}
-    .btn:active{transform: translateY(0px) scale(.99)}
-    .btn.ghost{
-      color:var(--txt);
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      box-shadow:none;
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    .btn.ghost{color:var(--txt);border:1px solid var(--line);background:rgba(255,255,255,.03)}
+    .hint{margin-top:10px;font-size:12px;color:var(--muted)}
+    .toast{
+      margin-top:12px;display:none;
+      border:1px solid rgba(255,77,109,.25);
+      background:rgba(255,77,109,.10);
+      border-radius:14px;padding:12px;
+      font-size:13px;line-height:1.5;
     }
-
-    /* Progress */
-    .progress{
-      width:100%; height:10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      overflow:hidden;
-      margin-top:12px;
-    }
-    .bar{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, var(--neon), var(--neon2));
-      transition: width .15s linear;
-    }
-
-    /* Output */
-    .card2{
-      margin-top:12px;
-      padding:12px;
-      border-radius: calc(var(--r) - 6px);
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.16);
-    }
-    .out-title{font-weight:800; font-size:12px; color:var(--muted); margin-bottom:10px}
-    .kv{display:flex; justify-content:space-between; gap:12px; padding:6px 0}
-    .kv span:first-child{color:var(--muted); font-size:12px}
-    .kv span:last-child{font-size:12px; text-align:right; word-break:break-all}
-    .link{
-      color: var(--txt);
-      text-decoration: none;
-      border-bottom:1px dashed rgba(0,224,255,.35);
-    }
-    .link:hover{border-bottom-color: rgba(0,224,255,.85)}
-    .logs{
-      margin-top:12px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      color: rgba(233,236,255,.82);
-      border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(0,0,0,.18);
-      padding:10px;
-      max-height: 240px;
-      overflow:auto;
-      white-space: pre-wrap;
-    }
+    .toast strong{display:block;margin-bottom:4px}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:2px 6px;border-radius:8px}
   </style>
 </head>
 
 <body>
-  <div class="bg">
-    <div class="grid"></div>
-    <div class="glow"></div>
-    <div class="scan"></div>
-  </div>
+  <div class="bg"></div>
 
-  <header class="top">
+  <header>
     <div class="brand">
       <span class="dot"></span>
-      <span class="name">Ciel Sec</span>
-      <span class="tag">rootz-drop</span>
+      <strong>Ciel Sec</strong>
+      <span class="tag">admin</span>
     </div>
-    <div class="actions">
-      <button id="btnAuth" class="btn ghost" type="button">Verificar sessão</button>
-      <button id="btnPing" class="btn ghost" type="button">Ping Upload UI</button>
-    </div>
+    <span class="tag">upload</span>
   </header>
 
-  <main class="wrap">
-    <section class="hero">
-      <div class="hero-copy">
-        <h1>Upload moderno, rápido e limpo.</h1>
-        <p>
-          UI inspirada em landing dark/clean. Integra com as rotas:
-          <code>/api/auth/user</code> e <code>/api/files/upload</code>.
-          Se bater CORS, usa proxy (BFF) e acabou a dor.
-        </p>
+  <main>
+    <h1>Página de Upload Admin</h1>
+    <p>
+      Interface inspirada em landing dark/neon. Botão de envio aqui é “pegadinha” (não envia nada).
+      Se você for integrar de verdade, pluga num proxy teu e troca o handler do botão.
+    </p>
 
-        <div class="pillrow">
-          <span class="pill" id="pillAuth">Sessão: desconhecida</span>
-          <span class="pill muted" id="pillEnv">Modo: direto</span>
-        </div>
+    <section class="card">
+      <label class="drop">
+        <input id="file" type="file" hidden />
+        <strong>Selecionar arquivo</strong>
+        <div class="hint" id="hint">Nenhum arquivo selecionado.</div>
+      </label>
+
+      <div class="row">
+        <button class="btn" id="send" type="button">Enviar</button>
+        <button class="btn ghost" id="clear" type="button">Limpar</button>
       </div>
 
-      <div class="panel card">
-        <div class="panel-head">
-          <div>
-            <div class="title">Uploader</div>
-            <div class="sub">Arrasta o arquivo aqui ou clica pra selecionar</div>
-          </div>
-          <div class="mini">
-            <span class="mini-k">API</span>
-            <span class="mini-v" id="apiBaseLabel"></span>
-          </div>
-        </div>
-
-        <label id="drop" class="drop">
-          <input id="file" type="file" hidden />
-          <div class="drop-inner">
-            <div class="icon">⬆</div>
-            <div class="drop-text">
-              <strong>Drop zone</strong>
-              <span>PNG, ZIP, PDF, TXT, etc.</span>
-            </div>
-          </div>
-          <div class="drop-hint" id="dropHint">Nenhum arquivo selecionado.</div>
-        </label>
-
-        <div class="progress">
-          <div class="bar" id="bar"></div>
-        </div>
-
-        <div class="row">
-          <button id="btnUpload" class="btn" type="button">Enviar</button>
-          <button id="btnClear" class="btn ghost" type="button">Limpar</button>
-        </div>
-
-        <div class="card2">
-          <div class="out-title">Resultado</div>
-          <div class="kv"><span>Arquivo</span><span id="outFile">—</span></div>
-          <div class="kv"><span>Status</span><span id="outStatus">—</span></div>
-          <div class="kv"><span>Link</span><span id="outLink">—</span></div>
-        </div>
-
-        <div class="logs" id="logs"></div>
+      <div class="toast" id="toast">
+        <strong>🛑 Upload negado</strong>
+        sério idiota tu achou mesmo que ia fazer upload no meu site ,-, 
       </div>
+
+      <p class="hint">Dica: integração real = <code>/rootz/api/files/upload</code> via proxy (BFF) pra não tomar CORS.</p>
     </section>
   </main>
 
   <script>
-    // ==============================
-    // CONFIG
-    // ==============================
-    // Se você estiver rodando no mesmo domínio da rootz (ou CORS liberado), deixa assim:
-    const API_BASE = "https://www.rootz.so";
+    const file = document.getElementById("file");
+    const hint = document.getElementById("hint");
+    const toast = document.getElementById("toast");
 
-    // Endpoints informados por você:
-    const EP_AUTH_USER = "/api/auth/user";
-    const EP_FILES_UPLOAD = "/api/files/upload";
-
-    // Observação: o endpoint "/upload/<id>?_rsc=..." parece rota do front (Next.js) e não precisa ser chamado via JS.
-    // O upload real aqui é o POST /api/files/upload.
-
-    // ==============================
-    // UI helpers
-    // ==============================
-    const $ = (id) => document.getElementById(id);
-    const logs = $("logs");
-    const pillAuth = $("pillAuth");
-    const apiBaseLabel = $("apiBaseLabel");
-    const drop = $("drop");
-    const fileInput = $("file");
-    const bar = $("bar");
-    const dropHint = $("dropHint");
-
-    const outFile = $("outFile");
-    const outStatus = $("outStatus");
-    const outLink = $("outLink");
-
-    apiBaseLabel.textContent = API_BASE;
-
-    function log(line){
-      const ts = new Date().toLocaleTimeString();
-      logs.textContent += `[${ts}] ${line}\n`;
-      logs.scrollTop = logs.scrollHeight;
-    }
-
-    function setAuthPill(ok, text){
-      pillAuth.textContent = text;
-      pillAuth.classList.remove("ok","bad","muted");
-      pillAuth.classList.add(ok === true ? "ok" : ok === false ? "bad" : "muted");
-    }
-
-    function resetOutput(){
-      outFile.textContent = "—";
-      outStatus.textContent = "—";
-      outLink.textContent = "—";
-      bar.style.width = "0%";
-    }
-
-    // ==============================
-    // Drag & Drop
-    // ==============================
-    drop.addEventListener("dragover", (e)=>{ e.preventDefault(); drop.classList.add("dragover"); });
-    drop.addEventListener("dragleave", ()=> drop.classList.remove("dragover"));
-    drop.addEventListener("drop", (e)=>{
-      e.preventDefault();
-      drop.classList.remove("dragover");
-      const f = e.dataTransfer.files?.[0];
-      if (!f) return;
-      fileInput.files = e.dataTransfer.files;
-      dropHint.textContent = `${f.name} (${Math.round(f.size/1024)} KB)`;
-      outFile.textContent = f.name;
-      log(`Arquivo selecionado via drop: ${f.name}`);
+    file.addEventListener("change", () => {
+      const f = file.files?.[0];
+      hint.textContent = f ? `${f.name} (${Math.round(f.size/1024)} KB)` : "Nenhum arquivo selecionado.";
+      toast.style.display = "none";
     });
 
-    fileInput.addEventListener("change", ()=>{
-      const f = fileInput.files?.[0];
-      if (!f) return;
-      dropHint.textContent = `${f.name} (${Math.round(f.size/1024)} KB)`;
-      outFile.textContent = f.name;
-      log(`Arquivo selecionado: ${f.name}`);
+    document.getElementById("clear").addEventListener("click", () => {
+      file.value = "";
+      hint.textContent = "Nenhum arquivo selecionado.";
+      toast.style.display = "none";
     });
 
-    $("btnClear").addEventListener("click", ()=>{
-      fileInput.value = "";
-      dropHint.textContent = "Nenhum arquivo selecionado.";
-      resetOutput();
-      log("Limpo.");
+    document.getElementById("send").addEventListener("click", () => {
+      toast.style.display = "block";
+      toast.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
-
-    // ==============================
-    // Auth check
-    // ==============================
-    async function checkAuth(){
-      log(`GET ${API_BASE}${EP_AUTH_USER}`);
-      try{
-        const r = await fetch(`${API_BASE}${EP_AUTH_USER}`, {
-          method:"GET",
-          credentials:"include", // importante se a sessão for cookie-based
-          headers:{ "Accept":"application/json" }
-        });
-
-        if(!r.ok){
-          setAuthPill(false, `Sessão: falhou (${r.status})`);
-          log(`Auth falhou: HTTP ${r.status}`);
-          return;
-        }
-
-        const data = await r.json().catch(()=> ({}));
-        // Ajusta conforme o formato real do JSON
-        const name = data?.user?.name || data?.name || "OK";
-        setAuthPill(true, `Sessão: ativa (${name})`);
-        log(`Auth OK: ${JSON.stringify(data).slice(0,200)}...`);
-      }catch(err){
-        setAuthPill(false, "Sessão: erro (CORS/rede?)");
-        log(`Erro auth: ${err}`);
-      }
-    }
-
-    $("btnAuth").addEventListener("click", checkAuth);
-
-    // ==============================
-    // Upload (XHR pra ter progress)
-    // ==============================
-    function uploadFile(file){
-      return new Promise((resolve, reject)=>{
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", `${API_BASE}${EP_FILES_UPLOAD}`, true);
-
-        // Se a API usa cookie de sessão:
-        xhr.withCredentials = true;
-
-        xhr.upload.onprogress = (e)=>{
-          if(!e.lengthComputable) return;
-          const pct = Math.round((e.loaded / e.total) * 100);
-          bar.style.width = pct + "%";
-        };
-
-        xhr.onload = ()=>{
-          const ok = xhr.status >= 200 && xhr.status < 300;
-          let body = xhr.responseText;
-
-          try { body = JSON.parse(xhr.responseText); } catch {}
-
-          if(!ok){
-            reject({ status: xhr.status, body });
-            return;
-          }
-          resolve({ status: xhr.status, body });
-        };
-
-        xhr.onerror = ()=> reject({ status: 0, body: "network error" });
-
-        const form = new FormData();
-        // Campo "file" é o mais comum — se a API exigir outro nome, troque aqui.
-        form.append("file", file, file.name);
-
-        xhr.send(form);
-      });
-    }
-
-    $("btnUpload").addEventListener("click", async ()=>{
-      const f = fileInput.files?.[0];
-      if(!f){
-        log("Nenhum arquivo selecionado.");
-        outStatus.textContent = "Selecione um arquivo primeiro.";
-        return;
-      }
-
-      resetOutput();
-      outFile.textContent = f.name;
-      outStatus.textContent = "Enviando...";
-      log(`POST ${API_BASE}${EP_FILES_UPLOAD} (file=${f.name})`);
-
-      try{
-        const res = await uploadFile(f);
-        outStatus.textContent = `OK (${res.status})`;
-
-        // Ajuste aqui conforme o formato real da resposta do rootz.
-        // Exemplos comuns:
-        // - { url: "https://..." }
-        // - { file: { url: "..." } }
-        // - { id: "...", path: "/upload/..." }
-        const url =
-          res.body?.url ||
-          res.body?.file?.url ||
-          (res.body?.path ? `${API_BASE}${res.body.path}` : null);
-
-        if(url){
-          outLink.innerHTML = `<a class="link" href="${url}" target="_blank" rel="noopener">Abrir link</a>`;
-          log(`Upload OK -> ${url}`);
-        }else{
-          outLink.textContent = "(Resposta sem URL — veja log)";
-          log("Upload OK, mas não identifiquei URL automaticamente. Resposta:");
-          log(JSON.stringify(res.body, null, 2));
-        }
-
-      }catch(e){
-        outStatus.textContent = `Falhou (${e.status || "?"})`;
-        log(`Upload falhou: HTTP ${e.status} body=${typeof e.body === "string" ? e.body : JSON.stringify(e.body).slice(0,500)}`);
-        if(String(e).includes("CORS") || (e.status === 0)){
-          log("Se isso for CORS, você PRECISA usar um proxy backend (BFF) ou hospedar no mesmo domínio.");
-        }
-      }
-    });
-
-    $("btnPing").addEventListener("click", ()=>{
-      log("Dica: a rota /upload/<id>?_rsc=... parece parte do front (Next.js). O upload real é /api/files/upload.");
-    });
-
-    // auto
-    log("UI carregada.");
-    setAuthPill(null, "Sessão: desconhecida");
   </script>
 </body>
 </html>
