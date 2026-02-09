@@ -9,9 +9,8 @@
       color-scheme: dark;
       --bg:#05060a; --bg2:#090b14; --txt:#e9ecff; --muted:#a8b0d6;
       --line:rgba(255,255,255,.10); --card:rgba(10,12,24,.62);
-      --neon:#8a5cff; --neon2:#00e0ff; --r:18px;
+      --neon:#8a5cff; --neon2:#00e0ff; --r:18px; --t:.22s;
       --shadow:0 0 40px rgba(138,92,255,.18);
-      --t:.25s;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
@@ -26,7 +25,7 @@
     }
     .bg{position:fixed;inset:0;pointer-events:none;z-index:-1}
     .bg::before{
-      content:"";position:absolute;inset:-2px;opacity:.35;
+      content:"";position:absolute;inset:-2px;opacity:.32;
       background:
         linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
@@ -34,10 +33,9 @@
       mask-image:radial-gradient(circle at 50% 20%, #000 0, #000 40%, transparent 70%);
     }
     .bg::after{
-      content:"";position:absolute;inset:0;opacity:.10;
+      content:"";position:absolute;inset:0;opacity:.08;
       background:repeating-linear-gradient(180deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 3px,transparent 8px);
     }
-
     header{
       position:sticky;top:0;z-index:10;
       display:flex;align-items:center;justify-content:space-between;
@@ -47,11 +45,8 @@
     .brand{display:flex;align-items:center;gap:10px}
     .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--neon),var(--neon2));box-shadow:0 0 18px rgba(138,92,255,.65)}
     .tag{font-size:12px;color:var(--muted);padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03)}
-
     main{max-width:980px;margin:0 auto;padding:28px 18px 80px}
     h1{font-size:40px;letter-spacing:-.8px;line-height:1.05;text-shadow:0 0 22px rgba(138,92,255,.18)}
-    p{color:var(--muted);margin-top:10px;line-height:1.6;max-width:65ch}
-
     .card{
       margin-top:18px;
       border:1px solid var(--line);
@@ -72,6 +67,7 @@
       user-select:none;
     }
     .drop:hover{transform:translateY(-1px);border-color:rgba(138,92,255,.45);background:rgba(138,92,255,.06)}
+    .hint{margin-top:8px;font-size:12px;color:var(--muted)}
     .row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
     .btn{
       border:none;cursor:pointer;border-radius:14px;padding:10px 14px;
@@ -80,16 +76,14 @@
     }
     .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
     .btn.ghost{color:var(--txt);border:1px solid var(--line);background:rgba(255,255,255,.03)}
-    .hint{margin-top:10px;font-size:12px;color:var(--muted)}
     .toast{
       margin-top:12px;display:none;
-      border:1px solid rgba(255,77,109,.25);
-      background:rgba(255,77,109,.10);
+      border:1px solid rgba(0,224,255,.25);
+      background:rgba(0,224,255,.08);
       border-radius:14px;padding:12px;
       font-size:13px;line-height:1.5;
     }
     .toast strong{display:block;margin-bottom:4px}
-    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:2px 6px;border-radius:8px}
   </style>
 </head>
 
@@ -107,10 +101,6 @@
 
   <main>
     <h1>Página de Upload Admin</h1>
-    <p>
-      Interface inspirada em landing dark/neon. Botão de envio aqui é “pegadinha” (não envia nada).
-      Se você for integrar de verdade, pluga num proxy teu e troca o handler do botão.
-    </p>
 
     <section class="card">
       <label class="drop">
@@ -125,11 +115,10 @@
       </div>
 
       <div class="toast" id="toast">
-        <strong>🛑 Upload negado</strong>
-        sério idiota tu achou mesmo que ia fazer upload no meu site ,-, 
+        <strong>🚫 Acesso restrito</strong>
+        Claro que não teria upload aqui :)<br/>
+        Área administrativa — somente usuários autorizados.
       </div>
-
-      <p class="hint">Dica: integração real = <code>/rootz/api/files/upload</code> via proxy (BFF) pra não tomar CORS.</p>
     </section>
   </main>
 
