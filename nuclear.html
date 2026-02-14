@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuclear Booter | Ciel Sec</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #161616;
+            --accent: #ff3e3e;
+            --accent-glow: rgba(255, 62, 62, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --border: #222222;
+            --success: #00ff88;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "☢️";
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 10px var(--accent));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .power-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 3rem;
+        }
+
+        .power-badge::before {
+            content: "●";
+            color: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 5%;
+            background: var(--bg-secondary);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            letter-spacing: -1px;
+        }
+
+        .pricing-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(255, 62, 62, 0.1);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 62, 62, 0.05) 100%);
+        }
+
+        .pricing-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: 1rem;
+            right: -2rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 3rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transform: rotate(45deg);
+        }
+
+        .plan-name {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 0.2rem;
+        }
+
+        .plan-price span {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .plan-power {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* Methods Section */
+        .methods {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .method-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .method-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .method-icon {
+            font-size: 2rem;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+        .method-card:hover .method-icon {
+            filter: grayscale(0%);
+        }
+
+        .method-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .method-cat {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .method-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .method-power {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .power-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .power-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #ff8800);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .root-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 62, 62, 0.2);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 4rem 5% 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-sig {
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-copy {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-content">
+            <div class="logo">NUCLEAR BOOTER</div>
+            <ul class="nav-links">
+                <li><a href="#pricing">Planos</a></li>
+                <li><a href="#methods">Métodos</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="power-badge">5 GBPS POWER</div>
+            <h1>NUCLEAR</h1>
+            <p class="hero-subtitle">Stress testing infrastructure. Professional grade. Maximum impact.</p>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <h2 class="section-title">ESCOLHA SEU PLANO</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">Acesso 1 Dia</div>
+                <div class="plan-price"><span>R$</span>50,00</div>
+                <div class="plan-power">⚡ 5 GBPS POWER</div>
+                <ul class="plan-features">
+                    <li>Acesso total ao painel</li>
+                    <li>Todos os métodos L4/L7</li>
+                    <li>Suporte básico</li>
+                    <li>1 dia de uso</li>
+                </ul>
+                <a href="#" class="btn">Comprar Agora</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="plan-name">Acesso 7 Dias</div>
+                <div class="plan-price"><span>R$</span>130,00</div>
+                <div class="plan-power">⚡ 5 GBPS POWER</div>
+                <ul class="plan-features">
+                    <li>Acesso total ao painel</li>
+                    <li>Todos os métodos L4/L7</li>
+                    <li>Suporte prioritário</li>
+                    <li>7 dias de uso</li>
+                    <li>API Access</li>
+                </ul>
+                <a href="#" class="btn">Comprar Agora</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">Acesso 30 Dias</div>
+                <div class="plan-price"><span>R$</span>300,00</div>
+                <div class="plan-power">⚡ 5 GBPS POWER</div>
+                <ul class="plan-features">
+                    <li>Acesso total ao painel</li>
+                    <li>Todos os métodos L4/L7</li>
+                    <li>Suporte VIP 24/7</li>
+                    <li>30 dias de uso</li>
+                    <li>API Access</li>
+                    <li>Métodos exclusivos</li>
+                </ul>
+                <a href="#" class="btn">Comprar Agora</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="methods" id="methods">
+        <h2 class="section-title">MÉTODOS DE ATAQUE</h2>
+        
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="filterMethods('all')">Todos</button>
+            <button class="tab-btn" onclick="filterMethods('L4-UDP')">UDP</button>
+            <button class="tab-btn" onclick="filterMethods('L4-TCP')">TCP</button>
+            <button class="tab-btn" onclick="filterMethods('AMP')">AMP</button>
+            <button class="tab-btn" onclick="filterMethods('L7-HTTP')">HTTP</button>
+            <button class="tab-btn" onclick="filterMethods('L7-HTTPS')">HTTPS</button>
+            <button class="tab-btn" onclick="filterMethods('L7-SLOW')">SLOW</button>
+            <button class="tab-btn" onclick="filterMethods('L7-DNS')">DNS</button>
+            <button class="tab-btn" onclick="filterMethods('ADV')">ADV</button>
+        </div>
+
+        <div class="methods-grid" id="methodsGrid">
+            <!-- Methods will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-logo">☢️ NUCLEAR</div>
+            <div class="footer-sig">— Ciel Sec —</div>
+            <p class="footer-copy">© 2025 Nuclear Booter. All rights reserved.<br>Professional stress testing solutions.</p>
+        </div>
+    </footer>
+
+    <script>
+        const ATTACK_METHODS = {
+            "1": {"name": "UDP FLOOD", "desc": "High-speed UDP packet flood", "cat": "L4-UDP", "icon": "💥", "power": 8},
+            "2": {"name": "UDP FRAG", "desc": "Fragmented UDP packets", "cat": "L4-UDP", "icon": "🧩", "power": 7},
+            "3": {"name": "UDP BURST", "desc": "Burst mode UDP flood", "cat": "L4-UDP", "icon": "💣", "power": 9},
+            "4": {"name": "UDP RANDOM", "desc": "Random port UDP flood", "cat": "L4-UDP", "icon": "🎲", "power": 7},
+            "5": {"name": "UDP REFLECT", "desc": "UDP reflection attack", "cat": "L4-UDP", "icon": "🪞", "power": 7},
+            "6": {"name": "UDP BROADCAST", "desc": "UDP broadcast flood", "cat": "L4-UDP", "icon": "📢", "power": 6},
+            "7": {"name": "UDP MULTICAST", "desc": "UDP multicast flood", "cat": "L4-UDP", "icon": "📡", "power": 6},
+            "8": {"name": "UDP SMALL", "desc": "Small packet UDP flood", "cat": "L4-UDP", "icon": "🔹", "power": 6},
+            "9": {"name": "UDP LARGE", "desc": "Large packet UDP flood", "cat": "L4-UDP", "icon": "🔷", "power": 8},
+            "10": {"name": "UDP MIXED", "desc": "Mixed size UDP flood", "cat": "L4-UDP", "icon": "🔀", "power": 7},
+            "11": {"name": "DNS AMP", "desc": "DNS amplification", "cat": "AMP", "icon": "📖", "power": 8},
+            "12": {"name": "NTP AMP", "desc": "NTP amplification", "cat": "AMP", "icon": "⏰", "power": 8},
+            "13": {"name": "SSDP AMP", "desc": "SSDP amplification", "cat": "AMP", "icon": "📺", "power": 7},
+            "14": {"name": "MEMCACHE AMP", "desc": "Memcached amplification", "cat": "AMP", "icon": "💾", "power": 9},
+            "15": {"name": "CHARGEN AMP", "desc": "Chargen amplification", "cat": "AMP", "icon": "⚡", "power": 7},
+            "16": {"name": "SNMP AMP", "desc": "SNMP amplification", "cat": "AMP", "icon": "📊", "power": 8},
+            "17": {"name": "LDAP AMP", "desc": "LDAP amplification", "cat": "AMP", "icon": "📁", "power": 7},
+            "18": {"name": "MSSQL AMP", "desc": "MSSQL amplification", "cat": "AMP", "icon": "🗄️", "power": 7},
+            "19": {"name": "NETBIOS AMP", "desc": "NetBIOS amplification", "cat": "AMP", "icon": "🖥️", "power": 6},
+            "20": {"name": "QUAKE3 AMP", "desc": "Quake3 amp (game server)", "cat": "AMP", "icon": "🎮", "power": 6},
+            "21": {"name": "STUN AMP", "desc": "STUN amplification", "cat": "AMP", "icon": "🔌", "power": 6},
+            "22": {"name": "WS-DISCOV AMP", "desc": "WS-Discovery amplification", "cat": "AMP", "icon": "🔍", "power": 7},
+            "23": {"name": "TCP SYN", "desc": "SYN flood attack", "cat": "L4-TCP", "icon": "🔌", "power": 9},
+            "24": {"name": "TCP ACK", "desc": "ACK flood attack", "cat": "L4-TCP", "icon": "👍", "power": 6},
+            "25": {"name": "TCP CONNECT", "desc": "Full connection flood", "cat": "L4-TCP", "icon": "🔗", "power": 7},
+            "26": {"name": "TCP RST", "desc": "RST packet flood", "cat": "L4-TCP", "icon": "🚫", "power": 6},
+            "27": {"name": "TCP FIN", "desc": "FIN flood attack", "cat": "L4-TCP", "icon": "🏁", "power": 5},
+            "28": {"name": "TCP PSH", "desc": "PSH flood attack", "cat": "L4-TCP", "icon": "📤", "power": 6},
+            "29": {"name": "TCP SYN-ACK", "desc": "SYN-ACK flood", "cat": "L4-TCP", "icon": "🤝", "power": 7},
+            "30": {"name": "TCP URG", "desc": "URG flag flood", "cat": "L4-TCP", "icon": "⚡", "power": 5},
+            "31": {"name": "TCP XMAS", "desc": "Xmas tree attack", "cat": "L4-TCP", "icon": "🎄", "power": 5},
+            "32": {"name": "TCP NULL", "desc": "Null flag attack", "cat": "L4-TCP", "icon": "⭕", "power": 5},
+            "33": {"name": "TCP MAIK", "desc": "Maimon attack", "cat": "L4-TCP", "icon": "🔥", "power": 6},
+            "34": {"name": "TCP FRAGMENT", "desc": "TCP fragment flood", "cat": "L4-TCP", "icon": "💔", "power": 6},
+            "35": {"name": "TCP LAND", "desc": "Land attack", "cat": "L4-TCP", "icon": "🏝️", "power": 5},
+            "36": {"name": "ICMP FLOOD", "desc": "Ping flood (needs root)", "cat": "L4-ICMP", "icon": "📡", "power": 7, "root": true},
+            "37": {"name": "ICMP POD", "desc": "Ping of Death", "cat": "L4-ICMP", "icon": "💀", "power": 6, "root": true},
+            "38": {"name": "ICMP SMURF", "desc": "Smurf attack", "cat": "L4-ICMP", "icon": "🐷", "power": 6, "root": true},
+            "39": {"name": "ICMP FRAG", "desc": "ICMP fragment flood", "cat": "L4-ICMP", "icon": "🔨", "power": 5, "root": true},
+            "40": {"name": "ICMP UNREACH", "desc": "ICMP unreachable flood", "cat": "L4-ICMP", "icon": "❌", "power": 5, "root": true},
+            "41": {"name": "HTTP GET", "desc": "GET request flood", "cat": "L7-HTTP", "icon": "🌐", "power": 6},
+            "42": {"name": "HTTP POST", "desc": "POST request flood", "cat": "L7-HTTP", "icon": "📤", "power": 7},
+            "43": {"name": "HTTP HEAD", "desc": "HEAD request flood", "cat": "L7-HTTP", "icon": "👤", "power": 5},
+            "44": {"name": "HTTP PUT", "desc": "PUT request flood", "cat": "L7-HTTP", "icon": "📥", "power": 6},
+            "45": {"name": "HTTP DELETE", "desc": "DELETE request flood", "cat": "L7-HTTP", "icon": "🗑️", "power": 5},
+            "46": {"name": "HTTP OPTIONS", "desc": "OPTIONS request flood", "cat": "L7-HTTP", "icon": "⚙️", "power": 4},
+            "47": {"name": "HTTP PATCH", "desc": "PATCH request flood", "cat": "L7-HTTP", "icon": "🩹", "power": 5},
+            "48": {"name": "HTTP TRACE", "desc": "TRACE request flood", "cat": "L7-HTTP", "icon": "🔍", "power": 4},
+            "49": {"name": "HTTP CONNECT", "desc": "CONNECT request flood", "cat": "L7-HTTP", "icon": "🔗", "power": 5},
+            "50": {"name": "HTTP RANGE", "desc": "Range header abuse", "cat": "L7-HTTP", "icon": "📏", "power": 6},
+            "51": {"name": "HTTP CC", "desc": "Cache-Control abuse", "cat": "L7-HTTP", "icon": "📦", "power": 5},
+            "52": {"name": "HTTP CF-BYPASS", "desc": "Cloudflare bypass flood", "cat": "L7-HTTP", "icon": "☁️", "power": 6},
+            "53": {"name": "HTTPS FLOOD", "desc": "TLS/SSL flood", "cat": "L7-HTTPS", "icon": "🔒", "power": 6},
+            "54": {"name": "HTTPS RENEW", "desc": "TLS renegotiation flood", "cat": "L7-HTTPS", "icon": "🔄", "power": 7},
+            "55": {"name": "SSL HANDSHAKE", "desc": "SSL handshake flood", "cat": "L7-HTTPS", "icon": "🤝", "power": 6},
+            "56": {"name": "TLS ALERT", "desc": "TLS alert flood", "cat": "L7-HTTPS", "icon": "⚠️", "power": 5},
+            "57": {"name": "HTTPS GET", "desc": "HTTPS GET flood", "cat": "L7-HTTPS", "icon": "🔐", "power": 6},
+            "58": {"name": "HTTPS POST", "desc": "HTTPS POST flood", "cat": "L7-HTTPS", "icon": "📤", "power": 7},
+            "59": {"name": "SLOWLORIS", "desc": "Slow HTTP headers", "cat": "L7-SLOW", "icon": "🐌", "power": 5},
+            "60": {"name": "RUDY", "desc": "R-U-Dead-Yet attack", "cat": "L7-SLOW", "icon": "💀", "power": 6},
+            "61": {"name": "SLOW POST", "desc": "Slow POST attack", "cat": "L7-SLOW", "icon": "📮", "power": 5},
+            "62": {"name": "SLOW READ", "desc": "Slow read attack", "cat": "L7-SLOW", "icon": "📖", "power": 5},
+            "63": {"name": "PING PONG", "desc": "Ping pong attack", "cat": "L7-SLOW", "icon": "🏓", "power": 4},
+            "64": {"name": "PHP SLOW", "desc": "PHP slow attack", "cat": "L7-SLOW", "icon": "🐘", "power": 5},
+            "65": {"name": "BIG POST", "desc": "Large POST body", "cat": "L7-SLOW", "icon": "📦", "power": 6},
+            "66": {"name": "COOKIE MONSTER", "desc": "Cookie exhaustion", "cat": "L7-SLOW", "icon": "🍪", "power": 4},
+            "67": {"name": "DNS FLOOD", "desc": "DNS query flood", "cat": "L7-DNS", "icon": "📖", "power": 7},
+            "68": {"name": "DNS NXDOMAIN", "desc": "NXDOMAIN flood", "cat": "L7-DNS", "icon": "❓", "power": 6},
+            "69": {"name": "DNS RANDOM", "desc": "Random subdomain flood", "cat": "L7-DNS", "icon": "🎲", "power": 6},
+            "70": {"name": "DNS TXT", "desc": "TXT record flood", "cat": "L7-DNS", "icon": "📝", "power": 5},
+            "71": {"name": "DNS ANY", "desc": "ANY query flood", "cat": "L7-DNS", "icon": "📋", "power": 6},
+            "72": {"name": "DNS WATER", "desc": "DNS watermark attack", "cat": "L7-DNS", "icon": "💧", "power": 5},
+            "73": {"name": "SIP INVITE", "desc": "SIP INVITE flood", "cat": "L7-SIP", "icon": "📞", "power": 6},
+            "74": {"name": "SIP REGISTER", "desc": "SIP REGISTER flood", "cat": "L7-SIP", "icon": "📱", "power": 6},
+            "75": {"name": "SIP OPTIONS", "desc": "SIP OPTIONS flood", "cat": "L7-SIP", "icon": "⚙️", "power": 5},
+            "76": {"name": "SIP BYE", "desc": "SIP BYE flood", "cat": "L7-SIP", "icon": "📵", "power": 5},
+            "77": {"name": "SIP CANCEL", "desc": "SIP CANCEL flood", "cat": "L7-SIP", "icon": "🚫", "power": 5},
+            "78": {"name": "RTP FLOOD", "desc": "RTP packet flood", "cat": "L7-SIP", "icon": "🔊", "power": 6},
+            "79": {"name": "MINECRAFT", "desc": "Minecraft protocol flood", "cat": "L7-GAME", "icon": "⛏️", "power": 6},
+            "80": {"name": "VALVE A2S", "desc": "Valve A2S info flood", "cat": "L7-GAME", "icon": "🎮", "power": 6},
+            "81": {"name": "STEAM AMP", "desc": "Steam amplification", "cat": "L7-GAME", "icon": "💨", "power": 6},
+            "82": {"name": "TEAM SPEAK", "desc": "TeamSpeak query flood", "cat": "L7-GAME", "icon": "🎙️", "power": 5},
+            "83": {"name": "DISCORD", "desc": "Discord gateway flood", "cat": "L7-GAME", "icon": "💬", "power": 5},
+            "84": {"name": "TWITCH", "desc": "Twitch IRC flood", "cat": "L7-GAME", "icon": "📺", "power": 5},
+            "85": {"name": "MYSQL CONNECT", "desc": "MySQL connection flood", "cat": "L7-DB", "icon": "🐬", "power": 6},
+            "86": {"name": "REDIS FLOOD", "desc": "Redis command flood", "cat": "L7-DB", "icon": "🔴", "power": 6},
+            "87": {"name": "MONGO FLOOD", "desc": "MongoDB query flood", "cat": "L7-DB", "icon": "🍃", "power": 6},
+            "88": {"name": "POSTGRES", "desc": "PostgreSQL connect flood", "cat": "L7-DB", "icon": "🐘", "power": 6},
+            "89": {"name": "CASSANDRA", "desc": "Cassandra query flood", "cat": "L7-DB", "icon": "👁️", "power": 5},
+            "90": {"name": "ELASTIC", "desc": "Elasticsearch flood", "cat": "L7-DB", "icon": "🔎", "power": 5},
+            "91": {"name": "MIXED L4", "desc": "Rotating L4 methods", "cat": "ADV", "icon": "🔄", "power": 8},
+            "92": {"name": "MIXED L7", "desc": "Rotating L7 methods", "cat": "ADV", "icon": "🎲", "power": 7},
+            "93": {"name": "BEAST MODE", "desc": "Maximum power", "cat": "ADV", "icon": "🦁", "power": 10},
+            "94": {"name": "STEALTH MODE", "desc": "Low and slow", "cat": "ADV", "icon": "🥷", "power": 4},
+            "95": {"name": "MULTI VECTOR", "desc": "Multi-vector assault", "cat": "ADV", "icon": "⚔️", "power": 9},
+            "96": {"name": "TSUNAMI", "desc": "Wave attack pattern", "cat": "ADV", "icon": "🌊", "power": 8},
+            "97": {"name": "VORTEX", "desc": "Spiral attack pattern", "cat": "ADV", "icon": "🌀", "power": 7},
+            "98": {"name": "BLIZZARD", "desc": "Random burst attack", "cat": "ADV", "icon": "❄️", "power": 7},
+            "99": {"name": "THUNDER", "desc": "Lightning burst attack", "cat": "ADV", "icon": "⚡", "power": 9},
+            "100": {"name": "APOCALYPSE", "desc": "Ultimate destruction", "cat": "ADV", "icon": "☢️", "power": 10}
+        };
+
+        function renderMethods(filter = 'all') {
+            const grid = document.getElementById('methodsGrid');
+            grid.innerHTML = '';
+            
+            Object.entries(ATTACK_METHODS).forEach(([id, method]) => {
+                if (filter !== 'all' && method.cat !== filter) return;
+                
+                const card = document.createElement('div');
+                card.className = 'method-card';
+                card.innerHTML = `
+                    ${method.root ? '<span class="root-badge">ROOT</span>' : ''}
+                    <div class="method-header">
+                        <span class="method-icon">${method.icon}</span>
+                        <div class="method-info">
+                            <h3>${method.name}</h3>
+                            <span class="method-cat">${method.cat}</span>
+                        </div>
+                    </div>
+                    <p class="method-desc">${method.desc}</p>
+                    <div class="method-power">
+                        <span>Power:</span>
+                        <div class="power-bar">
+                            <div class="power-fill" style="width: ${method.power * 10}%"></div>
+                        </div>
+                        <span>${method.power}/10</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMethods(category) {
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(category) || (category === 'all' && btn.textContent === 'Todos')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderMethods(category);
+        }
+
+        // Initialize
+        renderMethods();
+    </script>
+
+</body>
+</html>
